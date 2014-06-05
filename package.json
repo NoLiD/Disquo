@@ -1,0 +1,19 @@
+{
+  "author": "Kirby Banman <kdbanman@ualberta.ca>",
+  "name": "Disquo",
+  "version": "0.0.1",
+  "homepage": "http://disquo.io",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/NoLiD/Disquo.git"
+  },
+  "dependencies": {
+    "express": "~4.0.0",
+    "morgan": "~1.0.0"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}
