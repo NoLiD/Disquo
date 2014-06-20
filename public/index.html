@@ -3,6 +3,7 @@
 	<head>
 		<title>Disquo</title>
 		<style>
+/* column layout */
 #visual_container {
 	clear:left;
 	float:left;
@@ -15,7 +16,7 @@
 	float:left;
 	width:100%;
 	position:relative;
-	right:25%;
+	right:40%;
 	background:#89ffa2; /* column 3 background colour */
 }
 #entities_container {
@@ -23,52 +24,87 @@
 	float:left;
 	width:100%;
 	position:relative;
-	right:25%;
+	right:20%;
 	background:#ffa7a7; /* column 2 background colour */
 }
 #types_container {
 	float:left;
 	width:100%;
 	position:relative;
-	right:25%;
+	right:20%;
 	background:#fff689; /* column 1 background colour */
 }
 #types {
 	float:left;
-	width:21%;
+	width:16%;
 	position:relative;
-	left:77%;
+	left:82%;
 	overflow:hidden;
 }
 #entities {
 	float:left;
-	width:21%;
+	width:16%;
 	position:relative;
-	left:81%;
+	left:86%;
 	overflow:hidden;
 }
 #properties {
 	float:left;
-	width:21%;
+	width:16%;
 	position:relative;
-	left:85%;
+	left:90%;
 	overflow:hidden;
 }
 #visual {
 	float:left;
-	width:21%;
+	width:36%;
 	position:relative;
-	left:89%;
+	left:94%;
 	overflow:hidden;
+}
+/* column style */
+.column > ul {
+	list-style-type: none;
+        padding: 0 0 1em 0;
+        margin: 0;
+}
+/* selection bar */
+#selection_bar {
+    margin: 0.5em;
+}
+#selection_bar > ul {
+	list-style-type: none;
+        padding: 0;
+        margin: 0;
+}
+#selection_bar > ul > li {
+	display: inline-block;
+        background: #dfdfdf;
+        padding: 0.1em 0.3em 0.1em 0.3em;
+        border-radius: 0.2em;
+        border: 1px solid #bbbbbb;
+}
+#selection_bar .kill {
+	font-family:sans-serif;
+        font-weight:bold;
+        font-size:0.6em;
+        color:#aaaaaa;
 }
 		</style>
 	</head>
 	<body>
+<div id="selection_bar">
+<ul>
+	<li class="type">50s Movies | <span class="kill">X</span></li>
+	<li class="entity">Waterfront | <span class="kill">X</span></li>
+	<li class="entity">Streetcar Named Desire | <span class="kill">X</span></li>
+</ul>
+</div>
 <div id="visual_container">
 	<div id="properties_container">
 		<div id="entities_container">
 			<div id="types_container">
-				<div id="types">
+				<div class="column" id="types">
 					<!-- Column one start -->
 					<h3>Types</h3>
 					<ul>
@@ -79,7 +115,7 @@
 					</ul>
 					<!-- Column one end -->
 				</div>
-				<div id="entities">
+				<div class="column" id="entities">
 					<!-- Column two start -->
 					<h3>Entities</h3>
 					<ul>
@@ -90,7 +126,7 @@
 					</ul>
 					<!-- Column two end -->
 				</div>
-				<div id="properties">
+				<div class="column" id="properties">
 					<!-- Column three start -->
 					<h3>Properties</h3>
 					<ul>
@@ -101,7 +137,7 @@
 					</ul>
 					<!-- Column three end -->
 				</div>
-				<div id="visual">
+				<div class="column" id="visual">
 					<!-- Column four start -->
 					<h3>Visual</h3>
 					<!-- Column four end -->
