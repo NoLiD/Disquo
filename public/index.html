@@ -2,95 +2,7 @@
 <html>
 	<head>
 		<title>Disquo</title>
-		<style>
-/* column layout */
-#visual_container {
-	clear:left;
-	float:left;
-	width:100%;
-	overflow:hidden;
-	background:#b2f0f9; /* column 4 background colour */
-}
-#properties_container {
-	clear:left;
-	float:left;
-	width:100%;
-	position:relative;
-	right:40%;
-	background:#89ffa2; /* column 3 background colour */
-}
-#entities_container {
-	clear:left;
-	float:left;
-	width:100%;
-	position:relative;
-	right:20%;
-	background:#ffa7a7; /* column 2 background colour */
-}
-#types_container {
-	float:left;
-	width:100%;
-	position:relative;
-	right:20%;
-	background:#fff689; /* column 1 background colour */
-}
-#types {
-	float:left;
-	width:16%;
-	position:relative;
-	left:82%;
-	overflow:hidden;
-}
-#entities {
-	float:left;
-	width:16%;
-	position:relative;
-	left:86%;
-	overflow:hidden;
-}
-#properties {
-	float:left;
-	width:16%;
-	position:relative;
-	left:90%;
-	overflow:hidden;
-}
-#visual {
-	float:left;
-	width:36%;
-	position:relative;
-	left:94%;
-	overflow:hidden;
-}
-/* column style */
-.column > ul {
-	list-style-type: none;
-        padding: 0 0 1em 0;
-        margin: 0;
-}
-/* selection bar */
-#selection_bar {
-    margin: 0.5em;
-}
-#selection_bar > ul {
-	list-style-type: none;
-        padding: 0;
-        margin: 0;
-}
-#selection_bar > ul > li {
-	display: inline-block;
-        background: #dfdfdf;
-        padding: 0.1em 0.3em 0.1em 0.3em;
-        border-radius: 0.2em;
-        border: 1px solid #bbbbbb;
-}
-#selection_bar .kill {
-	font-family:sans-serif;
-        font-weight:bold;
-        font-size:0.6em;
-        color:#aaaaaa;
-}
-		</style>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css" />
 	</head>
 	<body>
 <div id="selection_bar">
@@ -101,50 +13,37 @@
 </ul>
 </div>
 <div id="visual_container">
-	<div id="properties_container">
-		<div id="entities_container">
-			<div id="types_container">
-				<div class="column" id="types">
-					<!-- Column one start -->
-					<h3>Types</h3>
-					<ul>
-						<li>Safari</li>
-						<li>Firefox</li>
-						<li>Opera 9</li>
-						<li>Netscape 7 &amp; 9</li>
-					</ul>
-					<!-- Column one end -->
-				</div>
-				<div class="column" id="entities">
-					<!-- Column two start -->
-					<h3>Entities</h3>
-					<ul>
-						<li>Safari</li>
-						<li>Firefox</li>
-						<li>Opera 9</li>
-						<li>Netscape 7 &amp; 9</li>
-					</ul>
-					<!-- Column two end -->
-				</div>
-				<div class="column" id="properties">
-					<!-- Column three start -->
-					<h3>Properties</h3>
-					<ul>
-						<li>Safari</li>
-						<li>Firefox</li>
-						<li>Opera 9</li>
-						<li>Netscape 7 &amp; 9</li>
-					</ul>
-					<!-- Column three end -->
-				</div>
-				<div class="column" id="visual">
-					<!-- Column four start -->
-					<h3>Visual</h3>
-					<!-- Column four end -->
-				</div>
-			</div>
-		</div>
-	</div>
+        <div id="entities_container">
+                <div id="types_container">
+                        <div class="column" id="types">
+                                <!-- Column one start -->
+                                <h3>Types</h3>
+                                <ul>
+                                        <li>Safari</li>
+                                        <li>Firefox</li>
+                                        <li>Opera 9</li>
+                                        <li>Netscape 7 &amp; 9</li>
+                                </ul>
+                                <!-- Column one end -->
+                        </div>
+                        <div class="column" id="entities">
+                                <!-- Column two start -->
+                                <h3>Entities</h3>
+                                <ul>
+                                        <li>Safari</li>
+                                        <li>Firefox</li>
+                                        <li>Opera 9</li>
+                                        <li>Netscape 7 &amp; 9</li>
+                                </ul>
+                                <!-- Column two end -->
+                        </div>
+                        <div class="column" id="visual">
+                                <!-- Column four start -->
+                                <h3>Visual</h3>
+                                <!-- Column four end -->
+                        </div>
+                </div>
+        </div>
 </div>
 	</body>
 </html>

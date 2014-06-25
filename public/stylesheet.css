@@ -1,0 +1,77 @@
+/*
+column layout adapted from
+matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
+*/
+
+#visual_container {
+	clear:left;
+	float:left;
+	width:100%;
+	overflow:hidden;
+        position:relative;
+	background:#b2f0f9; /* column 3 background colour */
+}
+#entities_container {
+	clear:left;
+	float:left;
+	width:100%;
+	position:relative;
+	right:60%;
+	background:#ffa7a7; /* column 2 background colour */
+}
+#types_container {
+	float:left;
+	width:100%;
+	position:relative;
+	right:20%;
+	background:#fff689; /* column 1 background colour */
+}
+#types {
+	float:left;
+	width:16%;
+	position:relative;
+	left:82%;
+	overflow:hidden;
+}
+#entities {
+	float:left;
+	width:16%;
+	position:relative;
+	left:86%;
+	overflow:hidden;
+}
+#visual {
+	float:left;
+	width:56%;
+	position:relative;
+	left:90%;
+	overflow:hidden;
+}
+/* column style */
+.column > ul {
+	list-style-type: none;
+        padding: 0 0 1em 0;
+        margin: 0;
+}
+/* selection bar */
+#selection_bar {
+    margin: 0.5em;
+}
+#selection_bar > ul {
+	list-style-type: none;
+        padding: 0;
+        margin: 0;
+}
+#selection_bar > ul > li {
+	display: inline-block;
+        background: #dfdfdf;
+        padding: 0.1em 0.3em 0.1em 0.3em;
+        border-radius: 0.2em;
+        border: 1px solid #bbbbbb;
+}
+#selection_bar .kill {
+	font-family:sans-serif;
+        font-weight:bold;
+        font-size:0.6em;
+        color:#aaaaaa;
+}
