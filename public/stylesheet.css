@@ -1,15 +1,46 @@
+/* color palette as per 
+   http://paletton.com/#uid=30n0L0kbn++00++69++fM++jS+U*/
+
+body {
+    font-family: Verdana, Geneva, sans-serif;
+    color: #333333;
+    background-color: #ffffff;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    font-size: 1em;
+}
+#main_container {
+    overflow: hidden;
+    padding: 0.5em;
+    background-color: inherit;
+    border: 1px solid #c5c5c5;
+}
+.type {
+    background-color: #e5e8ff;
+    border: 1px solid #ccd0ff;
+}
+.entity {
+    background-color: #ECFFCE;
+    border: 1px solid #b7ff42;
+}
+.selected {
+    border-color: #333333;
+    border-style: dashed;
+    border-width: 1px;
+    font-weight: bold;
+}
+
 /*
 column layout adapted from
 matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
 */
-
 #visual_container {
 	clear:left;
 	float:left;
 	width:100%;
 	overflow:hidden;
     position:relative;
-	background:#b2f0f9; /* column 3 background colour */
 }
 #entities_container {
 	clear:left;
@@ -17,55 +48,53 @@ matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
 	width:100%;
 	position:relative;
 	right:60%;
-	background:#ffa7a7; /* column 2 background colour */
 }
 #types_container {
 	float:left;
 	width:100%;
 	position:relative;
 	right:20%;
-	background:#fff689; /* column 1 background colour */
 }
 #types {
 	float:left;
-	width:16%;
+	width:20%;
 	position:relative;
-	left:82%;
+	left:80%;
 	overflow:hidden;
 }
 #entities {
 	float:left;
-	width:16%;
+	width:20%;
 	position:relative;
-	left:86%;
+	left:80%;
 	overflow:hidden;
 }
 #visual {
 	float:left;
-	width:56%;
+	width:60%;
 	position:relative;
-	left:90%;
+	left:80%;
 	overflow:hidden;
 }
 /* column style */
-.column > ul {
+.column ul {
 	list-style-type: none;
     padding: 0 0 1em 0;
     margin: 0;
 }
+.column li {
+    padding: 0.3em;
+}
+
 /* selection bar */
 #selection_bar {
-    margin: 0.5em;
+    margin: 0.5em 0 0.5em 0;
 	list-style-type: none;
     padding: 0;
-    margin: 0;
 }
 #selection_bar > li {
 	display: inline-block;
-        background: #dfdfdf;
-        padding: 0.1em 0.3em 0.1em 0.3em;
-        border-radius: 0.2em;
-        border: 1px solid #bbbbbb;
+    padding: 0.1em 0.3em 0.1em 0.3em;
 }
 #selection_bar .deselect {
 	font-family:sans-serif;
@@ -73,3 +102,4 @@ matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
         font-size:0.6em;
         color:#aaaaaa;
 }
+
