@@ -1,0 +1,6 @@
+{
+    "name": "Disquo",
+    "dependencies": {
+        "ember": "~1.5"
+    }
+}
