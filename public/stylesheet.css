@@ -7,14 +7,23 @@ body {
     background-color: #ffffff;
 }
 h1, h2, h3, h4, h5, h6 {
-    font-weight: normal;
-    font-size: 1em;
+    font-weight: bolder;
+    font-size: 1.5em;
+    line-height: 0;
+    color: #c0c0c0;
+    text-shadow: 0 0.1em 0.1em #ddd;
 }
 #main_container {
     overflow: hidden;
     padding: 0.5em;
     background-color: inherit;
     border: 1px solid #c5c5c5;
+}
+
+/* list items and tags */
+.type, .entity {
+    position: relative;
+    cursor: default;
 }
 .type {
     background-color: #e5e8ff;
@@ -29,6 +38,55 @@ h1, h2, h3, h4, h5, h6 {
     border-style: dashed;
     border-width: 1px;
     font-weight: bold;
+}
+.type:hover, .entity:hover {
+    background-color: #ffffff;
+}
+    
+
+/* tooltips - requires relative positioning of list items */
+.type:after, .entity:after {
+    position: absolute;
+    top: 1.6em;
+    left: 0.3em;
+    z-index: 1;
+    border: inherit;
+    border-style: dotted;
+    background-color: white;
+    padding: inherit;
+    visibility: hidden;
+    content: "Comment: " attr(data-comment);
+}
+.type:hover:after, .entity:hover:after {
+    visibility:visible;
+}
+
+/* types and entities columns */
+.column ul {
+	list-style-type: none;
+    padding: 0 0 1em 0;
+    margin: 0;
+    z-index: -1;
+}
+.column li {
+    padding: 0.3em;
+}
+
+/* selection bar */
+#selection_bar {
+    margin: 0.5em 0 0.5em 0;
+	list-style-type: none;
+    padding: 0;
+}
+#selection_bar > li {
+	display: inline-block;
+    padding: 0.1em 0.3em 0.1em 0.3em;
+}
+#selection_bar .deselect {
+	font-family:sans-serif;
+        font-weight:bold;
+        font-size:0.6em;
+        color:#aaaaaa;
 }
 
 /*
@@ -76,30 +134,3 @@ matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
 	left:80%;
 	overflow:hidden;
 }
-/* column style */
-.column ul {
-	list-style-type: none;
-    padding: 0 0 1em 0;
-    margin: 0;
-}
-.column li {
-    padding: 0.3em;
-}
-
-/* selection bar */
-#selection_bar {
-    margin: 0.5em 0 0.5em 0;
-	list-style-type: none;
-    padding: 0;
-}
-#selection_bar > li {
-	display: inline-block;
-    padding: 0.1em 0.3em 0.1em 0.3em;
-}
-#selection_bar .deselect {
-	font-family:sans-serif;
-        font-weight:bold;
-        font-size:0.6em;
-        color:#aaaaaa;
-}
-
