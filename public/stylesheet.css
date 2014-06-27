@@ -50,19 +50,17 @@ matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
 /* column style */
 .column > ul {
 	list-style-type: none;
-        padding: 0 0 1em 0;
-        margin: 0;
+    padding: 0 0 1em 0;
+    margin: 0;
 }
 /* selection bar */
 #selection_bar {
     margin: 0.5em;
-}
-#selection_bar > ul {
 	list-style-type: none;
-        padding: 0;
-        margin: 0;
+    padding: 0;
+    margin: 0;
 }
-#selection_bar > ul > li {
+#selection_bar > li {
 	display: inline-block;
         background: #dfdfdf;
         padding: 0.1em 0.3em 0.1em 0.3em;
