@@ -53,6 +53,7 @@ h1, h2, h3, h4, h5, h6 {
     border: inherit;
     border-style: dotted;
     background-color: white;
+    font-weight: normal;
     padding: inherit;
     visibility: hidden;
     content: "Comment: " attr(data-comment);
