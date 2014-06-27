@@ -34,15 +34,17 @@ In the set of lists below, static elements have a normal style and `dynamic elem
     [ ] page navigator
 
 [x] visual comparison pane
-    [ ] `title for predicate or value view mode`
+    [X] `title for predicate or value view mode`
     [ ] visual graph svg
     [ ] ? **TODO**
 
-[ ] rdf:type (or rdf:predicate or entity) list item
-    [ ] `rdfs:label string container`
+[ ] rdf:type (or rdf:entity) list item
+    [ ] spanify as `.label` for rdfs:label string container
+    [ ] classify as `.type or .entity`
     [ ] item descriptor tooltip
 
 [ ] item descriptor tooltip
+    - note: this could probably be rendered by CSS from `data-*` attributes
     [ ] `URI string container`
     [ ] `rdfs:comment string container`
 
