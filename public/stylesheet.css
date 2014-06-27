@@ -8,7 +8,7 @@ matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
 	float:left;
 	width:100%;
 	overflow:hidden;
-        position:relative;
+    position:relative;
 	background:#b2f0f9; /* column 3 background colour */
 }
 #entities_container {
@@ -69,7 +69,7 @@ matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
         border-radius: 0.2em;
         border: 1px solid #bbbbbb;
 }
-#selection_bar .kill {
+#selection_bar .deselect {
 	font-family:sans-serif;
         font-weight:bold;
         font-size:0.6em;
