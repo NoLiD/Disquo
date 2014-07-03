@@ -56,9 +56,9 @@ In the set of lists below, static elements have a normal style and `dynamic elem
     - [ ] item descriptor tooltip
 
 - [ ] item descriptor tooltip
-    - note: this could probably be rendered by CSS from `data-*` attributes
-    - [ ] `URI string container`
-    - [ ] `rdfs:comment string container`
+    - [ ] lable string as tooltip title (CURRENTLY NOT WRAPPING)
+    - [X] `URI string container`
+    - [X] `rdfs:comment string container`
 
 - [ ] page navigator
     - [ ] `page n/N display container`

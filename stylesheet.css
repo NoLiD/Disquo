@@ -6,12 +6,19 @@ body {
     color: #333333;
     background-color: #ffffff;
 }
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3 {
     font-weight: bolder;
     font-size: 1.5em;
     line-height: 0;
     color: #c0c0c0;
     text-shadow: 0 0.1em 0.1em #ddd;
+}
+h4, h5, h6 {
+    font-weight: bold;
+    font-size: 1.2em;
+    line-height: 0;
+    color: #c0c0c0;
+    text-shadow: 0 0.05em 0.05em #ddd;
 }
 #main_container {
     overflow: hidden;
@@ -21,6 +28,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* list items and tags */
+.item-wrapper {
+    position: relative;
+}
 .type, .entity {
     position: relative;
     cursor: default;
@@ -45,20 +55,22 @@ h1, h2, h3, h4, h5, h6 {
     
 
 /* tooltips - requires relative positioning of list items */
-.type:after, .entity:after {
+.type + div.tooltip, .entity + div.tooltip {
     position: absolute;
-    top: 1.6em;
-    left: 0.3em;
-    z-index: 1000;
-    border: inherit;
+    top: 0;
+    left: 100%;
+    z-index: 1;
     border-style: dotted;
     background-color: white;
     font-weight: normal;
-    padding: inherit;
+    padding: 0 1em;
     visibility: hidden;
-    content: "Comment: " attr(data-comment);
 }
-.type:hover:after, .entity:hover:after {
+.type:hover + div.tooltip, .entity:hover + div.tooltip {
+    visibility:visible;
+}
+
+.type + div.tooltip:hover, .entity + div.tooltip:hover {
     visibility:visible;
 }
 
@@ -67,7 +79,6 @@ h1, h2, h3, h4, h5, h6 {
 	list-style-type: none;
     padding: 0 0 1em 0;
     margin: 0;
-    z-index: -1;
 }
 .column li {
     padding: 0.3em;
@@ -85,9 +96,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 #selection_bar .deselect {
 	font-family:sans-serif;
-        font-weight:bold;
-        font-size:0.6em;
-        color:#aaaaaa;
+    font-weight:bold;
+    font-size:0.6em;
+    color:#aaaaaa;
 }
 
 /*
@@ -119,19 +130,19 @@ matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
 	width:20%;
 	position:relative;
 	left:80%;
-	overflow:hidden;
+	overflow:visible;
 }
 #entities {
 	float:left;
 	width:20%;
 	position:relative;
 	left:80%;
-	overflow:hidden;
+	overflow:visible;
 }
 #visual {
 	float:left;
 	width:60%;
 	position:relative;
 	left:80%;
-	overflow:hidden;
+	overflow:visible;
 }
