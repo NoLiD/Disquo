@@ -9,14 +9,14 @@ body {
 h1, h2, h3 {
     font-weight: bolder;
     font-size: 1.5em;
-    line-height: 0;
+    line-height: 1.5em;
     color: #c0c0c0;
     text-shadow: 0 0.1em 0.1em #ddd;
 }
 h4, h5, h6 {
     font-weight: bold;
     font-size: 1.2em;
-    line-height: 0;
+    line-height: 1.2em;
     color: #c0c0c0;
     text-shadow: 0 0.05em 0.05em #ddd;
 }
