@@ -13,18 +13,16 @@ TODO
 
 ### index.html
 
-- move endpoint chooser button outside of main container
-
 - [X] content root
-    - [ ] endpoint selection bar
+    - [X] endpoint selection bar
     - [X] selected tag bar
     - [X] type selection pane
     - [X] entity selection pane
     - [X] visual comparison pane
 
-- [ ] endpoint selection bar
-    - [ ] endpoint input
-    - [ ] endpoint select button
+- [X] endpoint selection bar
+    - [X] endpoint input
+    - [X] endpoint select button
 
 - [X] selected tag bar
     - [X] list of selection tag
