@@ -11,6 +11,24 @@
 
 <body>
 
+<div id="endpoint_container">
+<h3>Endpoint</h3>
+<div id="current_endpoint">http://dbpedia.org/sparql</div>
+<div id="endpoint_selector">
+    <label class="button" for="modal-toggle">Choose Data Source</label>
+    <input type="checkbox" id="modal-toggle" />
+    <div id="endpoint_modal">
+        <div id="endpoint_form">
+            <label class="close" for="modal-toggle"></label>
+            <h4>Endpoint Choice</h4>
+            <input type="text" placeholder="SPARQL endpoint URI" />
+            <button class="button">Submit</button>
+            <label class="button" for="modal-toggle">Cancel</label>
+        </div>
+    </div>
+</div>
+</div>
+    
 <div id="main_container">
     
 <ul id="selection_bar">
@@ -245,6 +263,8 @@
     </div>
 </div>
 
+<div class="clearfix"></div>
+    
 </div>
 <script src="./bower_components/jquery/dist/jquery.js"></script>
 <script src="./bower_components/handlebars/handlebars.js"></script>

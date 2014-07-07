@@ -2,27 +2,32 @@
    http://paletton.com/#uid=30n0L0kbn++00++69++fM++jS+U*/
 
 body {
-    font-family: Verdana, Geneva, sans-serif;
+    font-family: Verdana, Geneva, sans-serif !important;
     color: #333333;
     background-color: #ffffff;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 0.2em 0;
+    padding: 0;
 }
 h1, h2, h3 {
     font-weight: bolder;
     font-size: 1.5em;
     line-height: 1.5em;
-    color: #c0c0c0;
+    color: #b0b0b0;
     text-shadow: 0 0.1em 0.1em #ddd;
 }
 h4, h5, h6 {
     font-weight: bold;
     font-size: 1.2em;
     line-height: 1.2em;
-    color: #c0c0c0;
+    color: #b0b0b0;
     text-shadow: 0 0.05em 0.05em #ddd;
 }
-#main_container {
+#main_container, #endpoint_container {
     overflow: visible;
     padding: 0.5em;
+    margin: 0.2em 0;
     background-color: inherit;
     border: 1px solid #c5c5c5;
 }
@@ -108,6 +113,90 @@ h4, h5, h6 {
     left: 0;
 }
 
+/* entity selection window */
+#endpoint_selector {
+    padding: 1em 0;
+    display: inline-block;
+}
+.button {
+    display: inline-block;
+    background-color: #f1f1f1;
+    color: #333333;
+    font-size: 1em;
+    line-height: 1em;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    border: 1px solid #c5c5c5;
+    box-shadow: inset 0 1px 4px #f9f9f9;
+    text-shadow: -1px -1px 1px #fff;
+}
+.button:hover {
+    background-color: #fbfbfb;
+}
+#endpoint_form {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    padding: 2em;
+    background-color: #fff;
+    border: 2px solid #c5c5c5;
+    
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+#endpoint_modal label.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    height: 20px;
+    width: 20px;
+    background-image: url("xIcon.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.3;
+    cursor: pointer;
+}
+#endpoint_modal label.close:hover {
+    opacity: 0.7;
+}
+#endpoint_modal h4 {
+    position: absolute;
+    top: 1em;
+    left: 1.5em;
+}
+#endpoint_modal h4 + input {
+    display: block;
+    margin-top: 3em;
+    margin-bottom: 1em;
+    position: relative;
+}
+#endpoint_modal input {
+    width: 40em;
+    height: 2.4em;
+    padding: 0 1.5em;
+    border: 1px solid #c5c5c5;
+    color: #333333;
+}
+#endpoint_modal input:focus {
+    outline: 0;
+    box-shadow: 0 0 2px #c5c5c5;
+}
+#modal-toggle, #endpoint_modal {
+    display: none;
+}
+#modal-toggle:checked + div {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(50,50,50,0.90);
+    z-index: 1000;
+}
+
 /*
 column layout adapted from
 matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
@@ -152,4 +241,7 @@ matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
 	position:relative;
 	left:80%;
 	overflow:visible;
+}
+.clearfix {
+    clear:both;
 }
