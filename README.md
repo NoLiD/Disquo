@@ -13,13 +13,7 @@ TODO
 
 ### index.html
 
-In HTML, define our major UI elements.  There will be **static** and **dynamic** elements.
-
-**Static** elements persist throughout application usage.  They may become [hidden/unhidden](http://www.w3schools.com/css/css_display_visibility.asp), or change in other ways, but they are never *deleted* from the content.
-
-**Dynamic** elements can be thought of as nested within static elements.  They are generated from data received by servers, and deleted as necessary.
-
-In the set of lists below, static elements have a normal style and `dynamic elements are codeblocked`:
+- move endpoint chooser button outside of main container
 
 - [X] content root
     - [ ] endpoint selection bar
