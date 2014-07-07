@@ -6,7 +6,10 @@ Data comparator for humans.
 TODO
 ====
 
-Tasks listed per file below.
+- in both html and css, make consistent the ids and classes
+    - no camelCase (readability)
+    - no dashes (javascript compliance>
+    - all underscores
 
 ### index.html
 
@@ -35,14 +38,14 @@ In the set of lists below, static elements have a normal style and `dynamic elem
 - [X] selection tag
     - [X] `type/entity name`
     - [X] deselect button 
-    - [ ] item descriptor tooltip
+    - [X] item descriptor tooltip
 
 - [X] type selection pane
     - [X] list of rdf:type items
     - [ ] page navigator
 
 - [X] entity selection pane
-    - [ ] list of entity items
+    - [X] list of entity items
     - [ ] page navigator
 
 - [x] visual comparison pane
@@ -50,13 +53,12 @@ In the set of lists below, static elements have a normal style and `dynamic elem
     - [ ] visual graph svg
     - [ ] ? **TODO**
 
-- [ ] rdf:type (or rdf:entity) list item
-    - [ ] spanify as `.label` for rdfs:label string container
-    - [ ] classify as `.type or .entity`
-    - [ ] item descriptor tooltip
+- [X] rdf:type (or rdf:entity) list item
+    - [x] classify as `.type or .entity`
+    - [X] item descriptor tooltip
 
-- [ ] item descriptor tooltip
-    - [ ] lable string as tooltip title (CURRENTLY NOT WRAPPING)
+- [X] item descriptor tooltip
+    - [X] label string as tooltip title (CURRENTLY NOT WRAPPING)
     - [X] `URI string container`
     - [X] `rdfs:comment string container`
 
