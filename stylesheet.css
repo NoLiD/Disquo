@@ -21,7 +21,7 @@ h4, h5, h6 {
     text-shadow: 0 0.05em 0.05em #ddd;
 }
 #main_container {
-    overflow: hidden;
+    overflow: visible;
     padding: 0.5em;
     background-color: inherit;
     border: 1px solid #c5c5c5;
@@ -90,7 +90,7 @@ h4, h5, h6 {
 	list-style-type: none;
     padding: 0;
 }
-#selection_bar > li {
+#selection_bar .type, #selection_bar .entity {
 	display: inline-block;
     padding: 0.1em 0.3em 0.1em 0.3em;
 }
@@ -99,6 +99,13 @@ h4, h5, h6 {
     font-weight:bold;
     font-size:0.6em;
     color:#aaaaaa;
+}
+#selection_bar div.item-wrapper {
+    display: inline-block;
+}
+#selection_bar div.tooltip {
+    top: 1.3em;
+    left: 0;
 }
 
 /*
@@ -109,7 +116,7 @@ matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
 	clear:left;
 	float:left;
 	width:100%;
-	overflow:hidden;
+	overflow:visible;
     position:relative;
 }
 #entities_container {
