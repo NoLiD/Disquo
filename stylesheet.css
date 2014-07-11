@@ -1,6 +1,3 @@
-/* color palette as per 
-   http://paletton.com/#uid=30n0L0kbn++00++69++fM++jS+U*/
-
 body {
     font-family: Verdana, Geneva, sans-serif !important;
     color: #333333;
@@ -15,25 +12,23 @@ h1, h2, h3 {
     font-size: 1.5em;
     line-height: 1.5em;
     color: #b0b0b0;
-    text-shadow: 0 0.1em 0.1em #ddd;
 }
 h4, h5, h6 {
     font-weight: bold;
     font-size: 1.2em;
     line-height: 1.2em;
     color: #b0b0b0;
-    text-shadow: 0 0.05em 0.05em #ddd;
-}
-#main_container, #endpoint_container {
-    overflow: visible;
-    padding: 0.5em;
-    margin: 0.2em 0;
-    background-color: inherit;
-    border: 1px solid #c5c5c5;
 }
 
-/* list items and tags */
-.item-wrapper {
+
+
+/*************************************************
+list items and tags
+*************************************************/
+
+
+
+.item_wrapper {
     position: relative;
 }
 .type, .entity {
@@ -59,12 +54,18 @@ h4, h5, h6 {
 }
     
 
-/* tooltips - requires relative positioning of list items */
+
+/************************************************************
+tooltips - requires relative positioning of list items
+************************************************************/
+
+
+
 .type + div.tooltip, .entity + div.tooltip {
     position: absolute;
     top: 0;
     left: 100%;
-    z-index: 1;
+    z-index: 1000;
     border-style: dotted;
     background-color: white;
     font-weight: normal;
@@ -80,17 +81,27 @@ h4, h5, h6 {
 }
 
 /* types and entities columns */
-.column ul {
+.col ul {
 	list-style-type: none;
     padding: 0 0 1em 0;
     margin: 0;
 }
-.column li {
+.col li {
     padding: 0.3em;
 }
 
-/* selection bar */
+
+
+/*********************************************
+selection bar
+*********************************************/
+
+
+
 #selection_bar {
+    overflow-y: visible;
+}
+#selection_bar ul {
     margin: 0.5em 0 0.5em 0;
 	list-style-type: none;
     padding: 0;
@@ -115,7 +126,7 @@ h4, h5, h6 {
 #selection_bar .deselect:hover {
     opacity: 0.7;
 }
-#selection_bar div.item-wrapper {
+#selection_bar div.item_wrapper {
     display: inline-block;
 }
 #selection_bar div.tooltip {
@@ -123,10 +134,21 @@ h4, h5, h6 {
     left: 0;
 }
 
-/* entity selection window */
+
+
+/**********************************
+entity selection window
+***********************************/
+
+
+
 #endpoint_selector {
-    padding: 1em 0;
+    text-align: right;
     display: inline-block;
+}
+#endpoint_selector small {
+    color: #999;
+    cursor:pointer;
 }
 .button {
     display: inline-block;
@@ -207,51 +229,38 @@ h4, h5, h6 {
     z-index: 1000;
 }
 
-/*
+
+
+/***********************************************
 column layout adapted from
-matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks
-*/
-#visual_container {
-	clear:left;
-	float:left;
-	width:100%;
-	overflow:visible;
-    position:relative;
+https://gist.github.com/metaist/7632393
+************************************************/
+
+
+
+.container-fixed {
+    bottom: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
 }
-#entities_container {
-	clear:left;
-	float:left;
-	width:100%;
-	position:relative;
-	right:60%;
+ 
+.container-fixed .col {
+    height: 100%;
+    overflow-x: visible;
+    overflow-y: scroll;
 }
-#types_container {
-	float:left;
-	width:100%;
-	position:relative;
-	right:20%;
-}
-#types {
-	float:left;
-	width:20%;
-	position:relative;
-	left:80%;
-	overflow:visible;
-}
-#entities {
-	float:left;
-	width:20%;
-	position:relative;
-	left:80%;
-	overflow:visible;
-}
-#visual {
-	float:left;
-	width:60%;
-	position:relative;
-	left:80%;
-	overflow:visible;
-}
-.clearfix {
-    clear:both;
-}
+ 
+.row-xs-12 { height: 100%; }
+.row-xs-11 { height: 91.66666666666666%; }
+.row-xs-10 { height: 83.33333333333334%; }
+.row-xs-9 { height: 75%; }
+.row-xs-8 { height: 66.66666666666666%; }
+.row-xs-7 { height: 58.333333333333336%; }
+.row-xs-6 { height: 50%; }
+.row-xs-5 { height: 41.66666666666667%;}
+.row-xs-4 { height: 33.33333333333333%;}
+.row-xs-3 { height: 25%; }
+.row-xs-2 { height: 16.666666666666664%; }
+.row-xs-1 { height: 8.333333333333332%; }

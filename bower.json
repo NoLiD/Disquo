@@ -1,6 +1,7 @@
 {
     "name": "Disquo",
     "dependencies": {
-        "ember": "~1.5"
+        "ember": "~1.5",
+        "bootstrap": "~3.2"
     }
 }

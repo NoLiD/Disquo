@@ -13,54 +13,20 @@ TODO
 
 ### index.html
 
-- [X] content root
-    - [X] endpoint selection bar
-    - [X] selected tag bar
-    - [X] type selection pane
-    - [X] entity selection pane
-    - [X] visual comparison pane
+- bootstrapify
+    - use `.container-fixed` and grid for endpoint modal
+    - remove horizontal scroll from columns
+    - convert types and entities to list-groups
+        - use hover and selection response
+        - bring back the tooltips
+    - convert all three `h2 + ul` to panes
+    - 
+    
+- predicate view pane
+    - mock hardcoded visual graph svg using d3
 
-- [X] endpoint selection bar
-    - [X] endpoint input
-    - [X] endpoint select button
-
-- [X] selected tag bar
-    - [X] list of selection tag
-
-- [X] selection tag
-    - [X] `type/entity name`
-    - [X] deselect button 
-    - [X] item descriptor tooltip
-
-- [X] type selection pane
-    - [X] list of rdf:type items
-    - [ ] page navigator
-
-- [X] entity selection pane
-    - [X] list of entity items
-    - [ ] page navigator
-
-- [x] visual comparison pane
-    - [X] `title for predicate or value view mode`
-    - [ ] visual graph svg
-    - [ ] ? **TODO**
-
-- [X] rdf:type (or rdf:entity) list item
-    - [x] classify as `.type or .entity`
-    - [X] item descriptor tooltip
-
-- [X] item descriptor tooltip
-    - [X] label string as tooltip title (CURRENTLY NOT WRAPPING)
-    - [X] `URI string container`
-    - [X] `rdfs:comment string container`
-
-- [ ] page navigator
-    - [ ] `page n/N display container`
-    - [ ] next and previous page button
-
-- [ ] visual graph canvas
-    - ? **TODO**
+- other graph view pane
+    - figure out what parts need to be different from 
 
 ### stylesheet.css
 
-- [ ] convert hover after to hover + div.tip
