@@ -35,23 +35,6 @@ list items and tags
     position: relative;
     cursor: default;
 }
-.type {
-    background-color: #e5e8ff;
-    border: 1px solid #ccd0ff;
-}
-.entity {
-    background-color: #ECFFCE;
-    border: 1px solid #b7ff42;
-}
-.selected {
-    border-color: #333333;
-    border-style: dashed;
-    border-width: 1px;
-    font-weight: bold;
-}
-.type:hover, .entity:hover {
-    background-color: #ffffff;
-}
     
 
 
@@ -83,11 +66,8 @@ tooltips - requires relative positioning of list items
 /* types and entities columns */
 .col ul {
 	list-style-type: none;
-    padding: 0 0 1em 0;
+    padding: 0;
     margin: 0;
-}
-.col li {
-    padding: 0.3em;
 }
 
 
@@ -232,7 +212,7 @@ entity selection window
 
 
 /***********************************************
-column layout adapted from
+vertical grid layout adapted from
 https://gist.github.com/metaist/7632393
 ************************************************/
 
