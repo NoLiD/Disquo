@@ -6,7 +6,7 @@
 <title>Disquo</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/bootstrap-darkly.css" />
 <link rel="stylesheet" type="text/css" href="/stylesheet.css" />
 
 </head>
@@ -16,7 +16,7 @@
 <div class="container-fixed">
 
     
-<div class="navbar navbar-inverse" role="navigation">
+<div class="navbar navbar-default" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="/index.html">Disquo</a>
@@ -38,7 +38,8 @@
 
 <div class="row row-xs-1">
 
-<div class="col col-xs-10" id="selection_bar">
+<div class="col col-xs-10">
+<div id="selection_bar">
 <ul class="list-group">
     <div class="list-group-item item_wrapper">
         <li class="type">
@@ -86,6 +87,7 @@
     </div>
 </ul>
 </div>
+</div>
 
 <div class="col col-xs-2" id="endpoint_selector">
     <label for="modal-toggle"><small>Endpoint</small></label>
@@ -103,9 +105,10 @@
     
 </div>
 
-<div class="row row-xs-11">
+<div class="row row-xs-10">
     
-<div class="col col-xs-3 panel panel-primary" id="types">
+<div class="col col-xs-3">
+<div class="panel panel-primary" id="types">
     <!-- Column one start -->
     <div class="panel-heading">Types</div>
     <div class="panel-body">
@@ -193,6 +196,7 @@
     </ul>
     </div>
     <!-- Column one end -->
+</div>
 </div>
 <div class="col col-xs-3 panel panel-primary" id="entities">
     <!-- Column two start -->

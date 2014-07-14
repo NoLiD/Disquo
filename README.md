@@ -22,12 +22,9 @@ TODO
 
 - bootstrapify
     - use bootstrap modal for endpoint selector
-    - make sure panel CONTENT is scrollable, not panel
-        - remove horizontal scroll from columns
     - convert types and entities to list-groups
         - use hover and selection response
         - bring back the tooltips
-    - convert all three `h2 + ul` to panes
     - use bootstrap badge mechanism with glyphicon rather than xIcon.png
 
 - see if bootstrap popovers can have structured content
