@@ -25,7 +25,7 @@ TODO
         - bring back the tooltips
             - see if bootstrap popovers can have structured content
                 - if not, ask stackoverflow how to get bla
-    - use bootstrap badge mechanism with glyphicon rather than xIcon.png
+    - fix hover response for glyphicons
     
 - predicate view pane
     - mock hardcoded visual graph svg using d3
