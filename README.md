@@ -22,13 +22,10 @@ TODO
 
 - bootstrapify
     - use bootstrap modal for endpoint selector
-    - convert types and entities to list-groups
-        - use hover and selection response
         - bring back the tooltips
+            - see if bootstrap popovers can have structured content
+                - if not, ask stackoverflow how to get bla
     - use bootstrap badge mechanism with glyphicon rather than xIcon.png
-
-- see if bootstrap popovers can have structured content
-    - if not, ask stackoverflow how to get bla
     
 - predicate view pane
     - mock hardcoded visual graph svg using d3

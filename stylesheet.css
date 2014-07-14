@@ -20,19 +20,17 @@ list items and tags
 *************************************************/
 
 
-
-.item_wrapper {
-    position: relative;
-}
-.type, .entity {
-    position: relative;
+.list-group-item {
     cursor: default;
+}
+.list-group-item:hover {
+    background-color: #222222;
 }
     
 
 
 /************************************************************
-tooltips - requires relative positioning of list items
+tooltips
 ************************************************************/
 
 
@@ -90,9 +88,10 @@ selection bar
 	list-style-type: none;
     padding: 0;
 }
-#selection_bar .type, #selection_bar .entity {
-	display: inline-block;
-    padding: 0.1em 0.3em 0.1em 0.3em;
+#selection_bar .list-group-item {
+    padding: 0.5em 0.5em;
+    display: inline-block;
+    border-radius: 0.2em;
 }
 #selection_bar .deselect {
     position: relative;
@@ -109,10 +108,6 @@ selection bar
 }
 #selection_bar .deselect:hover {
     opacity: 0.7;
-}
-#selection_bar div.item_wrapper {
-    display: inline-block;
-    border-radius: 0.2em;
 }
 #selection_bar div.tooltip {
     top: 1.3em;
