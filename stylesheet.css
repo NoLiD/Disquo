@@ -40,7 +40,11 @@ h4, h5, h6 {
 
 .navbar-collapse {
 	background-color: #00bc8c;
-	border-bottom: 1px solid transparent;
+}
+
+.navbar-collapse.in {
+	background-color: #00bc8c;
+	border-bottom: 1px solid #009871;
 }
 
 #panels {
