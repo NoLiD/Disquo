@@ -34,3 +34,5 @@ TODO
     - figure out what parts need to be different from 
 
 ### stylesheet.css
+
+- fix overflow in panel bug
