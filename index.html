@@ -16,8 +16,8 @@
 <div class="container-fixed">
 
 
-<div class="navbar navbar-default" role="navigation">
-    <div class="container">
+<div class="navbar navbar-inverse navbar-fixed" role="navigation">
+    <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/index.html">Disquo</a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,87 +32,28 @@
             <li><a href="/about.html">About</a></li>
             <li><a href="/contact.html">Contact</a></li>
           </ul>
+		  <ul class="nav navbar-nav navbar-right">
+			<li>
+				<div id="endpoint_selector">
+					<label for="modal-toggle">Endpoint<label>
+					<input type="checkbox" id="modal-toggle" />
+					<div id="endpoint_modal">
+						<div id="endpoint_form">
+							<label class="close" for="modal-toggle"></label>
+							<h4>Endpoint Choice</h4>
+							<input type="text" placeholder="SPARQL endpoint URI" />
+							<button class="button">Submit</button>
+							<label class="button" for="modal-toggle">Cancel</label>
+						</div>
+					</div>
+				</div>
+			</li>
+		  </ul>
         </div>
     </div>
 </div>
 
-<div class="row row-xs-1">
-
-<div class="col col-xs-10">
-<div id="selection_bar">
-<ul class="list-group">
-    <div class="list-group-item">
-        <li class="">
-            <span>50s Movies</span>
-            <div class="deselect">
-                <span class="glyphicon glyphicon-remove"></span>
-            </div>
-        </li>
-        <div class="details">
-            <h4>Skin Disease</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-            <p>http://example.org/entity_uri</p>
-        </div>
-    </div>
-    <div class="list-group-item">
-        <li class="">
-            <span>Waterfront</span>
-            <div class="deselect">
-                <span class="glyphicon glyphicon-remove"></span>
-            </div>
-        </li>
-        <div class="details">
-            <h4>Skin Disease</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-            <p>http://example.org/entity_uri</p>
-        </div>
-    </div>
-    <div class="list-group-item">
-        <li class="">
-            <span>Streetcar Named Desire</span>
-            <div class="deselect">
-                <span class="glyphicon glyphicon-remove"></span>
-            </div>
-        </li>
-        <div class="details">
-            <h4>Skin Disease</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-            <p>http://example.org/entity_uri</p>
-        </div>
-    </div>
-    <div class="list-group-item">
-        <li class="">
-            <span>Rebel Without a Cause</span>
-            <div class="deselect">
-                <span class="glyphicon glyphicon-remove"></span>
-            </div>
-        </li>
-        <div class="details">
-            <h4>Skin Disease</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-            <p>http://example.org/entity_uri</p>
-        </div>
-    </div>
-</ul>
-</div>
-</div>
-
-<div class="col col-xs-2" id="endpoint_selector">
-    <label for="modal-toggle"><small>Endpoint</small></label>
-    <input type="checkbox" id="modal-toggle" />
-    <div id="endpoint_modal">
-        <div id="endpoint_form">
-            <label class="close" for="modal-toggle"></label>
-            <h4>Endpoint Choice</h4>
-            <input type="text" placeholder="SPARQL endpoint URI" />
-            <button class="button">Submit</button>
-            <label class="button" for="modal-toggle">Cancel</label>
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="row row-xs-10">
+<div class="row row-xs-11">
 
 <div class="col col-xs-3">
 <div class="panel panel-primary" id="types">

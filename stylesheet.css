@@ -13,7 +13,13 @@ h4, h5, h6 {
     line-height: 1.2em;
 }
 
+* {
+	border-radius: 0 !important;
+}
 
+.navbar {
+	margin: 0;
+}
 
 /*************************************************
 list items and tags
@@ -55,19 +61,26 @@ details
     visibility:visible;
 }
 
-/* types and entities columns */
-#types, #entities {
+/* panels */
+.panel {
     height: 100%;
+	border-color: #00bc8c;
 }
 
-#types .panel-body , #entities .panel-body {
+.panel .panel-heading {
+	border: thin solid #00bc8c;
+	border-left-width: 0;
+	border-right-width: 0;
+}
+
+.panel-body {
     height: 100%;
     padding: 0;
     overflow-x: visible;
     overflow-y: auto;
 }
 
-#types ul, #entities ul {
+.panel-body ul {
 	list-style-type: none;
     padding: 0;
     margin: 0;
@@ -118,12 +131,6 @@ entity selection window
 
 
 #endpoint_selector {
-    text-align: right;
-    display: inline-block;
-    padding-right: 1em;
-}
-#endpoint_selector small {
-    color: #999;
     cursor:pointer;
 }
 .button {
