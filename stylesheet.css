@@ -31,12 +31,12 @@ list items and tags
 
 
 /************************************************************
-tooltips
+detailss
 ************************************************************/
 
 
 
-.type + div.tooltip, .entity + div.tooltip {
+.type + div.details, .entity + div.details {
     position: absolute;
     top: 0;
     left: 100%;
@@ -47,11 +47,11 @@ tooltips
     padding: 0 1em;
     visibility: hidden;
 }
-.type:hover + div.tooltip, .entity:hover + div.tooltip {
+.type:hover + div.details, .entity:hover + div.details {
     visibility:visible;
 }
 
-.type + div.tooltip:hover, .entity + div.tooltip:hover {
+.type + div.details:hover, .entity + div.details:hover {
     visibility:visible;
 }
 
@@ -63,7 +63,7 @@ tooltips
 #types .panel-body , #entities .panel-body {
     height: 100%;
     padding: 0;
-    overflow-x: hidden;
+    overflow-x: visible;
     overflow-y: auto;
 }
 
@@ -104,7 +104,7 @@ selection bar
 #selection_bar .deselect:hover {
     opacity: 1;
 }
-#selection_bar div.tooltip {
+#selection_bar div.details {
     top: 1.3em;
     left: 0;
 }
@@ -225,7 +225,8 @@ https://gist.github.com/metaist/7632393
 .container-fixed .col {
     height: 100%;
     padding: 0;
-    overflow: hidden;
+	overflow-y: hidden;
+	overflow-x: visible;
 }
 
 .row {
