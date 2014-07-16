@@ -1,0 +1,75 @@
+<div class="container-fixed">
+
+    <nav class="navbar navbar-inverse navbar-fixed" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/index.html">Disquo</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" style="height: 1px;">
+                <ul class="nav navbar-nav">
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {{outlet endpoint}}
+                    <li>
+                        <div id="endpoint_selectorssd">
+                            <label for="modal-toggle">Endpoint<label>
+                            <input type="checkbox" id="modal-toggle" />
+                            <div id="endpoint_modal">
+                                <div id="endpoint_form">
+                                    <label class="close" for="modal-toggle"></label>
+                                    <h4>Endpoint Choice</h4>
+                                    <input type="text" placeholder="SPARQL endpoint URI" />
+                                    <button class="button">Submit</button>
+                                    <label class="button" for="modal-toggle">Cancel</label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="panels">
+        <div class="col col-xs-2">
+            <div class="panel panel-primary" id="types">
+                <!-- Column one start -->
+                <div class="panel-heading">Types</div>
+                <div class="panel-body">
+                    {{outlet types}}
+                </div>
+                <!-- Column one end -->
+            </div>
+        </div>
+        <div class="col col-xs-2">
+            <div class="panel panel-primary" id="entities">
+                <!-- Column two start -->
+                <div class="panel-heading">Entities</div>
+                <div class="panel-body">
+                    {{outlet entities}}
+                </div>
+                <!-- Column two end -->
+            </div>
+        </div>
+        <div class="col col-xs-8">
+            <div class="panel panel-primary" id="visual">
+                <!-- Column three start -->
+                <div class="panel-heading">Predicate View</div>
+                <div class="panel-body">
+                    {{outlet predicates}}
+                </div>
+                <!-- Column three end -->
+            </div>
+        </div>
+    </div>
+
+</div>
+{{outlet}}

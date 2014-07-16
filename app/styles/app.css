@@ -62,7 +62,7 @@ list items and tags
     background-color: #222222;
     color: #00bc8c;
 }
-    
+
 
 /* panels */
 .panel {
@@ -162,7 +162,7 @@ entity selection window
     padding: 2em;
     background-color: #fff;
     border: 2px solid #c5c5c5;
-    
+
     -webkit-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
     -o-transform: translateX(-50%);
@@ -218,4 +218,3 @@ entity selection window
     background-color: rgba(50,50,50,0.90);
     z-index: 1000;
 }
-
