@@ -64,32 +64,6 @@ list items and tags
 }
     
 
-
-/************************************************************
-details
-************************************************************/
-
-
-
-.list-group-item .details {
-    position: absolute;
-    top: 0;
-    left: 100%;
-    z-index: 1000;
-    border-style: dotted;
-    background-color: white;
-    font-weight: normal;
-    padding: 0 1em;
-    visibility: hidden;
-}
-.list-group-item:hover .details {
-    visibility:visible;
-}
-
-.list-group-item .details:hover {
-    visibility:visible;
-}
-
 /* panels */
 .panel {
     height: 100%;
