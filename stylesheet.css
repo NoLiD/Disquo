@@ -31,12 +31,12 @@ list items and tags
 
 
 /************************************************************
-detailss
+details
 ************************************************************/
 
 
 
-.type + div.details, .entity + div.details {
+.list-group-item .details {
     position: absolute;
     top: 0;
     left: 100%;
@@ -47,11 +47,11 @@ detailss
     padding: 0 1em;
     visibility: hidden;
 }
-.type:hover + div.details, .entity:hover + div.details {
+.list-group-item:hover .details {
     visibility:visible;
 }
 
-.type + div.details:hover, .entity + div.details:hover {
+.list-group-item .details:hover {
     visibility:visible;
 }
 
