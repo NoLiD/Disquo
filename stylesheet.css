@@ -63,7 +63,7 @@ tooltips
 #types .panel-body , #entities .panel-body {
     height: 100%;
     padding: 0;
-    overflow-x: visible;
+    overflow-x: hidden;
     overflow-y: auto;
 }
 
@@ -225,8 +225,7 @@ https://gist.github.com/metaist/7632393
 .container-fixed .col {
     height: 100%;
     padding: 0;
-    overflow-x: visible;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .row {
