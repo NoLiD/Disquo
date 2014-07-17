@@ -15,6 +15,21 @@ h4, h5, h6 {
     border-radius: 0 !important;
 }
 
+
+/*************************************************
+main layout
+*************************************************/
+
+.container-fixed,
+.navbar,
+.panels,
+.col,
+.panel,
+.panel-heading,
+.panel-body {
+    margin: 0;
+}
+
 .container-fixed {
     position: fixed;
     bottom: 0;
@@ -31,7 +46,6 @@ h4, h5, h6 {
 }
 
 .navbar {
-    margin: 0;
     height: 8%;
     z-index: 2000;
 }
@@ -45,10 +59,10 @@ h4, h5, h6 {
     border-bottom: 1px solid #009871;
 }
 
-#panels {
-    margin: 0;
+.panels {
     height: 92%;
 }
+
 
 /*************************************************
 list items and tags
@@ -90,45 +104,7 @@ list items and tags
 .panel-body ul {
     list-style-type: none;
     padding: 0;
-    margin: 0;
 }
-
-
-
-/*********************************************
-selection bar
-*********************************************/
-
-
-
-#selection_bar {
-    padding-left: 1em;
-    overflow-y: visible;
-}
-#selection_bar ul {
-    margin: 0;
-    list-style-type: none;
-    padding: 0;
-}
-#selection_bar .list-group-item {
-    padding: 0.5em;
-    display: inline-block;
-    border-radius: 0.2em;
-}
-#selection_bar .deselect {
-    display: inline-block;
-    margin-left: 0.5em;
-    opacity: 0.3;
-    cursor: pointer;
-}
-#selection_bar .deselect:hover {
-    opacity: 1;
-}
-#selection_bar div.details {
-    top: 1.3em;
-    left: 0;
-}
-
 
 
 /**********************************
