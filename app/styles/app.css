@@ -41,7 +41,8 @@ main layout
 .container-fixed .col {
     height: 100%;
     padding: 0;
-    overflow-y: hidden;
+    /*DEBUG - originally hidden*/
+    overflow-y: scroll;
     overflow-x: visible;
 }
 
@@ -60,7 +61,8 @@ main layout
 }
 
 .panels {
-    height: 92%;
+    /*DEBUG - originally 92*/
+    height: 82%;
 }
 
 
