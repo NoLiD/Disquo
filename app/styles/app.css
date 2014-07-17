@@ -94,14 +94,14 @@ list items and tags
     border-right-width: 0;
 }
 
-.panel-body {
+.panel .panel-body {
     height: 100%;
     padding: 0;
     overflow-x: visible;
     overflow-y: auto;
 }
 
-.panel-body ul {
+.panel .panel-body ul {
     list-style-type: none;
     padding: 0;
 }
