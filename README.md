@@ -2,34 +2,23 @@
 
 Data comparator for humans.
 
-## Installation
+## Install
 
-* `git clone http://github.com:NoLiD/Disquo.git`
-* `npm install`
-* `bower install`
+1. `git clone http://github.com:NoLiD/Disquo.git`
+2. `npm install`
+3. `bower install`
+4. `npm install -g ember-cli`
 
-## Running
+## Build
 
-* `ember server`
-* Visit your Disquo at http://localhost:4200.
+`ember build`
 
-## Building
+## Run
 
-* `ember build`
+1. `ember server`
+2. Visit your Disquo at http://localhost:4200.
 
 # TODO
-
-- potential themes
-    - flatstrap (unhealthy build status)
-    - bootswatch.com/flatly
-    - bootswatch.com/darkly
-    - bootswatch.com/superhero
-    - bootswatch.com/yeti
-
-- in both html and css, make consistent the ids and classes
-    - no camelCase (readability)
-    - no dashes (javascript compliance>
-    - all underscores
 
 ### index.html
 
