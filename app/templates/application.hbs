@@ -16,24 +16,7 @@
                     <li><a href="/about.html">About</a></li>
                     <li><a href="/contact.html">Contact</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {{outlet endpoint}}
-                    <li>
-                        <div id="endpoint_selectorssd">
-                            <label for="modal-toggle">Endpoint<label>
-                            <input type="checkbox" id="modal-toggle" />
-                            <div id="endpoint_modal">
-                                <div id="endpoint_form">
-                                    <label class="close" for="modal-toggle"></label>
-                                    <h4>Endpoint Choice</h4>
-                                    <input type="text" placeholder="SPARQL endpoint URI" />
-                                    <button class="button">Submit</button>
-                                    <label class="button" for="modal-toggle">Cancel</label>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                {{outlet endpoint}}
             </div>
         </div>
     </nav>

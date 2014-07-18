@@ -1,1 +1,8 @@
-{{outlet}}
+<ul class="nav navbar-nav navbar-right">
+    {{#if endpoint}}
+        <li><button type="button" class="btn btn-default navbar-btn">@</button></li>
+        <li class="list-group-item navbar-btn disabled">{{endpoint}}</li>
+    {{else}}
+        <li class="list-group-item navbar-btn disabled">Select an Endpoint!</li>
+    {{/if}}
+</ul>

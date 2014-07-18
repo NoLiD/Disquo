@@ -2,13 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
     renderTemplate: function() {
-        this.render({
+        //render the application template first
+        this.render();
+
+        this.render('endpoint', {
             into: 'application',
             outlet: 'endpoint',
+            controller: 'endpoint'
         });
-    },
-
-    model: function(params) {
-        return { endpoint: params.endpoint_url };
     }
 });
