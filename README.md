@@ -20,6 +20,11 @@ Data comparator for humans.
 
 # TODO
 
+- play with input-group-addon background color
+
+- d3ify
+	- local json loading?
+
 ### index.html
 
 - bootstrapify
