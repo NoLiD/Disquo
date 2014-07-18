@@ -1,0 +1,11 @@
+<div class="modal fade" {{bind-attr id="name"}} tabindex="-1" role="dialog" data-backdrop="false" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" {{action "close"}}><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">{{title}}</h4>
+        </div>
+      {{yield}}
+    </div>
+  </div>
+</div>

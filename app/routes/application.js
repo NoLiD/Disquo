@@ -10,5 +10,23 @@ export default Ember.Route.extend({
             outlet: 'endpoint',
             controller: 'endpoint'
         });
+    },
+    actions: {
+        openModal: function(modalName, model) {
+            var modal = 'modals/' + modalName;
+
+            this.controllerFor(modal).set('model', model);
+
+            return this.render(modal, {
+                into: 'application',
+                outlet: 'modal'
+            });
+        },
+        closeModal: function() {
+            return this.disconnectOutlet({
+                outlet: 'modal',
+                parentView: 'application'
+            });
+        }
     }
 });
