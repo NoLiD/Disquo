@@ -1,6 +1,8 @@
 /* global require, module */
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var mergeTrees = require('broccoli-merge-trees');
+var pickFiles = require('broccoli-static-compiler');
 
 var app = new EmberApp();
 
@@ -32,4 +34,11 @@ app.import('vendor/underscore.string/lib/underscore.string.js');
 // Jassa
 app.import('vendor/jassa/jassa.js');
 
-module.exports = app.toTree();
+// Fonts
+var extraAssets = pickFiles('vendor/bootswatch-dist/fonts', {
+    srcDir: '/',
+    files: ['**/*.woff', '**/*.ttf', '**/*.svg', '**/*eot'],
+    destDir: '/fonts'
+});
+
+module.exports = mergeTrees([app.toTree(), extraAssets]);
