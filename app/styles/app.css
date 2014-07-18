@@ -41,8 +41,7 @@ main layout
 .container-fixed .col {
     height: 100%;
     padding: 0;
-    /*DEBUG - originally hidden*/
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: visible;
 }
 
@@ -61,8 +60,7 @@ main layout
 }
 
 .panels {
-    /*DEBUG - originally 92*/
-    height: 82%;
+    height: 92%;
 }
 
 
@@ -91,13 +89,17 @@ list items and tags
 }
 
 .panel .panel-heading {
+    height: 2.8em;
     border: thin solid #00bc8c;
     border-left-width: 0;
     border-right-width: 0;
 }
 
 .panel .panel-body {
-    height: 100%;
+    height: 90%; /* fallback for non-calc() browsers */
+    height: -webkit-calc(100% - 2.8em);
+    height: -moz-calc(100% - 2.8em);
+    height: calc(100% - 2.8em);
     padding: 0;
     overflow-x: visible;
     overflow-y: auto;
