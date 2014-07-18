@@ -5,7 +5,7 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.resource('endpoint', { path: '/:endpoint_url' }, function() {
+  this.resource('endpoint', { path: '/:endpoint_url/:port' }, function() {
       this.route('types', { path: '/types/:uri' });
       this.route('entities', { path: '/entities/:uri' });
       this.route('predicates', { path: '/predicates/:uri' });

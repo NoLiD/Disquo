@@ -9,6 +9,6 @@ export default Ember.Route.extend({
     },
 
     model: function(params) {
-        return { endpoint: params.endpoint_url };
+        return { endpoint: params.endpoint_url, port: params.port};
     }
 });
