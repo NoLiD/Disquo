@@ -19,10 +19,6 @@ var app = new EmberApp();
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 
-// Bootstrap
-// app.import('vendor/bootstrap/dist/css/bootstrap.css');
-// app.import('vendor/bootstrap/dist/js/bootstrap.js');
-
 // Bootswatch darkly
 app.import('vendor/bootswatch-dist/css/bootstrap.css');
 app.import('vendor/bootswatch-dist/js/bootstrap.js');
