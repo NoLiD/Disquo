@@ -2,9 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
     renderTemplate: function() {
-        //render the application template first
+        // render the application template first
         this.render();
-
+        // then render the endpoint selector
         this.render('endpoint', {
             into: 'application',
             outlet: 'endpoint',
@@ -22,7 +22,10 @@ export default Ember.Route.extend({
                 outlet: 'modal'
             });
         },
-        closeModal: function() {
+        closeModal: function(name) {
+            // before removing the outlet, tell jquery to remove the junk it added
+            Ember.$('#' + name).modal('hide');
+
             return this.disconnectOutlet({
                 outlet: 'modal',
                 parentView: 'application'

@@ -8,7 +8,6 @@ export default Ember.Component.extend({
     },
     actions: {
         close: function() {
-            Ember.$('#' + this.get('name')).modal('hide');
             return this.sendAction();
         }
     }
