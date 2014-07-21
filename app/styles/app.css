@@ -47,7 +47,6 @@ main layout
 
 .navbar {
     height: 8%;
-    z-index: 2000;
 }
 
 .navbar-collapse {
@@ -126,6 +125,10 @@ Modals
 
 /**********************************
 Notifications
+-----------------------------------
+This makes notifications appear from
+top of the window rather than
+the original bottom right corner
 ***********************************/
 
 .ember-notify-cn {
@@ -145,18 +148,4 @@ Notifications
     right: 0px;
     left: 0px;
     width: 100%;
-}
-/* alert-danger taking from Bootstrap */
-.alert-error {
-  background-color: #e74c3c;
-  border-color: #e74c3c;
-  color: #ffffff;
-}
-
-.alert-error hr {
-  border-top-color: #e43725;
-}
-
-.alert-error .alert-link {
-  color: #e6e6e6;
 }

@@ -2,10 +2,11 @@
     <div class="modal-body">
         <p>To start exploring data please select or enter a SPARQL endpoint</p>
         <div class="row">
+            <form {{action "enterEndpoin" on="submit"}}>
             <div class="col col-xs-10">
                 <div class="input-group">
                     <span class="input-group-addon">http://</span>
-                    {{input type="url" class="form-control" placeholder="endpoint.com" value=endpoint}}
+                    {{input type="url" action="enterEndpoint" class="form-control" placeholder="endpoint.com" value=endpoint}}
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
                             <span class="caret"></span>
@@ -24,10 +25,11 @@
             <div class="<col col-xs-2">
                 <div class="input-group">
                     <span class="input-group-addon">Port</span>
-                    {{input type="text" class="form-control" placeholder="80" value=port}}
+                    {{input type="text" action="enterEndpoint" class="form-control" placeholder="80" value=port}}
                 </div>
             </div>
         </div>
+    </form>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" {{action "close"}}>Close</button>
