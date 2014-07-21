@@ -12,10 +12,11 @@ export default Ember.Controller.extend({
 
             var regex = new RegExp('[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)');
 
-            if (endpoint === undefined || !regex.test(endpoint))
+            if (endpoint === undefined || !regex.test(endpoint)) {
                 return Notify.error('Invalid Endpoint URL!');
+            }
 
-            if (port === undefined) {
+            if (port === undefined || port === '') {
                 this.set('port', 80);
                 port = 80;
             } else if (isNaN(_.string.toNumber(port))) {
