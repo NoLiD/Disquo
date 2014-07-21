@@ -15,6 +15,7 @@
     "jassa": "0.0.4-SNAPSHOT",
     "underscore": "1.6.x",
     "underscore.string": "2.3.x",
+    "ember-notify": "0.3.x",
     "bootswatch-dist": "3.2.0-darkly"
   },
   "resolutions": {

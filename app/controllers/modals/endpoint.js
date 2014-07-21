@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Notify from 'ember-notify';
 
 export default Ember.Controller.extend({
     actions: {
@@ -6,9 +7,23 @@ export default Ember.Controller.extend({
             return this.send('closeModal', 'endpoint');
         },
         enterEndpoint: function() {
-            //Some URL validation and error checking should occur here
+            var port = this.get('port');
+            var endpoint = this.get('endpoint');
 
-            this.transitionToRoute('endpoint', this.get('endpoint'), this.get('port'));
+            var regex = new RegExp('[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)');
+
+            if (endpoint === undefined || !regex.test(endpoint))
+                return Notify.error('Invalid Endpoint URL!');
+
+            if (port === undefined) {
+                this.set('port', 80);
+                port = 80;
+            } else if (isNaN(_.string.toNumber(port))) {
+                return Notify.error('Invalid port!');
+            }
+
+            this.transitionToRoute('endpoint', endpoint, port);
+
             return this.send('close');
         }
     }

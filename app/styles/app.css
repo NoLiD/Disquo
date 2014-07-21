@@ -112,9 +112,51 @@ list items and tags
 
 
 /**********************************
-entity selection window
+Modals
 ***********************************/
 
 .modal-header .close {
     color: #ffffff;
+}
+
+.modal-content {
+    background-color: #00bc8c;
+}
+
+
+/**********************************
+Notifications
+***********************************/
+
+.ember-notify-cn {
+    width: 100%;
+    top: 0px;
+}
+.ember-notify {
+    margin: 0px;
+    width: 100%;
+    top: -150px;
+    left: 0px;
+    right: 0px;
+}
+
+.ember-notify-cn .ember-notify-show {
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    width: 100%;
+}
+/* alert-danger taking from Bootstrap */
+.alert-error {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+  color: #ffffff;
+}
+
+.alert-error hr {
+  border-top-color: #e43725;
+}
+
+.alert-error .alert-link {
+  color: #e6e6e6;
 }

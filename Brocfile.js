@@ -30,6 +30,14 @@ app.import('vendor/underscore.string/lib/underscore.string.js');
 // Jassa
 app.import('vendor/jassa/jassa.js');
 
+// Ember-notify
+app.import('vendor/ember-notify/dist/named-amd/main.js', {
+  exports: {
+    'ember-notify': ['default']
+  }
+});
+app.import('vendor/ember-notify/dist/ember-notify.css');
+
 // Fonts
 var extraAssets = pickFiles('vendor/bootswatch-dist/fonts', {
     srcDir: '/',
