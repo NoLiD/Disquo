@@ -27,19 +27,15 @@ Data comparator for humans.
 
 ### index.html
 
-- bootstrapify
-    - use bootstrap modal for endpoint selector
-        - bring back the tooltips
-            - see if bootstrap popovers can have structured content
-                - if not, ask stackoverflow how to get bla
-    - fix hover response for glyphicons
+- format list entries with grayed-out-until-hover comment text
 
 - predicate view pane
+    - review the proposal from the meeting
+    - warp a demo to the style and data of the proposal 
     - mock hardcoded visual graph svg using d3
 
 - other graph view pane
-    - figure out what parts need to be different from
+    - figure out what parts need to be different from above
 
 ### stylesheet.css
 
-- fix overflow in panel bug
