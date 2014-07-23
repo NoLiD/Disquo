@@ -71,9 +71,14 @@ list items and tags
 .list-group-item {
     cursor: default;
 }
+.list-group-item p {
+    color: #888;
+}
 .list-group-item:hover {
     background-color: #222222;
-    color: #00bc8c;
+}
+.list-group-item:hover p {
+    color: inherit;
 }
 
 
