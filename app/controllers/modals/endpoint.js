@@ -16,10 +16,14 @@ export default Ember.Controller.extend({
                 return Notify.error('Invalid Endpoint URL!');
             }
 
+            if (!_(endpoint).startsWith("http://")) {
+                endpoint = _(endpoint).insert(0, "http://");
+            }
+
             if (port === undefined || port === '') {
                 this.set('port', 80);
                 port = 80;
-            } else if (isNaN(_.string.toNumber(port))) {
+            } else if (isNaN(_(port).toNumber())) {
                 return Notify.error('Invalid port!');
             }
 

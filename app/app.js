@@ -3,11 +3,16 @@ import Resolver from 'ember/resolver';
 import loadInitializers from 'ember/load-initializers';
 
 /* Class overrides */
-import View from './classes/view-reopen';
-import TextField from './classes/textfield-reopen';
+import TextField from './overrides/textfield-reopen';
+import Router from './overrides/router-reopen';
+import Route from './overrides/route-reopen';
+import View from './overrides/view-reopen';
 
 /* Ember Notify lib */
 import Notify from 'ember-notify';
+
+/* Underscore integration */
+_.mixin(_.string.exports());
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
