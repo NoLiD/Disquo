@@ -1,8 +1,32 @@
-<ul {{action 'openModal' 'endpoint'}} class="nav navbar-nav navbar-right">
-    {{#if endpoint}}
-        <li><button type="button" class="btn btn-default navbar-btn">@</button></li>
-        <li class="list-group-item navbar-btn disabled">{{endpoint}}</li>
-    {{else}}
-        <li class="list-group-item navbar-btn disabled">Select an Endpoint!</li>
-    {{/if}}
-</ul>
+<div class="row panels">
+    <div class="col col-xs-2">
+        <div class="panel panel-primary" id="types">
+            <!-- Column one start -->
+            <div class="panel-heading">Types</div>
+            <div class="panel-body">
+                {{outlet types}}
+            </div>
+            <!-- Column one end -->
+        </div>
+    </div>
+    <div class="col col-xs-2">
+        <div class="panel panel-primary" id="things">
+            <!-- Column two start -->
+            <div class="panel-heading">Things</div>
+            <div class="panel-body">
+                {{outlet things}}
+            </div>
+            <!-- Column two end -->
+        </div>
+    </div>
+    <div class="col col-xs-8">
+        <div class="panel panel-primary" id="visual">
+            <!-- Column three start -->
+            <div class="panel-heading">Predicate View</div>
+            <div class="panel-body">
+                {{outlet predicates}}
+            </div>
+            <!-- Column three end -->
+        </div>
+    </div>
+</div>

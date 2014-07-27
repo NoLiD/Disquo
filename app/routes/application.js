@@ -5,9 +5,9 @@ export default Ember.Route.extend({
         // render the application template first
         this.render();
         // then render the endpoint selector
-        this.render('endpoint', {
+        this.render('endpoint-selector', {
             into: 'application',
-            outlet: 'endpoint',
+            outlet: 'endpoint-selector',
             controller: 'endpoint'
         });
     },
