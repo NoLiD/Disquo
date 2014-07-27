@@ -1,6 +1,6 @@
 import { test, moduleFor } from 'ember-qunit';
 
-moduleFor('controller:endpoint', 'EndpointController', {
+moduleFor('controller:modals/error', 'ModalsErrorController', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
 });

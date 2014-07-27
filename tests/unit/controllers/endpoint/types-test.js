@@ -1,12 +1,12 @@
 import { test, moduleFor } from 'ember-qunit';
 
-moduleFor('controller:endpoint/types', 'Endpoint/typesController', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+moduleFor('controller:endpoint/types', 'EndpointTypesController', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
 });
 
 // Replace this with your real tests.
 test('it exists', function() {
-  var controller = this.subject();
-  ok(controller);
+    var controller = this.subject();
+    ok(controller);
 });
