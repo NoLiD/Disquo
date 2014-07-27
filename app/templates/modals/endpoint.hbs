@@ -2,7 +2,6 @@
     <div class="modal-body">
         <p>To start exploring data please select or enter a SPARQL endpoint</p>
         <div class="row">
-            <form {{action "enterEndpoin" on="submit"}}>
             <div class="col col-xs-10">
                 <div class="input-group">
                     <span class="input-group-addon">http://</span>
@@ -29,10 +28,9 @@
                 </div>
             </div>
         </div>
-    </form>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" {{action "close"}}>Close</button>
-        <button type="button" class="btn btn-primary" {{action "enterEndpoint"}}>Go!</button>
+        <button type="button" class="btn btn-success" {{action "enterEndpoint"}}>Go!</button>
     </div>
 {{/modal-dialog}}

@@ -17,8 +17,8 @@ _.mixin(_.string.exports());
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
 var App = Ember.Application.extend({
-  modulePrefix: 'disquo', // TODO: loaded via config
-  Resolver: Resolver
+    modulePrefix: 'disquo', // TODO: loaded via config
+    Resolver: Resolver
 });
 
 loadInitializers(App, 'disquo');

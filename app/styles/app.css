@@ -127,6 +127,11 @@ Modals
     background-color: #00bc8c;
 }
 
+.modal-header,
+.modal-footer {
+    background-color: #222222;
+}
+
 
 /**********************************
 Notifications
