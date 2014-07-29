@@ -6,11 +6,11 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
     this.resource('endpoint', { path: '/:endpoint_url/:port' }, function() {
-        this.route('types', { path: '/types/:uri' });
-        this.route('things', { path: '/things/:uri' });
-        this.route('predicates', { path: '/predicates/:uri' });
+        this.route('types', { path: '/types/:query/:uri' });
+        this.route('things', { path: '/things/:query/:uri' });
+        this.route('predicates', { path: '/predicates/:query/:uri' });
     });
-    this.route('error', { path: '*wildcard'});
+    this.route('missing', { path: '*wildcard'});
 });
 
 export default Router;
