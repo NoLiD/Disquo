@@ -2,13 +2,17 @@ import Ember from 'ember';
 import Notify from 'ember-notify';
 
 export default Ember.Controller.extend({
+    needs: ['endpoint'],
+    _endpoint: Ember.computed.alias('controllers.endpoint.model.endpoint'),
+
     actions: {
         close: function() {
             return this.send('closeModal', 'endpoint');
         },
         enterEndpoint: function() {
-            var port = this.get('port');
-            var endpoint = this.get('endpoint');
+            var port = this.get('port'),
+                endpoint = this.get('endpoint'),
+                _endpoint = this.get('_endpoint');
 
             var regex = new RegExp('[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)');
 
@@ -27,7 +31,9 @@ export default Ember.Controller.extend({
                 return Notify.error('Invalid port!');
             }
 
-            this.transitionToRoute('endpoint', endpoint, port);
+            if (endpoint !== _endpoint) {
+                this.transitionToRoute('endpoint', endpoint, port);
+            }
 
             return this.send('close');
         }
