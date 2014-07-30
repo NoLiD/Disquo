@@ -4,10 +4,10 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     afterRenderEvent: function() {
-        Ember.$('#' + this.get('name')).modal().on('hidden.bs.modal', function() {
+        Ember.$('#' + this.get('name')).modal().on('hidden.bs.modal', Ember.run.bind(this, function() {
             // this makes sure everything is removed if the user clicks the backdrop
-            this.sendAction('close');
-        }.bind(this));
+            this.send('close');
+        }));
     },
     actions: {
         close: function() {
