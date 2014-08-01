@@ -9,6 +9,7 @@ export default Ember.Controller.extend({
         close: function() {
             return this.send('closeModal', 'endpoint');
         },
+
         enterEndpoint: function() {
             var port = this.get('port'),
                 endpoint = this.get('endpoint'),

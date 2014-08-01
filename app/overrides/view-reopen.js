@@ -6,5 +6,6 @@ export default Ember.View.reopen({
         this._super();
         Ember.run.scheduleOnce('afterRender', this, this.afterRenderEvent);
     },
+
     afterRenderEvent: Ember.K
 });

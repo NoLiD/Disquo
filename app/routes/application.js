@@ -11,6 +11,7 @@ export default Ember.Route.extend({
             controller: 'endpoint'
         });
     },
+
     actions: {
         openModal: function(modalName, model) {
             var modal = 'modals/' + modalName;
@@ -22,6 +23,7 @@ export default Ember.Route.extend({
                 outlet: 'modal'
             });
         },
+
         closeModal: function(name) {
             // before removing the outlet, tell jquery to remove the junk it added
             Ember.run(function() {
