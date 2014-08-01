@@ -1,62 +1,21 @@
 <ul class="list-group">
-    <div class="list-group-item">
-        <li>
-            <h4>Skin Disease</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-        </li>
-    </div>
-    <div class="list-group-item">
-        <li>
-            <h4>50s Movie</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-        </li>
-    </div>
-    <div class="list-group-item">
-        <li>
-            <h4>Scifi Movie</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-        </li>
-    </div>
-    <div class="list-group-item">
-        <li>
-            <h4>Flying Mammal</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-        </li>
-    </div>
-    <div class="list-group-item">
-        <li>
-            <h4>Spoken Language</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-        </li>
-    </div>
-    <div class="list-group-item">
-        <li>
-            <h4>Scientist</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-        </li>
-    </div>
-    <div class="list-group-item">
-        <li>
-            <h4>Physicist</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-        </li>
-    </div>
-    <div class="list-group-item">
-        <li>
-            <h4>Recursively Enumerable Grammar</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-        </li>
-    </div>
-    <div class="list-group-item">
-        <li>
-            <h4>Political Party</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-        </li>
-    </div>
-    <div class="list-group-item">
-        <li>
-            <h4>Nazi Sympathizer</h4>
-            <p>This is a string of comment text. Lorem ipsum something word word duck.</p>
-        </li>
-    </div>
+    {{#each}}
+        <div class="list-group-item">
+            <li>
+                <h4>
+                {{#if labels.default}}
+                    {{labels.default}}
+                {{else}}
+                    {{labels.en}}
+                {{/if}}
+                </h4>
+            </li>
+        </div>
+    {{else}}
+        <div class="list-group-item">
+            <li>
+                <h4>No result!</h4>
+            </li>
+        </div>
+    {{/each}}
 </ul>

@@ -1,25 +1,37 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-    endpoints: Ember.A(),
+    askQuery: 'ASK { ?s ?p ?o }',
 
-    addEndpoint: function(endpoint) {
-        var query = 'ASK { ?s ?p ?o }',
-            sparqlService = new Jassa.service.SparqlServiceHttp(endpoint, []),
-            queryExection = sparqlService.createQueryExecutionStr(query);
+    addEndpoint: function(url, initGraph) {
+        // For now will just have a single 'endpoint'
+        // Querying multiple endpoints will require a collection
+        var endpoint = this.get('endpoint');
 
-        // since Jassa doesn't use the RSVP lib nor ember's xhr
-        // these calls might need to be wrapped in Ember.run functions
+        return new Ember.RSVP.Promise(function(resolve, reject) {
+            if (endpoint) {
+                resolve(endpoint);
+            } else {
+                var service   = new Jassa.service.SparqlServiceHttp(url, initGraph),
+                    queryExec = service.createQueryExecutionStr(this.get('askQuery'));
 
-        return queryExection.execAsk().then(function(response) {
-            this.get('endpoints').addObject(endpoint);
+                queryExec.execAsk().then(function(response) {
+                    this.set('endpoint', service);
+                    resolve(service);
+                }.bind(this), function(error) {
+                    reject('Error! Couldn\'t connect to ' + url);
+                });
+            }
         }.bind(this));
     },
-    // Still unsure about this, it's currently not being used
+
     find: function(name, method, params) {
         var adapter = this.container.lookup('adapter:' + name);
-        if (adapter.hasOwnProperty(method)) {
-            return adapter[method](this.get('endpoints'), params);
+
+        if (adapter.get(method)) {
+            return adapter[method](this.get('endpoint'), params);
+        } else {
+            return Ember.RSVP.Promise.reject('Error! Invalid query type');
         }
     }
 });

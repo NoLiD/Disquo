@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Notify from 'ember-notify';
 
 export default Ember.Route.extend({
     renderTemplate: function() {
@@ -9,6 +10,12 @@ export default Ember.Route.extend({
     },
 
     model: function(params) {
-        return "types for " + params.uri;
+        return this.store.find('type', params.query, params.uri);
+    },
+
+    actions: {
+        error: function(error, transition) {
+            Notify.error(error, { closeAfter: 4000});
+        }
     }
 });

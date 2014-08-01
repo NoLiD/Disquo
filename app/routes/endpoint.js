@@ -8,21 +8,19 @@ export default Ember.Route.extend({
 
     model: function(params, transition) {
         var port = params.port,
-            endpoint = params.endpoint_url;
+            url  = params.endpoint_url;
 
-        return this.store.addEndpoint(endpoint).then(function(response) {
+        return this.store.addEndpoint(url, []).then(function(response) {
             if (transition.targetName === 'endpoint.index') {
                 this.transitionTo('endpoint.types', 'all', 'all');
             }
-            return { endpoint: endpoint, port: params.port};
-        }.bind(this), function(error) {
-            return "Error! Couldn't connect to " + endpoint;
-        });
+            return { endpoint: url, port: port };
+        }.bind(this));
     },
 
     actions: {
         error: function(error, transition) {
-            Notify.error(error, {closeAfter: 4000});
+            Notify.error(error, { closeAfter: 4000 });
             this.controllerFor('endpoint').set('model', '');
             this.transitionTo('index');
         }
