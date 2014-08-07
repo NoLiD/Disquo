@@ -11,7 +11,7 @@ export default Ember.Object.extend({
 
         return new Ember.RSVP.Promise(function(resolve, reject) {
                 queryExec.execSelect().then(function(resultSet) {
-                    resolve(service.resultsToArray(resultSet, 'instance'));
+                    resolve({ things: service.resultsToArray(resultSet, 'instance') });
                 }, function(error) {
                     reject('Error! Unable to fetch things');
                 });

@@ -17,5 +17,20 @@ export default Ember.Router.reopen({
         });
 
         return arr;
+    },
+
+    // Stuff for titles
+    // https://gist.github.com/machty/8413411
+
+    updateTitle: function() {
+        this.send('collectTitleTokens', []);
+    }.on('didTransition'),
+
+    setTitle: function(title) {
+        if (Ember.testing) {
+            this._title = title;
+        } else {
+            window.document.title = title;
+        }
     }
 });

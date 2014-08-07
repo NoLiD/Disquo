@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+    title: function(tokens) {
+        return 'Disquo - ' + tokens.join(' ');
+    },
+
     renderTemplate: function() {
         // render the application template first
         this.render();
