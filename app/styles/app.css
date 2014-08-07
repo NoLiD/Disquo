@@ -159,3 +159,143 @@ the original bottom right corner
     left: 0px;
     width: 100%;
 }
+
+/**********************************
+Loading Spinner
+-----------------------------------
+***********************************/
+
+.loading-container .loading-square {
+  margin:auto;
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background-color:#009871;
+  opacity:0.85;
+  height:8px;
+  width:30px;
+  z-index: 1050;
+
+  -webkit-animation: loading-animation 2.3s infinite;
+  -moz-animation: loading-animation 2.3s infinite;
+  animation: loading-animation 2.3s infinite;
+}
+.loading-container .loading-square div {
+  position:absolute;
+  background-color:#009871;
+  opacity:0.85;
+  width:100%;
+  height:100%;
+  top:6px;
+  right:6px;
+
+  -webkit-animation: loading-animation 2.3s infinite;
+  -webkit-animation-timing-function: cubic-bezier(1,.45,.45,1);
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  -moz-animation: loading-animation 2.3s cubic-bezier(1,.45,.45,1) infinite;
+  animation: loading-animation 2.3s cubic-bezier(1,.45,.45,1) infinite;
+}
+.loading-container .loading-square div + div,
+.loading-container .loading-square div + div div {
+  position:absolute;
+  background-color:#009871;
+  height:100%;
+  width:100%;
+  top:-6px;
+  right:-6px;
+}
+.loading-container .two {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  transform: rotate(90deg);
+
+  -webkit-animation: loading-color 2.3s infinite;
+  -moz-animation: loading-color 2.3s infinite;
+  animation: loading-color 2.3s infinite;
+}
+
+/* color animation only */
+@-webkit-keyframes loading-color {
+  25%{
+    background-color: #375a7f;
+  }
+  50%{
+    background-color: #009871;
+  }
+  75%{
+    background-color: #375a7f;
+  }
+}
+@-moz-keyframes loading-color-one {
+  25%{
+    background-color: #375a7f;
+  }
+  50%{
+    background-color: #009871;
+  }
+  75%{
+    background-color: #375a7f;
+  }
+}
+@keyframes loading-color-one {
+  25%{
+    background-color: #375a7f;
+  }
+  50%{
+    background-color: #009871;
+  }
+  75%{
+    background-color: #375a7f;
+  }
+}
+/* rotation and color animation */
+@-webkit-keyframes loading-animation {
+  25%{
+    background-color: #375a7f;
+    opacity:0.7;
+  }
+  50%{
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    background-color: #009871;
+    opacity:0.85;
+  }
+  75%{
+    background-color: #375a7f;
+    opacity:0.7;
+  }
+}
+@-moz-keyframes loading-animation {
+  25%{
+    background-color: #375a7f;
+    opacity:0.7;
+  }
+  50%{
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+    background-color: #009871;
+    opacity:0.85;
+  }
+  75%{
+    background-color: #375a7f;
+    opacity:0.7;
+  }
+}
+@keyframes loading-animation {
+  25%{
+    background-color: #375a7f;
+    opacity:0.7;
+  }
+  50%{
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+    background-color: #009871;
+    opacity:0.85;
+  }
+  75%{
+    background-color: #375a7f;
+    opacity:0.7;
+  }
+}
