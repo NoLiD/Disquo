@@ -2,27 +2,30 @@ import Ember from 'ember';
 import Notify from 'ember-notify';
 
 export default Ember.Route.extend({
-    renderTemplate: function() {
-        this.render({into: 'application'});
+    decodedModel: function(params, transition) {
+        return this.store.addEndpoint(params.endpoint_url, []).then(function() {
+            return params;
+        });
     },
 
-    model: function(params, transition) {
-        var port = params.port,
-            url  = params.endpoint_url;
-
-        return this.store.addEndpoint(url, []).then(function(response) {
-            if (transition.targetName === 'endpoint.index') {
-                this.transitionTo('endpoint.types', 'all', 'all');
-            }
-            return { endpoint: url, port: port };
-        }.bind(this));
+    afterModel: function(model, transition, queryParams) {
+        if (transition.targetName === 'endpoint.index') {
+            this.transitionTo('endpoint.types', 'all', 'all');
+        }
     },
 
     actions: {
         error: function(error, transition) {
-            Notify.error(error, { closeAfter: 4000 });
-            this.controllerFor('endpoint').set('model', '');
-            this.transitionTo('index');
+            Notify.error(error, { closeAfter: 5000 });
+
+            this.controllerFor(transition.targetName).set('model', '');
+
+            if (transition.targetName === 'endpoint.index') {
+                this.controllerFor('endpoint').set('model', '');
+                this.transitionTo('index');
+            }
+
+            return true;
         }
     }
 });

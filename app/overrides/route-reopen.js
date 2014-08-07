@@ -1,12 +1,17 @@
 import Ember from 'ember';
 
+// This hack won't help if we ever need to access the 'serialize' hook
+// peak at router-reopen
 export default Ember.Route.reopen({
-    deserialize: function(params, transition){
+    model: function(params, transition, queryParams) {
         _(params).each(function(val, key, lst) {
-            if (key !== 'queryParams') {
-                lst[key] = decodeURIComponent(val);
+            if (lst.hasOwnProperty(key)) {
+            lst[key] = decodeURIComponent(val);
             }
         });
-        return this._super(params, transition);
-    }
+
+        return this.decodedModel(params, transition, queryParams);
+    },
+
+    decodedModel: Ember.K
 });

@@ -1,6 +1,7 @@
 <ul class="list-group">
     {{#each}}
         <div class="list-group-item">
+            {{#link-to 'endpoint.things' 'all' uri}}
             <li>
                 <h4>
                 {{#if labels.default}}
@@ -10,12 +11,11 @@
                 {{/if}}
                 </h4>
             </li>
+            {{/link-to}}
         </div>
     {{else}}
         <div class="list-group-item">
-            <li>
-                <h4>No result!</h4>
-            </li>
+            <li><h4>No types</h4></li>
         </div>
     {{/each}}
 </ul>

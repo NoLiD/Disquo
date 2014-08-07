@@ -4,7 +4,7 @@
             <!-- Column one start -->
             <div class="panel-heading">Types</div>
             <div class="panel-body">
-                {{outlet types}}
+                {{render "endpoint/types"}}
             </div>
             <!-- Column one end -->
         </div>
@@ -14,7 +14,7 @@
             <!-- Column two start -->
             <div class="panel-heading">Things</div>
             <div class="panel-body">
-                {{outlet things}}
+                {{render "endpoint/things"}}
             </div>
             <!-- Column two end -->
         </div>
@@ -24,9 +24,10 @@
             <!-- Column three start -->
             <div class="panel-heading">Predicate View</div>
             <div class="panel-body">
-                {{outlet predicates}}
+                {{render "endpoint/predicates"}}
             </div>
             <!-- Column three end -->
         </div>
     </div>
 </div>
+{{outlet}}

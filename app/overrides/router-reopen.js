@@ -1,16 +1,21 @@
 import Ember from 'ember';
 
+// For now this is the only solution to encode all route params
+// even those from 'link-to' helpers
+// This might break with updates since we're modifying a 'private' method
+// There is no alterantive except to wait for an Ember update to address this issue
 export default Ember.Router.reopen({
-    transitionTo: function() {
-        var args = Array.prototype.slice.call(arguments);
-        var to = args.shift();
+    _doTransition: function(_targetRouteName, models, _queryParams) {
+        return this._super(_targetRouteName, this.encodeArray(models), _queryParams);
+    },
 
-        args = _(args).map(function(arg) {
-            return encodeURIComponent(arg);
+    encodeArray: function (arr) {
+        _.each(arr, function(e, i, l) {
+            if (_(e).isString()) {
+                l[i] = encodeURIComponent(e);
+            }
         });
 
-        args.unshift(to);
-
-        return this._super.apply(this, args);
+        return arr;
     }
 });
