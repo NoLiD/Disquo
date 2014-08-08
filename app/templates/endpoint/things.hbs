@@ -1,17 +1,13 @@
 <ul class="list-group">
     {{#each things}}
-        <div class="list-group-item">
-            {{#link-to 'endpoint.predicates' 'all' uri}}
-            <li>
-                <h4>
-                {{#if labels.default}}
-                    {{labels.default}}
-                {{else}}
-                    {{labels.en}}
-                {{/if}}
-                </h4>
-            </li>
-            {{/link-to}}
-        </div>
+    {{#link-to 'endpoint.predicates' 'all' uri tagName='li' classNames='list-group-item'}}
+            <h4 style="list-group-item-heading">
+            {{#if labels.default}}
+                {{labels.default}}
+            {{else}}
+                {{labels.en}}
+            {{/if}}
+            </h4>
+    {{/link-to}}
     {{/each}}
 </ul>

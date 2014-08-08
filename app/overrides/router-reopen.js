@@ -9,6 +9,12 @@ export default Ember.Router.reopen({
         return this._super(_targetRouteName, this.encodeArray(models), _queryParams);
     },
 
+    // this is used from LinkView to check
+    // if the current route matches a link
+    isActive: function() {
+        return this._super.apply(this, this.encodeArray(arguments));
+    },
+
     encodeArray: function (arr) {
         _.each(arr, function(e, i, l) {
             if (_(e).isString()) {
@@ -18,6 +24,8 @@ export default Ember.Router.reopen({
 
         return arr;
     },
+
+
 
     // Stuff for titles
     // https://gist.github.com/machty/8413411
