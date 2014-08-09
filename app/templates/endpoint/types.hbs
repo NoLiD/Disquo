@@ -1,15 +1,2 @@
-<ul class="list-group">
-    {{#each types}}
-    {{#link-to 'endpoint.things' 'all' uri tagName='li' classNames='list-group-item'}}
-            <h4 style="list-group-item-heading">
-            {{#if labels.default}}
-                {{labels.default}}
-            {{else}}
-                {{labels.en}}
-            {{/if}}
-            </h4>
-    {{/link-to}}
-    {{else}}
-    <h4 class="list-group-item">No types</h4>
-    {{/each}}
-</ul>
+{{#resources-list resources=types toRoute='endpoint.things'}}
+{{/resources-list}}
