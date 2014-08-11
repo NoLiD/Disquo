@@ -30,9 +30,7 @@ export default Ember.Route.extend({
 
         closeModal: function(name) {
             // before removing the outlet, tell jquery to remove the junk it added
-            Ember.run(function() {
-                Ember.$('#' + name).modal('hide');
-            });
+            Ember.$('#' + name).modal('hide');
 
             return this.disconnectOutlet({
                 outlet: 'modal',
