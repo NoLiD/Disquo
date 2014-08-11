@@ -80,7 +80,9 @@ list items and tags
 .list-group-item:hover p {
     color: inherit;
 }
-
+.list-group-item .badge  {
+  background-color: inherit;
+}
 
 /* panels */
 .panel {
@@ -105,8 +107,9 @@ list items and tags
     height: -moz-calc(100% - 2.8em);
     height: calc(100% - 2.8em);
     padding: 0;
-    overflow-x: visible;
+    overflow-x: hidden;
     overflow-y: auto;
+    word-wrap: break-word;
 }
 
 .panel .panel-body ul {

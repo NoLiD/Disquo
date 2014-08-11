@@ -2,6 +2,8 @@
 
 Data comparator for humans.
 
+This project is still in very early stages of development. Proceed with caution.
+
 ## Install
 
 1. `git clone http://github.com:NoLiD/Disquo.git`
@@ -22,6 +24,5 @@ Data comparator for humans.
 
 - predicate view pane
     - review the proposal from the meeting
-    - warp a demo to the style and data of the proposal 
+    - warp a demo to the style and data of the proposal
     - mock hardcoded visual graph svg using d3
-

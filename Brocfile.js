@@ -38,6 +38,9 @@ app.import('vendor/ember-notify/dist/named-amd/main.js', {
 });
 app.import('vendor/ember-notify/dist/ember-notify.css');
 
+// jQuery Selectonic
+app.import('vendor/selectonic/dist/selectonic.js');
+
 // Fonts
 var extraAssets = pickFiles('vendor/bootswatch-dist/fonts', {
     srcDir: '/',
