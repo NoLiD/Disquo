@@ -35,21 +35,39 @@ export default Ember.Object.extend({
         }
     },
 
+    commentFor: function(uri) {
+        var service = this.get('endpoint');
+        var commentQuery = 'SELECT DISTINCT ?comment {<' + uri + '> <http://www.w3.org/2000/01/rdf-schema#comment> ?comment}';
+
+        return new Ember.RSVP.Promise(function(resolve, reject) {
+            service.createQueryExecutionStr(commentQuery).execSelect().then(function(resultSet) {
+                var row, comment, lang,
+                    entry = {};
+
+                while (resultSet.hasNext()) {
+                    row     = resultSet.nextBinding();
+                    comment = row.varNameToEntry.comment.node.literalLabel.val;
+                    lang    = row.varNameToEntry.comment.node.literalLabel.lang;
+
+                    this._setLabel(entry, lang, comment);
+                }
+
+                resolve(entry);
+            }.bind(this), function(error) {
+                reject(error);
+            });
+        }.bind(this));
+    },
+
     init: function() {
+        var self = this;
+
         // this adds another method to Jass'a sparql service class
         // makes it easier for our adapter to parse results
         Jassa.service.SparqlServiceHttp.addMethods({
             resultsToArray: function(resultSet, uriVar) {
                 var row, entry, uri, label, lang,
                     map = {};
-
-                var setLabel = function(entry, lang, label) {
-                    if (lang) {
-                        entry[lang] = label;
-                    } else {
-                        entry['default'] = label;
-                    }
-                };
 
                 while (resultSet.hasNext()) {
                     row   = resultSet.nextBinding();
@@ -58,10 +76,10 @@ export default Ember.Object.extend({
                     lang  = row.varNameToEntry.label.node.literalLabel.lang;
 
                     if ((entry = map[uri])) {
-                        setLabel(entry, lang, label);
+                        self._setLabel(entry, lang, label);
                     } else {
                         entry = {};
-                        setLabel(entry, lang, label);
+                        self._setLabel(entry, lang, label);
                         map[uri] = entry;
                     }
                 }
@@ -74,5 +92,13 @@ export default Ember.Object.extend({
                 return arr;
             }
         });
+    },
+
+    _setLabel: function(entry, lang, label) {
+        if (lang) {
+            entry[lang] = label;
+        } else {
+            entry['default'] = label;
+        }
     }
 });

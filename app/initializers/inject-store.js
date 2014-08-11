@@ -6,6 +6,7 @@ export default {
     initialize: function(container, app) {
         app.register('store:main', Store, { singleton: true });
         app.inject('route', 'store', 'store:main');
+        app.inject('component', 'store', 'store:main');
         app.inject('controller', 'store', 'store:main');
     }
 };
