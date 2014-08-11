@@ -1,16 +1,19 @@
-{{#link-to toRoute 'all' resource.uri tagName='li' classNames='list-group-item'}}
-{{#with resource}}
-    <h4 style="list-group-item-heading">
-    {{#if labels.default}}
-        {{labels.default}}
-    {{else}}
-        {{labels.en}}
-    {{/if}}
-    </h4>
-    {{#if comment}}
-    <p class='list-group-item-text'>
-        {{comment}}
-    </p>
-    {{/if}}
-{{/with}}
-{{/link-to}}
+{{#if focused}}
+<span {{action "showComment"}} class="badge"><span class="glyphicon glyphicon-comment"></span></span>
+{{/if}}
+<h4 style="list-group-item-heading">
+{{#if labels.default}}
+    {{labels.default}}
+{{else}}
+    {{labels.en}}
+{{/if}}
+</h4>
+{{#if showingComment}}
+<p class='list-group-item-text'>
+{{#if comments.default}}
+    {{comments.default}}
+{{else}}
+    {{comments.en}}
+{{/if}}
+</p>
+{{/if}}
