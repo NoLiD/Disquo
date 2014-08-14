@@ -1,4 +1,23 @@
-{{#each resource in resources}}
-{{#resource-item uri=resource.uri labels=resource.labels}}
-{{/resource-item}}
-{{/each}}
+<div class="panel-heading">
+    <div class="col-xs-3">
+        <h4>{{title}}</h4>
+    </div>
+    {{#if resources}}
+    <div class="col-xs-9 pull-right">
+        <div class="input-group input-group-sm">
+            {{input type='search' class='form-control input-sm' placeholder='Search...' value=searchTerm}}
+            <!-- <input type="search" class="form-control input-sm" placeholder="Search..."/> -->
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-search"></i>
+            </span>
+        </div>
+    </div>
+    {{/if}}
+</div>
+<div class="panel-body">
+    <ul class="list-group">
+        {{#each resource in searchResults}}
+        {{resource-item uri=resource.uri labels=resource.labels}}
+        {{/each}}
+    </ul>
+</div>

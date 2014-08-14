@@ -62,6 +62,17 @@ main layout
     height: 92%;
 }
 
+.panel-heading {
+    font-size: 1.2em;
+    padding-right: 0px;
+}
+
+.panel-heading .input-group {
+    padding: 0px 0px 0px 10px;
+}
+
+
+
 
 /*************************************************
 list items and tags
