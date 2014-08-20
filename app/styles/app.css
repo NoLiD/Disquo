@@ -100,10 +100,6 @@ list items and tags
     height: 100%;
     border-color: #00bc8c;
 }
-#things {
-    border-left-width: 0;
-    border-right-width: 0;
-}
 
 .panel .panel-heading {
     height: 2.8em;
