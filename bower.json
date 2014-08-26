@@ -15,8 +15,7 @@
     "jassa": "0.0.4-SNAPSHOT",
     "underscore": "1.6.x",
     "underscore.string": "2.3.x",
-    "bootswatch-dist": "3.2.0-darkly",
-    "selectonic": "0.6.x"
+    "bootswatch-dist": "3.2.0-darkly"
   },
   "resolutions": {
     "jquery": ">=1.11.x <2.0.0"

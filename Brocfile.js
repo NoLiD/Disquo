@@ -30,9 +30,6 @@ app.import('vendor/underscore.string/lib/underscore.string.js');
 // Jassa
 app.import('vendor/jassa/jassa.js');
 
-// jQuery Selectonic
-app.import('vendor/selectonic/dist/selectonic.js');
-
 // Fonts
 var extraAssets = pickFiles('vendor/bootswatch-dist/fonts', {
     srcDir: '/',

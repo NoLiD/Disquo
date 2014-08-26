@@ -1,28 +1,14 @@
 import Ember from 'ember';
 
-// The following component combines jquery's selectonic plugin
-// with bootstrap's list-group to support multi and keyboard selections
+// This is the resources list view which provides an input for filtering
+// and a list of resources rendered with a nested resource-item component
+// Most of selection logic occurs here via event bubbling
 export default Ember.Component.extend({
     classNames: ['panel',  'panel-primary'],
 
-    initList: function() {
-        var self = this;
-
-        this.set('selectedItems', Ember.A());
-        this.$('.list-group').selectonic({
-            multi: false,
-            keyboard: true,
-            focusBlur: true,
-            // for Bootstrap
-            selectedClass: 'active',
-            // To avoid selecting virtual views script tags
-            filter: '> li',
-            listClass: 'list-group',
-            // Event calbacks
-            select      : function(event, ui) { Ember.run(self, self.select, ui.items); },
-            unselect    : function(event, ui) { Ember.run(self, self.unselect, ui.items); },
-        });
-    }.on('didInsertElement'),
+     initList: function() {
+         this.set('selectedItems', Ember.A());
+     }.on('didInsertElement'),
 
     updateURL: function() {
         var items = this.get('selectedItems');
@@ -30,28 +16,24 @@ export default Ember.Component.extend({
         if (items.length === 0) { return; }
 
         if (items.length === 1) {
-            this.sendAction('transition', this.get('toRoute'),
-                            'all', items.get('firstObject'));
+            this.sendAction('transitionAction', this.get('targetRoute'),
+                            'all', items.get('firstObject.resource.uri'));
 
         } else {
             // TODO: multiple selections
         }
     }.observes('selectedItems.[]'),
 
-    select: function(items) {
-        _(items).each(function(element) {
-            this.get('selectedItems').pushObject(this.getItemURI(element));
-        }, this);
-    },
+    clearSelection: function() {
+        var items = this.get('selectedItems');
 
-    unselect: function(items) {
-        _(items).each(function(element) {
-            this.get('selectedItems').removeObject(this.getItemURI(element));
-        }, this);
-    },
-
-    getItemURI: function(item) {
-        return Ember.$(item).attr('uri');
+        _(items).each(function(view) {
+            // if the list is filtered then the view might have been destroyed
+            if (!view.get('isDestroyed')) {
+                view.toggleActive();
+            }
+        });
+        items.clear();
     },
 
     searchResults: function() {
@@ -68,6 +50,17 @@ export default Ember.Component.extend({
         });
 
     }.property('resources.@each', 'searchTerm'),
+
+    actions: {
+        selected: function(resource, picking) {
+            if (!picking) { this.clearSelection(); }
+
+            this.get('selectedItems').addObject(resource);
+        },
+        deselected: function(resource, picking) {
+            this.get('selectedItems').removeObject(resource);
+        }
+    },
 
     _escapeRegExp: function(str) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");

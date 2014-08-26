@@ -16,8 +16,8 @@
 </div>
 <div class="panel-body">
     <ul class="list-group">
-        {{#each resource in searchResults}}
-        {{resource-item uri=resource.uri labels=resource.labels}}
-        {{/each}}
+    {{#each resource in searchResults}}
+        {{resource-item resource=resource onSelect='selected' onDeselect='deselected'}}
+    {{/each}}
     </ul>
 </div>
