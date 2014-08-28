@@ -20,7 +20,7 @@ export default Ember.Route.extend({
 
     actions: {
         error: function(error, transition) {
-            Notify.error(error, { closeAfter: 5000 });
+            Notify.error(error);
 
             this.controllerFor(transition.targetName).set('model', '');
 

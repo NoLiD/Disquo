@@ -25,5 +25,6 @@ loadInitializers(App, 'disquo');
 
 // Tell Notify to always use bootstrap styling
 Notify.useBootstrap();
+Notify.View.reopen({removeAfter: 5000});
 
 export default App;
