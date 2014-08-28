@@ -10,7 +10,7 @@ export default Ember.Component.extend({
 
     toggleComment: function() {
         this.toggleProperty('showingComment');
-    }.observes('resource.comments'),
+    }.observes('resource.comments.length'),
 
     toggleFocus: function() {
         this.toggleProperty('focused');
@@ -41,20 +41,12 @@ export default Ember.Component.extend({
         showComment: function() {
             if (!this.get('active')) { this.$().trigger('click'); }
 
-            var comments = this.get('resource.comments');
+            var resource = this.get('resource');
 
-            if (comments && !_(comments).isEmpty()) { return this.toggleComment(); }
+            if (resource.get('comments.length')) { return this.toggleComment(); }
 
-            var uri = this.get('resource.uri');
-
-            this.store.commentFor(uri).then(function(comment) {
-                if (_(comment).isEmpty()) {
-                    this.set('resource.comments', { default: 'This resource has no description' });
-                } else {
-                    this.set('resource.comments', comment);
-                }
-            }.bind(this), function(error) {
-                Notify.error('Unable to fetch comment for ' + uri, { closeAfter: 5000 });
+            this.store.fetchComments(resource).catch(function(error) {
+                Notify.error('Unable to fetch comment for ' + this.get('resource.uri'));
             });
         }
     }

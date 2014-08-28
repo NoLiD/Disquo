@@ -1,21 +1,14 @@
 {{#if focused}}
-<div {{action "showComment" bubbles=false}} class="badge">
-    <span class="glyphicon glyphicon-comment"></span>
+<div {{action "showComment" bubbles=false}} class="comment pull-right">
+    <span class="badge">
+        <span class="glyphicon glyphicon-comment"></span>
+    </span>
 </div>
 {{/if}}
-<h4 style="list-group-item-heading">
-{{#if resource.labels.default}}
-    {{resource.labels.default}}
-{{else}}
-    {{resource.labels.en}}
-{{/if}}
+
+<h4 style="list-group-item-heading">{{resource.label}}
+    {{#if resource.altLabel}}<span class="badge">{{resource.altLabel}}</span>{{/if}}
 </h4>
 {{#if showingComment}}
-<p class='list-group-item-text'>
-    {{#if resource.comments.default}}
-        {{resource.comments.default}}
-    {{else}}
-        {{resource.comments.en}}
-    {{/if}}
-</p>
+<p class='list-group-item-text'>{{resource.comment}}</p>
 {{/if}}

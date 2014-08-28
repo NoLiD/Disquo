@@ -91,7 +91,7 @@ list items and tags
 .list-group-item:hover p {
     color: inherit;
 }
-.list-group-item .badge  {
+.list-group-item .comment .badge  {
   background-color: inherit;
 }
 

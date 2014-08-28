@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import Resource from './resource';
 
 export default Ember.Object.extend({
+    langEncoding: 'en',
     askQuery: 'ASK { ?s ?p ?o }',
 
     addEndpoint: function(url, initGraph) {
@@ -35,24 +37,27 @@ export default Ember.Object.extend({
         }
     },
 
-    commentFor: function(uri) {
+    fetchComments: function(resource) {
         var service = this.get('endpoint');
-        var commentQuery = 'SELECT DISTINCT ?comment {<' + uri + '> <http://www.w3.org/2000/01/rdf-schema#comment> ?comment}';
+        var commentQuery = 'SELECT DISTINCT ?comment {<' + resource.get('uri') + '> <http://www.w3.org/2000/01/rdf-schema#comment> ?comment}';
 
         return new Ember.RSVP.Promise(function(resolve, reject) {
             service.createQueryExecutionStr(commentQuery).execSelect().then(function(resultSet) {
-                var row, comment, lang,
-                    entry = {};
+                var row, comment, lang;
 
                 while (resultSet.hasNext()) {
                     row     = resultSet.nextBinding();
                     comment = row.varNameToEntry.comment.node.literalLabel.val;
                     lang    = row.varNameToEntry.comment.node.literalLabel.lang;
 
-                    this._setLabel(entry, lang, comment);
+                    resource.addComment(comment, lang);
                 }
 
-                resolve(entry);
+                if (!resource.get('comments.length')) {
+                    resource.addComment('This resource has no description');
+                }
+
+                resolve();
             }.bind(this), function(error) {
                 reject(error);
             });
@@ -67,7 +72,7 @@ export default Ember.Object.extend({
         Jassa.service.SparqlServiceHttp.addMethods({
             resultsToArray: function(resultSet, uriVar) {
                 var row, entry, uri, label, lang,
-                    map = {};
+                    map = Ember.Map.create();
 
                 while (resultSet.hasNext()) {
                     row   = resultSet.nextBinding();
@@ -75,30 +80,29 @@ export default Ember.Object.extend({
                     label = row.varNameToEntry.label.node.literalLabel.val;
                     lang  = row.varNameToEntry.label.node.literalLabel.lang;
 
-                    if ((entry = map[uri])) {
-                        self._setLabel(entry, lang, label);
+                    if ((entry = map.get(uri))) {
+                        entry.addLabel(label, lang);
                     } else {
-                        entry = {};
-                        self._setLabel(entry, lang, label);
-                        map[uri] = entry;
+                        entry = self._createResource({uri: uri});
+                        entry.addLabel(label, lang);
+                        map.set(uri, entry);
                     }
                 }
                 var arr = Ember.A();
 
-                _.each(map, function(value, key, list) {
-                    arr.pushObject({ uri: key, labels: value});
+                map.forEach(function(key, value) {
+                    arr.pushObject(value);
                 });
-
                 return arr;
             }
         });
     },
 
-    _setLabel: function(entry, lang, label) {
-        if (lang) {
-            entry[lang] = label;
-        } else {
-            entry['default'] = label;
-        }
+    // We want all resources to be aware of lang encoding
+    // But we can't inject store into every single ember object
+    // Safest and cleanest way to have a wrapper for our objects constructors
+    _createResource: function(args) {
+        args.store = this;
+        return Resource.create(args);
     }
 });
