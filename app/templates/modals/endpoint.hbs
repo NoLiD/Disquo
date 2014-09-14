@@ -1,36 +1,36 @@
 {{#modal-dialog action="close" name="endpoint" title="Select an Endpoint"}}
-    <div class="modal-body">
-        <p>To start exploring data please select or enter a SPARQL endpoint</p>
-        <div class="row">
-            <div class="col col-xs-10">
-                <div class="input-group">
-                    <span class="input-group-addon">URL</span>
-                    {{input type="url" action="enterEndpoint" class="form-control" placeholder="endpoint.com" value=endpoint}}
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="<col col-xs-2">
-                <div class="input-group">
-                    <span class="input-group-addon">Port</span>
-                    {{input type="text" action="enterEndpoint" class="form-control" placeholder="80" value=port disabled=true}}
-                </div>
-            </div>
+<div class="modal-body">
+  <p>To start exploring data please select or enter a SPARQL endpoint</p>
+  <div class="row">
+    <div class="col col-xs-10">
+      <div class="input-group">
+        <span class="input-group-addon">URL</span>
+        {{input type="url" action="enterEndpoint" class="form-control" placeholder="endpoint.com" value=endpoint}}
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
         </div>
+      </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" {{action "close"}}>Close</button>
-        <button type="button" class="btn btn-success" {{action "enterEndpoint"}}>Go!</button>
+    <div class="<col col-xs-2">
+      <div class="input-group">
+        <span class="input-group-addon">Port</span>
+        {{input type="text" action="enterEndpoint" class="form-control" placeholder="80" value=port disabled=true}}
+      </div>
     </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" {{action "close"}}>Close</button>
+  <button type="button" class="btn btn-success" {{action "enterEndpoint"}}>Go!</button>
+</div>
 {{/modal-dialog}}

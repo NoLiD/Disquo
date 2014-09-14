@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    actions: {
-        didTransition: function() {
-            this.send('openModal', 'endpoint');
-        }
+  actions: {
+    didTransition: function() {
+      this.send('openModal', 'endpoint');
     }
+  }
 });

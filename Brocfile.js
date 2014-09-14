@@ -20,21 +20,20 @@ var app = new EmberApp();
 // along with the exports of each module as its value.
 
 // Bootswatch darkly
-app.import('vendor/bootswatch-dist/css/bootstrap.css');
-app.import('vendor/bootswatch-dist/js/bootstrap.js');
+app.import('bower_components/bootswatch-dist/css/bootstrap.css');
+app.import('bower_components/bootswatch-dist/js/bootstrap.js');
 
-// Underscore
-app.import('vendor/underscore/underscore.js');
-app.import('vendor/underscore.string/lib/underscore.string.js');
+// Although it's no longer a dependency we require, Jassa still needs it >.<
+app.import('bower_components/underscore/underscore.js');
 
 // Jassa
-app.import('vendor/jassa/jassa.js');
+app.import('bower_components/jassa/jassa.js');
 
 // Fonts
-var extraAssets = pickFiles('vendor/bootswatch-dist/fonts', {
-    srcDir: '/',
-    files: ['**/*.woff', '**/*.ttf', '**/*.svg', '**/*eot'],
-    destDir: '/fonts'
+var extraAssets = pickFiles('bower_components/bootswatch-dist/fonts', {
+  srcDir: '/',
+  files: ['**/*.woff', '**/*.ttf', '**/*.svg', '**/*eot'],
+  destDir: '/fonts'
 });
 
 module.exports = mergeTrees([app.toTree(), extraAssets]);

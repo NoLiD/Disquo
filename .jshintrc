@@ -2,10 +2,10 @@
   "predef": {
     "document": true,
     "window": true,
+    "-Promise": true,
     "DisquoENV": true,
     "Jassa": true,
-    "$": true,
-    "_": true
+    "$": true
   },
   "browser" : true,
   "boss" : true,
@@ -31,5 +31,5 @@
   "white": false,
   "eqnull": true,
   "esnext": true,
-  "unused": false
+  "unused": true
 }

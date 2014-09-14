@@ -1,18 +1,18 @@
 h1, h2, h3, h4, h5, h6 {
-    margin: 0 0 0.2em 0;
-    padding: 0;
+  margin: 0 0 0.2em 0;
+  padding: 0;
 }
 h1, h2, h3 {
-    font-size: 1.5em;
-    line-height: 1.5em;
+  font-size: 1.5em;
+  line-height: 1.5em;
 }
 h4, h5, h6 {
-    font-size: 1.2em;
-    line-height: 1.2em;
+  font-size: 1.2em;
+  line-height: 1.2em;
 }
 
 * {
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 
@@ -27,48 +27,48 @@ main layout
 .panel,
 .panel-heading,
 .panel-body {
-    margin: 0;
+  margin: 0;
 }
 
 .container-fixed {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
 }
 
 .container-fixed .col {
-    height: 100%;
-    padding: 0;
-    overflow-y: hidden;
-    overflow-x: visible;
+  height: 100%;
+  padding: 0;
+  overflow-y: hidden;
+  overflow-x: visible;
 }
 
 .navbar {
-    height: 8%;
+  height: 8%;
 }
 
 .navbar-collapse {
-    background-color: #00bc8c;
+  background-color: #00bc8c;
 }
 
 .navbar-collapse.in {
-    background-color: #00bc8c;
-    border-bottom: 1px solid #009871;
+  background-color: #00bc8c;
+  border-bottom: 1px solid #009871;
 }
 
 .panels {
-    height: 92%;
+  height: 92%;
 }
 
 .panel-heading {
-    font-size: 1.2em;
-    padding-right: 0px;
+  font-size: 1.2em;
+  padding-right: 0px;
 }
 
 .panel-heading .input-group {
-    padding: 0px 0px 0px 10px;
+  padding: 0px 0px 0px 10px;
 }
 
 
@@ -80,16 +80,16 @@ list items and tags
 
 
 .list-group-item {
-    cursor: default;
+  cursor: default;
 }
 .list-group-item p {
-    color: #888;
+  color: #888;
 }
 .list-group-item:hover {
-    background-color: #222222;
+  background-color: #222222;
 }
 .list-group-item:hover p {
-    color: inherit;
+  color: inherit;
 }
 .list-group-item .comment .badge  {
   background-color: inherit;
@@ -97,31 +97,31 @@ list items and tags
 
 /* panels */
 .panel {
-    height: 100%;
-    border-color: #00bc8c;
+  height: 100%;
+  border-color: #00bc8c;
 }
 
 .panel .panel-heading {
-    height: 2.8em;
-    border: thin solid #00bc8c;
-    border-left-width: 0;
-    border-right-width: 0;
+  height: 2.8em;
+  border: thin solid #00bc8c;
+  border-left-width: 0;
+  border-right-width: 0;
 }
 
 .panel .panel-body {
-    height: 90%; /* fallback for non-calc() browsers */
-    height: -webkit-calc(100% - 2.8em);
-    height: -moz-calc(100% - 2.8em);
-    height: calc(100% - 2.8em);
-    padding: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    word-wrap: break-word;
+  height: 90%; /* fallback for non-calc() browsers */
+  height: -webkit-calc(100% - 2.8em);
+  height: -moz-calc(100% - 2.8em);
+  height: calc(100% - 2.8em);
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  word-wrap: break-word;
 }
 
 .panel .panel-body ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 
@@ -130,16 +130,16 @@ Modals
 ***********************************/
 
 .modal-header .close {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 .modal-content {
-    background-color: #00bc8c;
+  background-color: #00bc8c;
 }
 
 .modal-header,
 .modal-footer {
-    background-color: #222222;
+  background-color: #222222;
 }
 
 
@@ -152,22 +152,22 @@ the original bottom right corner
 ***********************************/
 
 .ember-notify-cn {
-    width: 100%;
-    top: 0px;
+  width: 100%;
+  top: 0px;
 }
 .ember-notify {
-    margin: 0px;
-    width: 100%;
-    top: -150px;
-    left: 0px;
-    right: 0px;
+  margin: 0px;
+  width: 100%;
+  top: -150px;
+  left: 0px;
+  right: 0px;
 }
 
 .ember-notify-cn .ember-notify-show {
-    top: 0px;
-    right: 0px;
-    left: 0px;
-    width: 100%;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  width: 100%;
 }
 
 /**********************************

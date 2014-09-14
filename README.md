@@ -18,11 +18,8 @@ This project is still in very early stages of development. Proceed with caution.
 ## Run
 
 1. `ember server`
-2. Visit your Disquo at http://localhost:4200.
+2. Visit your Disquo at http://localhost:4200
 
-# TODO
+## Development
 
-- predicate view pane
-    - review the proposal from the meeting
-    - warp a demo to the style and data of the proposal
-    - mock hardcoded visual graph svg using d3
+For PRs or any sort of changes make sure that you're using [EditorConfig](http://editorconfig.org/) with your favourite editor.
