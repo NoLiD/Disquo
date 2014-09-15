@@ -7,33 +7,41 @@ export default Ember.Component.extend({
   classNames: ['panel',  'panel-primary'],
 
   initList: function() {
-    this.set('selectedItems', Ember.A());
+    this.set('selectedViews', Ember.A());
   }.on('didInsertElement'),
 
   updateURL: function() {
-    var items = this.get('selectedItems');
+    var items = this.get('selectedViews').mapBy('resource.uri');
 
     if (items.length === 0) { return; }
 
-    if (items.length === 1) {
-      this.sendAction('transitionAction', this.get('targetRoute'),
-                      'all', items.get('firstObject.resource.uri'));
-    } else {
-      // TODO: multiple selections
-    }
-  }.observes('selectedItems.[]'),
+    this.sendAction('transitionAction', this.get('targetRoute'),
+                      'all', JSON.stringify(items));
+
+  }.observes('selectedViews.[]'),
 
   clearSelection: function() {
-    var items = this.get('selectedItems');
+    var views = this.get('selectedViews');
 
-    items.forEach(function(view) {
+    views.forEach(function(view) {
       // if the list is filtered then the view might have been destroyed
       if (!view.get('isDestroyed')) {
         view.toggleActive();
       }
     });
 
-    items.clear();
+    views.clear();
+  },
+
+  actions: {
+    selected: function(view, picking) {
+      if (!picking) { this.clearSelection(); }
+
+      this.get('selectedViews').addObject(view);
+    },
+    deselected: function(view) {
+      this.get('selectedViews').removeObject(view);
+    }
   },
 
   searchResults: function() {
@@ -49,17 +57,6 @@ export default Ember.Component.extend({
       return regex.test(resource.get('label')) || regex.test(resource.get('comment'));
     });
   }.property('resources.@each', 'searchTerm'),
-
-  actions: {
-    selected: function(resource, picking) {
-      if (!picking) { this.clearSelection(); }
-
-      this.get('selectedItems').addObject(resource);
-    },
-    deselected: function(resource) {
-      this.get('selectedItems').removeObject(resource);
-    }
-  },
 
   _escapeRegExp: function(str) {
     return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");

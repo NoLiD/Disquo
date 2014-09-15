@@ -5,10 +5,10 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.resource('endpoint', { path: '/:endpoint_url/:port' }, function() {
-    this.route('types', { path: '/types/:query/:uri' });
-    this.route('things', { path: '/things/:query/:uri' });
-    this.route('predicates', { path: '/predicates/:query/:uri' });
+  this.resource('endpoint', { path: '/:url/:port' }, function() {
+    this.route('types', { path: '/types/:query/:selected' });
+    this.route('things', { path: '/things/:query/:selected' });
+    this.route('predicates', { path: '/predicates/:query/:selected' });
   });
   this.route('missing', { path: '*wildcard'});
 });

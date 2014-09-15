@@ -3,7 +3,7 @@ import Notify from 'ember-notify';
 
 export default Ember.Controller.extend({
   needs: ['endpoint'],
-  _endpoint: Ember.computed.alias('controllers.endpoint.model.endpoint_url'),
+  _endpoint: Ember.computed.alias('controllers.endpoint.model.url'),
 
   actions: {
     close: function() {

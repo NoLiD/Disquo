@@ -6,7 +6,11 @@ export default Ember.Route.reopen({
   model: function(params, transition, queryParams) {
     for (var prop in params) {
       if (params.hasOwnProperty(prop)) {
-        params[prop] = decodeURIComponent(params[prop]);
+        if (prop === 'selected') {
+          params[prop] = JSON.parse(decodeURIComponent(params[prop]));
+        } else {
+          params[prop] = decodeURIComponent(params[prop]);
+        }
       }
     }
     return this.decodedModel(params, transition, queryParams);

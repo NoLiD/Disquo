@@ -3,18 +3,20 @@ import Notify from 'ember-notify';
 
 export default Ember.Route.extend({
   titleToken: function(model) {
-    return model.endpoint_url;
+    return model.url;
   },
 
   decodedModel: function(params) {
-    return this.store.addEndpoint(params.endpoint_url, []).then(function() {
-      return params;
-    });
+    return this.store.addEndpoint(params.url, [])
+      .then(function() {
+        return params;
+      }
+    );
   },
 
   afterModel: function(model, transition) {
     if (transition.targetName === 'endpoint.index') {
-      this.transitionTo('endpoint.types', 'all', 'all');
+      this.transitionTo('endpoint.types', 'all', JSON.stringify(['all']));
     }
   },
 
