@@ -1,8 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  decodedModel: function() {
-    // Return an empty array for now
-    return Ember.A();
-  }
+    titleToken: function(model) {
+        return 'view of ' + model.uri;
+    },
+
+    decodedModel: function(params, transition) {
+        return this.store.find('predicate', params.query, params.uri).then(function(results) {
+            return Ember.$.extend(results, params);
+        });
+    }
 });
