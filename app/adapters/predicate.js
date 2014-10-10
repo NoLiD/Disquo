@@ -10,7 +10,7 @@ export default Ember.Object.extend({
         return new Ember.RSVP.Promise(function(resolve, reject) {
             queryExec.execSelect().then(function(resultSet) {
                 resolve({ predicates: service.resultsToArray(resultSet, 'predicate') });
-            }, function(error) {
+            }, function() {
                 reject('Error! Unable to fetch things');
             });
         });
