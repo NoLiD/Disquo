@@ -15,7 +15,6 @@ h4, h5, h6 {
   border-radius: 0 !important;
 }
 
-
 /*************************************************
 main layout
 *************************************************/
@@ -45,10 +44,6 @@ main layout
   overflow-x: visible;
 }
 
-.navbar {
-  height: 8%;
-}
-
 .navbar-collapse {
   background-color: #00bc8c;
 }
@@ -59,7 +54,7 @@ main layout
 }
 
 .panels {
-  height: 92%;
+  height: 100%;
 }
 
 .panel-heading {
@@ -68,16 +63,12 @@ main layout
 }
 
 .panel-heading .input-group {
-  padding: 0px 0px 0px 10px;
+  padding-left: 10px;
 }
-
-
-
 
 /*************************************************
 list items and tags
 *************************************************/
-
 
 .list-group-item {
   cursor: default;
@@ -99,6 +90,7 @@ list items and tags
 .panel {
   height: 100%;
   border-color: #00bc8c;
+  border-top: medium none;
 }
 
 .panel .panel-heading {
@@ -106,13 +98,11 @@ list items and tags
   border: thin solid #00bc8c;
   border-left-width: 0;
   border-right-width: 0;
+  border-top: medium none;
 }
 
 .panel .panel-body {
-  height: 90%; /* fallback for non-calc() browsers */
-  height: -webkit-calc(100% - 2.8em);
-  height: -moz-calc(100% - 2.8em);
-  height: calc(100% - 2.8em);
+  height: 90%;
   padding: 0;
   overflow-x: hidden;
   overflow-y: auto;
@@ -123,7 +113,6 @@ list items and tags
   list-style-type: none;
   padding: 0;
 }
-
 
 /**********************************
 Modals
@@ -141,7 +130,6 @@ Modals
 .modal-footer {
   background-color: #222222;
 }
-
 
 /**********************************
 Notifications
