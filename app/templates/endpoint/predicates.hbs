@@ -1,4 +1,8 @@
 <div class="panel panel-primary">
   <div class="panel-heading">Predicate View</div>
-  {{graph-view resource=uri predicates=predicates}}
+
+  {{graph-view
+    selected=selected
+    resources=predicates
+    transitionAction='transitionResources'}}
 </div>

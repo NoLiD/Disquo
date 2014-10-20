@@ -6,7 +6,7 @@ export default Ember.Route.extend({
     },
 
     decodedModel: function(params) {
-        return this.store.find('predicate', params.query, params.uri).then(function(results) {
+        return this.store.find('predicate', params.query, params.selected).then(function(results) {
             return Ember.$.extend(results, params);
         });
     }
