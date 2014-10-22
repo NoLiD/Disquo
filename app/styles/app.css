@@ -109,6 +109,10 @@ list items and tags
   word-wrap: break-word;
 }
 
+.panel .panel-body::-webkit-scrollbar {
+    display: none;
+}
+
 .panel .panel-body ul {
   list-style-type: none;
   padding: 0;
