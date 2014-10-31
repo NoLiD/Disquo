@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import Resource from './resource';
+import Query from './query';
 
 export default Ember.Object.extend({
   langEncoding: 'en',
-  askQuery: 'ASK { ?s ?p ?o }',
+  askQuery: Query.create({query: 'ASK { ?s ?p ?o }'}),
+  commentQuery: Query.create({query: 'SELECT DISTINCT ?comment {<{{uri}}> {{comment}} ?comment}'}),
 
   addEndpoint: function(url, initGraph) {
     // For now will just have a single 'endpoint'
@@ -14,8 +16,8 @@ export default Ember.Object.extend({
       if (endpoint) {
         resolve(endpoint);
       } else {
-        var service   = new Jassa.service.SparqlServiceHttp(url, initGraph),
-        queryExec = service.createQueryExecutionStr(this.get('askQuery'));
+        var service = new Jassa.service.SparqlServiceHttp(url, initGraph),
+        queryExec   = service.createQueryExecutionStr(this.get('askQuery').result());
 
         queryExec.execAsk().then(function() {
           this.set('endpoint', service);
@@ -38,11 +40,13 @@ export default Ember.Object.extend({
   },
 
   fetchComments: function(resource) {
-    var service = this.get('endpoint'),
-        commentQuery = 'SELECT DISTINCT ?comment {<' + resource.get('uri') + '> <http://www.w3.org/2000/01/rdf-schema#comment> ?comment}';
+    var service      = this.get('endpoint'),
+        commentQuery = this.get('commentQuery');
+
+    var query = commentQuery.result({uri: resource.get('uri')});
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      service.createQueryExecutionStr(commentQuery).execSelect().then(function(resultSet) {
+      service.createQueryExecutionStr(query).execSelect().then(function(resultSet) {
         var row, comment, lang;
 
         while (resultSet.hasNext()) {

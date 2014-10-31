@@ -1,12 +1,13 @@
 import Ember from 'ember';
+import Query from '../models/query';
 
 export default Ember.Object.extend({
-  all: function(service, selected) {
-    var queryExec,
-        query;
+  allQuery: Query.create({query: 'SELECT ?instance ?label WHERE { {{#each selected}} ?instance rdf:type <{{this}}> . {{/each}} ?instance {{label}} ?label } LIMIT 100'}),
 
-    query = 'SELECT ?instance ?label WHERE { ?instance rdf:type <' + selected.get('firstObject') + '> . ?instance <http://www.w3.org/2000/01/rdf-schema#label> ?label } LIMIT 100';
-    queryExec = service.createQueryExecutionStr(query);
+  all: function(service, selected) {
+    var queryExec, query = this.get('allQuery');
+
+    queryExec = service.createQueryExecutionStr(query.result({selected: selected}));
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       queryExec.execSelect().then(function(resultSet) {
