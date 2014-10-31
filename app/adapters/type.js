@@ -7,9 +7,10 @@ export default Ember.Object.extend({
   allQuery: Query.create({query: 'SELECT DISTINCT ?type ?label WHERE { [] a ?type . ?type {{label}} ?label } limit 100'}),
 
   all: function(service, selected) {
-    var queryExec;
+    var queryExec, query = this.get('allQuery');
 
-    queryExec = service.createQueryExecutionStr(this.get('allQuery').result());
+    query.set('context', {selected: selected});
+    queryExec = service.createQueryExecutionStr(query.get('result'));
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       queryExec.execSelect().then(function(resultSet) {

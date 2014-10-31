@@ -13,14 +13,15 @@ export default Ember.Object.extend({
     return Handlebars.compile(this.get('query'), {noEscape: true});
   }.property('query'),
 
-  result: function(context) {
+  result: function() {
     var template = this.get('template');
     var rdfRefs  = this.get('rdfRefs');
+    var context  = this.get('context');
 
-    if (context !== undefined) {
+    if (context) {
       return template(Ember.$.extend(context, rdfRefs));
     } else {
       return template(rdfRefs);
     }
-  }
+  }.property('context')
 });

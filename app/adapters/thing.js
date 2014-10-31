@@ -7,7 +7,8 @@ export default Ember.Object.extend({
   all: function(service, selected) {
     var queryExec, query = this.get('allQuery');
 
-    queryExec = service.createQueryExecutionStr(query.result({selected: selected}));
+    query.set('context', {selected: selected})
+    queryExec = service.createQueryExecutionStr(query.get('result'));
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       queryExec.execSelect().then(function(resultSet) {

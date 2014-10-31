@@ -17,7 +17,7 @@ export default Ember.Object.extend({
         resolve(endpoint);
       } else {
         var service = new Jassa.service.SparqlServiceHttp(url, initGraph),
-        queryExec   = service.createQueryExecutionStr(this.get('askQuery').result());
+        queryExec   = service.createQueryExecutionStr(this.get('askQuery.result'));
 
         queryExec.execAsk().then(function() {
           this.set('endpoint', service);
@@ -40,13 +40,15 @@ export default Ember.Object.extend({
   },
 
   fetchComments: function(resource) {
-    var service      = this.get('endpoint'),
-        commentQuery = this.get('commentQuery');
+    var queryExec,
+        service = this.get('endpoint'),
+        query   = this.get('commentQuery');
 
-    var query = commentQuery.result({uri: resource.get('uri')});
+    query.set('context', {uri: resource.get('uri')});
+    queryExec = service.createQueryExecutionStr(query.get('result'));
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      service.createQueryExecutionStr(query).execSelect().then(function(resultSet) {
+      queryExec.execSelect().then(function(resultSet) {
         var row, comment, lang;
 
         while (resultSet.hasNext()) {
