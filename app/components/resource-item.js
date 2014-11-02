@@ -39,8 +39,6 @@ export default Ember.Component.extend({
 
   actions: {
     showComment: function() {
-      if (!this.get('active')) { this.$().trigger('click'); }
-
       var resource = this.get('resource');
 
       if (resource.get('comments.length')) { return this.toggleComment(); }
