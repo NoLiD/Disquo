@@ -1,9 +1,9 @@
 import {
-  moduleForModel,
+  moduleFor,
   test
 } from 'ember-qunit';
 
-moduleFor('model:query', 'Query', {
+moduleFor('model:queries/query', 'QueriesQuery', {
   // Specify the other units that are required for this test.
   needs: []
 });

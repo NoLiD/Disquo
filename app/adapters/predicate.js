@@ -1,21 +1,25 @@
 import Ember from 'ember';
+import Query from '../models/queries/select-query';
 
 export default Ember.Object.extend({
-  all: function(service, selected) {
-    var queryExec, query;
+  allQuery: Query.create({template: 'SELECT ?predicate ?label WHERE { {{#each selected}} <{{this}}> ?predicate [] . {{/each}} ?predicate {{label}} ?label } LIMIT 100'}),
 
-    selected.forEach(function (res) {
+  all: function(service, selected) {
+    var query        = this.get('allQuery');
+
+    query.set('service', service);
+    query.set('context', {selected: selected});
+
+    selected.forEach(function () {
         // each res is a string uri of a selected thing.
         // construct query that gets incoming and outgoing predicates for each
     });
 
     // TODO: currently only gets outgoing predicates for first selected thing
-    query = 'SELECT ?predicate ?label WHERE { <' + selected.get('firstObject') + '> ?predicate [] . ?predicate <http://www.w3.org/2000/01/rdf-schema#label> ?label } LIMIT 100';
-    queryExec = service.createQueryExecutionStr(query);
 
-    return new Ember.RSVP.Promise(function(resolve, reject) {
-      queryExec.execSelect().then(function(resultSet) {
-        
+
+    return query.get('result').then(function(result) {
+
         // TODO: extend service in model/store.js to make result obj.  use the
         //       model/resource.js :
         // [
@@ -31,10 +35,11 @@ export default Ember.Object.extend({
         //   },
         //   ...
         // ]
-        resolve({ predicates: service.resultsToArray(resultSet, 'predicate') });
-      }, function() {
-        reject('Error! Unable to fetch things');
-      });
-    });
+        result = query.resultsToArray(result, 'predicate');
+        return { things: result, selected: selected };
+      }, function(error) {
+        return 'Unable to fetch predicates, error: ' + error;
+      }
+    );
   }
 });

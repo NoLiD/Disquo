@@ -4,7 +4,7 @@ export default Ember.Route.extend({
   titleToken: function(model) {
     var selected = model.selected;
 
-    if (selected.length === 1) {
+    if (selected && selected.length === 1) {
       var uri = selected.get('firstObject');
 
       if (uri === 'all') {

@@ -1,6 +1,6 @@
 import { test, moduleFor } from 'ember-qunit';
 
-moduleFor('route:endpoint/things', 'EndpointThingsRoute', {
+moduleFor('route:endpoint.things', 'EndpointThingsRoute', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

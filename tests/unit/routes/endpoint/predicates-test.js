@@ -1,6 +1,6 @@
 import { test, moduleFor } from 'ember-qunit';
 
-moduleFor('route:endpoint/predicates', 'EndpointPredicatesRoute', {
+moduleFor('route:endpoint.predicates', 'EndpointPredicatesRoute', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

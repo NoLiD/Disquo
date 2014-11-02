@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-  lang: Ember.computed.oneWay('store.langEncoding'),
+  lang:'en',
 
   init: function() {
     this.set('labels', Ember.Map.create());
