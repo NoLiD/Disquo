@@ -4,29 +4,32 @@ import Query from './query';
 
 export default Ember.Object.extend({
   langEncoding: 'en',
-  askQuery: Query.create({query: 'ASK { ?s ?p ?o }'}),
-  commentQuery: Query.create({query: 'SELECT DISTINCT ?comment {<{{uri}}> {{comment}} ?comment}'}),
+  askQuery: Query.create({template: 'ASK { ?s ?p ?o }'}),
+  commentQuery: Query.create({template: 'SELECT DISTINCT ?comment {<{{uri}}> {{comment}} ?comment}'}),
 
   addEndpoint: function(url, initGraph) {
     // For now will just have a single 'endpoint'
     // Querying multiple endpoints will require a collection
-    var endpoint = this.get('endpoint');
+    var endpoint = this.get('endpoint'),
+        query    = this.get('askQuery'),
+        self     = this;
 
-    return new Ember.RSVP.Promise(function(resolve, reject) {
-      if (endpoint) {
-        resolve(endpoint);
-      } else {
-        var service = new Jassa.service.SparqlServiceHttp(url, initGraph),
-        queryExec   = service.createQueryExecutionStr(this.get('askQuery.result'));
 
-        queryExec.execAsk().then(function() {
-          this.set('endpoint', service);
-          resolve(service);
-        }.bind(this), function() {
-          reject('Error! Couldn\'t connect to ' + url);
-        });
-      }
-    }.bind(this));
+    if (endpoint) {
+      return Ember.RSVP.Promise.resolve(endpoint);
+    }
+
+    var service = new Jassa.service.SparqlServiceHttp(url, initGraph);
+
+    query.set('service', service);
+
+    return query.get('result')
+          .then(function() {
+            self.set('endpoint', service);
+            return service;
+          }, function(error) {
+            return 'Unable to connect to ' + url + ', error: ' + error;
+          });
   },
 
   find: function(name, method, params) {
@@ -40,34 +43,34 @@ export default Ember.Object.extend({
   },
 
   fetchComments: function(resource) {
-    var queryExec,
-        service = this.get('endpoint'),
+    var service = this.get('endpoint'),
         query   = this.get('commentQuery');
 
+    var jsonToResult = Jassa.service.ServiceUtils.jsonToResultSet;
+
+    query.set('service', service);
     query.set('context', {uri: resource.get('uri')});
-    queryExec = service.createQueryExecutionStr(query.get('result'));
 
-    return new Ember.RSVP.Promise(function(resolve, reject) {
-      queryExec.execSelect().then(function(resultSet) {
-        var row, comment, lang;
+    return query.get('result')
+          .then(jsonToResult)
+          .then(function(result) {
+            var row, comment, lang;
 
-        while (resultSet.hasNext()) {
-          row     = resultSet.nextBinding();
-          comment = row.varNameToEntry.comment.node.literalLabel.val;
-          lang    = row.varNameToEntry.comment.node.literalLabel.lang;
+            while (result.hasNext()) {
+              row     = result.nextBinding();
+              comment = row.varNameToEntry.comment.node.literalLabel.val;
+              lang    = row.varNameToEntry.comment.node.literalLabel.lang;
 
-          resource.addComment(comment, lang);
-        }
+              resource.addComment(comment, lang);
+            }
 
-        if (!resource.get('comments.length')) {
-          resource.addComment('This resource has no description');
-        }
-
-        resolve();
-      }.bind(this), function(error) {
-        reject(error);
-      });
-    }.bind(this));
+            if (!resource.get('comments.length')) {
+              resource.addComment('This resource has no description');
+            }
+          }, function(error) {
+            return 'Unable to fetch comments for ' + resource.get('uri') + ', error: ' + error;
+          }
+    );
   },
 
   init: function() {

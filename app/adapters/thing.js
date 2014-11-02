@@ -2,20 +2,22 @@ import Ember from 'ember';
 import Query from '../models/query';
 
 export default Ember.Object.extend({
-  allQuery: Query.create({query: 'SELECT ?instance ?label WHERE { {{#each selected}} ?instance rdf:type <{{this}}> . {{/each}} ?instance {{label}} ?label } LIMIT 100'}),
+  allQuery: Query.create({template: 'SELECT ?instance ?label WHERE { {{#each selected}} ?instance rdf:type <{{this}}> . {{/each}} ?instance {{label}} ?label } LIMIT 100'}),
 
   all: function(service, selected) {
-    var queryExec, query = this.get('allQuery');
+    var query        = this.get('allQuery');
+    var jsonToResult = Jassa.service.ServiceUtils.jsonToResultSet;
 
-    query.set('context', {selected: selected})
-    queryExec = service.createQueryExecutionStr(query.get('result'));
+    query.set('service', service);
+    query.set('context', {selected: selected});
 
-    return new Ember.RSVP.Promise(function(resolve, reject) {
-      queryExec.execSelect().then(function(resultSet) {
-        resolve({ things: service.resultsToArray(resultSet, 'instance'), selected: selected });
-      }, function() {
-        reject('Error! Unable to fetch things');
-      });
-    });
+    return query.get('result')
+          .then(jsonToResult)
+          .then(function(result) {
+            return { things: service.resultsToArray(result, 'instance'), selected: selected };
+          }, function(error) {
+            return 'Unable to fetch things, error: ' + error;
+          }
+    );
   }
 });

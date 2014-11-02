@@ -9,19 +9,30 @@ export default Ember.Object.extend({
     comment:'<http://www.w3.org/2000/01/rdf-schema#comment>'
   },
 
-  template: function() {
-    return Handlebars.compile(this.get('query'), {noEscape: true});
-  }.property('query'),
-
-  result: function() {
-    var template = this.get('template');
-    var rdfRefs  = this.get('rdfRefs');
-    var context  = this.get('context');
+  query: function() {
+    var query   = Handlebars.compile(this.get('template'), {noEscape: true});
+    var rdfRefs = this.get('rdfRefs');
+    var context = this.get('context');
 
     if (context) {
-      return template(Ember.$.extend(context, rdfRefs));
+      return query(Ember.$.extend(context, rdfRefs));
     } else {
-      return template(rdfRefs);
+      return query(rdfRefs);
     }
-  }.property('context')
+  }.property('context'),
+
+  result: function() {
+    var query   = this.get('query');
+    var service = this.get('service');
+
+    var queryExec = service.createQueryExecutionStr(query);
+
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      queryExec.execAny().then(function(result) {
+        resolve(result);
+      }, function(error) {
+        reject(error);
+      });
+    });
+  }.property('query')
 });
