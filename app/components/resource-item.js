@@ -39,12 +39,19 @@ export default Ember.Component.extend({
 
   actions: {
     showComment: function() {
+      if (this.get('fetching')) { return; }
+
+      var self     = this;
       var resource = this.get('resource');
 
       if (resource.get('comments.length')) { return this.toggleComment(); }
 
+      this.set('fetching', true);
+
       this.store.fetchComments(resource).catch(function() {
-        Notify.error('Unable to fetch comment for ' + this.get('resource.uri'));
+        Notify.error('Unable to fetch comments for ' + self.get('resource.uri'));
+      }).finally(function() {
+        self.set('fetching', false);
       });
     }
   }
