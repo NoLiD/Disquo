@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import HelperMixin from '../../mixins/query-helper';
 
-export default Ember.Object.extend(HelperMixin, {
+export default Ember.Object.extend({
   rdfRefs: {
     label:'<http://www.w3.org/2000/01/rdf-schema#label>',
     comment:'<http://www.w3.org/2000/01/rdf-schema#comment>'
