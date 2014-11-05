@@ -1,14 +1,15 @@
 import Ember from 'ember';
-import Query from '../models/queries/select-query';
+import BaseAdapter from './base-adapter';
+import Query from '../models/queries/paginated-query';
 
-export default Ember.Object.extend({
-  allQuery: Query.create({template: 'SELECT ?predicate ?label WHERE { {{#each selected}} <{{this}}> ?predicate [] . {{/each}} ?predicate {{label}} ?label } LIMIT 100'}),
+export default BaseAdapter.extend({
+  AllQuery: Query.extend({variable: 'predicate', template: 'SELECT ?predicate ?label WHERE { {{#each selected}} <{{this}}> ?predicate [] . {{/each}} ?predicate {{label}} ?label }'}),
 
   all: function(service, selected) {
-    var query        = this.get('allQuery');
-
-    query.set('service', service);
-    query.set('context', {selected: selected});
+    var query = this.getOrCreateQuery('all',
+                                      selected,
+                                      this.get('AllQuery'),
+                                      service);
 
     selected.forEach(function () {
         // each res is a string uri of a selected thing.
@@ -35,10 +36,9 @@ export default Ember.Object.extend({
         //   },
         //   ...
         // ]
-        result = query.resultsToArray(result, 'predicate');
         return { things: result, selected: selected };
-      }, function(error) {
-        return 'Unable to fetch predicates, error: ' + error;
+      }, function() {
+        return Ember.RSVP.Promise.reject('Unable to fetch predicates of ' + selected.toString());
       }
     );
   }

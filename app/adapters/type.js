@@ -1,23 +1,23 @@
 import Ember from 'ember';
+import BaseAdapter from './base-adapter';
 import Query from '../models/queries/paginated-query';
 
-export default Ember.Object.extend({
+export default BaseAdapter.extend({
   // TODO: Remove limit and add page control
   // Which is needed with most queries
-  allQuery: Query.create({template: 'SELECT DISTINCT ?type ?label WHERE { [] a ?type . ?type {{label}} ?label }'}),
+  AllQuery: Query.extend({variable: 'type', template: 'SELECT DISTINCT ?type ?label WHERE { [] a ?type . ?type {{label}} ?label }'}),
 
   all: function(service, selected) {
-    var query        = this.get('allQuery');
-
-    query.set('service', service);
-    query.set('context', {selected: selected});
+    var query = this.getOrCreateQuery('all',
+                                      selected,
+                                      this.get('AllQuery'),
+                                      service);
 
     return query.get('result')
           .then(function(result) {
-            result = query.resultsToArray(result, 'type');
             return { types: result, selected: selected };
-          }, function(error) {
-            return 'Unable to fetch types, error: ' + error;
+          }, function() {
+            return Ember.RSVP.Promise.reject('Unable to fetch types of ' + selected.toString());
           }
     );
   }

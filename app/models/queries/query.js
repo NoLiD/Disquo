@@ -29,6 +29,7 @@ export default Ember.Object.extend(HelperMixin, {
       queryExec.execAny().then(function(result) {
         resolve(result);
       }, function(error) {
+        console.error('Error requesting query\'' + query + '\', error: ' + error);
         reject(error);
       });
     });

@@ -5,7 +5,8 @@
     "-Promise": true,
     "DisquoENV": true,
     "Jassa": true,
-    "$": true
+    "$": true,
+    "Handlebars": true
   },
   "browser" : true,
   "boss" : true,

@@ -16,6 +16,6 @@ export default Query.extend({
 
     this.set('query', query);
 
-    return this._super();
+    return this._super().then(this.resultToResources.bind(this));
   }.property('query')
 });

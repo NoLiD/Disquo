@@ -26,8 +26,8 @@ export default Ember.Object.extend({
           .then(function() {
             self.set('endpoint', service);
             return service;
-          }, function(error) {
-            return 'Unable to connect to ' + url + ', error: ' + error;
+          }, function() {
+            return Ember.RSVP.Promise.reject('Unable to connect to ' + url);
           });
   },
 
@@ -46,14 +46,15 @@ export default Ember.Object.extend({
         query   = this.get('commentQuery');
 
     query.set('service', service);
-    query.set('context', {uri: resource.get('uri')});
+    query.set('resource', resource);
+    query.set('context', {uri: resource.get('uri'),});
 
     return query.get('result')
-          .then(function(result) {
-            return query.resultsToComments(result, resource);
-          }, function(error) {
-            return 'Unable to fetch comments for ' + resource.get('uri') + ', error: ' + error;
-          }
-    );
+          .then(query.resultToComments.bind(query))
+          .catch(function(error) {
+            console.error('Error fetching comments: ' + error);
+            // for propagation
+            return error;
+          });
   }
 });
