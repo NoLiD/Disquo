@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import BaseAdapter from './base-adapter';
-import Query from '../models/queries/paginated-query';
+import Query from '../models/queries/async-select';
 
 export default BaseAdapter.extend({
   AllQuery: Query.extend({variable: 'instance', template: 'SELECT ?instance ?label WHERE { {{#each selected}} ?instance a <{{this}}> . {{/each}} ?instance {{label}} ?label }'}),

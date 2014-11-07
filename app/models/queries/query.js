@@ -6,8 +6,12 @@ export default Ember.Object.extend({
     comment:'<http://www.w3.org/2000/01/rdf-schema#comment>'
   },
 
+  _query: function() {
+    return Handlebars.compile(this.get('template'), {noEscape: true});
+  }.property('template'),
+
   query: function() {
-    var query   = Handlebars.compile(this.get('template'), {noEscape: true});
+    var query   = this.get('_query');
     var rdfRefs = this.get('rdfRefs');
     var context = this.get('context');
 

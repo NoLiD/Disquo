@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import BaseAdapter from './base-adapter';
-import Query from '../models/queries/paginated-query';
+import Query from '../models/queries/async-select';
 
 export default BaseAdapter.extend({
   // TODO: Remove limit and add page control

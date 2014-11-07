@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('model:queries/paginated-query', 'QueriesPaginatedQuery', {
+moduleFor('model:queries/async-select', 'QueriesAsyncSelect', {
   // Specify the other units that are required for this test.
   needs: []
 });

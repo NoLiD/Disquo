@@ -1,4 +1,4 @@
-import Query from './select-query';
+import Query from './select';
 
 export default Query.extend({
   init: function() {

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import BaseAdapter from './base-adapter';
-import Query from '../models/queries/paginated-query';
+import Query from '../models/queries/async-select';
 
 export default BaseAdapter.extend({
   AllQuery: Query.extend({variable: 'predicate', template: 'SELECT ?predicate ?label WHERE { {{#each selected}} <{{this}}> ?predicate [] . {{/each}} ?predicate {{label}} ?label }'}),
@@ -17,7 +17,7 @@ export default BaseAdapter.extend({
     });
 
     // TODO: currently only gets outgoing predicates for first selected thing
-
+    // incoming: SELECT ?predicate ?label WHERE { [] ?predicate <{{selected}}> . {{/each}} ?predicate {{label}} ?label }
 
     return query.get('result').then(function(result) {
 

@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('model:queries/ask-query', 'QueriesAskQuery', {
+moduleFor('model:queries/ask', 'QueriesAsk', {
   // Specify the other units that are required for this test.
   needs: []
 });

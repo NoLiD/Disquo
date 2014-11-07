@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import AskQuery from './queries/ask-query';
-import SelectQuery from './queries/select-query';
+import AskQuery from './queries/ask';
+import SelectQuery from './queries/select';
 
 export default Ember.Object.extend({
   askQuery: AskQuery.create({template: 'ASK { ?s ?p ?o }'}),
