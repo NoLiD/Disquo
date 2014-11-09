@@ -5,11 +5,8 @@ import Query from '../models/queries/async-select';
 export default BaseAdapter.extend({
   AllQuery: Query.extend({variable: 'predicate', template: 'SELECT ?predicate ?label WHERE { {{#each selected}} <{{this}}> ?predicate [] . {{/each}} ?predicate {{label}} ?label }'}),
 
-  all: function(service, selected) {
-    var query = this.getOrCreateQuery('all',
-                                      selected,
-                                      this.get('AllQuery'),
-                                      service);
+  all: function(selected) {
+    var query = this.getOrCreateQuery('all', selected, this.get('AllQuery'));
 
     selected.forEach(function () {
         // each res is a string uri of a selected thing.

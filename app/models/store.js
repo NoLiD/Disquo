@@ -3,20 +3,14 @@ import AskQuery from './queries/ask';
 import SelectQuery from './queries/select';
 
 export default Ember.Object.extend({
-  askQuery: AskQuery.create({template: 'ASK { ?s ?p ?o }'}),
+  askQuery: AskQuery.extend({template: 'ASK { ?s ?p ?o }'}),
   commentQuery: SelectQuery.create({template: 'SELECT DISTINCT ?comment {<{{uri}}> {{comment}} ?comment}'}),
 
   addEndpoint: function(url, initGraph) {
     // For now will just have a single 'endpoint'
     // Querying multiple endpoints will require a collection
-    var endpoint = this.get('endpoint'),
-        query    = this.get('askQuery'),
-        self     = this;
-
-
-    if (endpoint) {
-      return Ember.RSVP.Promise.resolve(endpoint);
-    }
+    var self     = this,
+        query    = this.get('askQuery').create();
 
     var service = new Jassa.service.SparqlServiceHttp(url, initGraph);
 
@@ -35,7 +29,7 @@ export default Ember.Object.extend({
     var adapter = this.container.lookup('adapter:' + name);
 
     if (adapter.get(method)) {
-      return adapter[method](this.get('endpoint'), params);
+      return adapter[method](params);
     } else {
       return Ember.RSVP.reject('Error! Invalid query');
     }

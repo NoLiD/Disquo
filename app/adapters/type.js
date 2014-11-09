@@ -7,11 +7,8 @@ export default BaseAdapter.extend({
   // Which is needed with most queries
   AllQuery: Query.extend({variable: 'type', template: 'SELECT DISTINCT ?type ?label WHERE { [] a ?type . ?type {{label}} ?label }'}),
 
-  all: function(service, selected) {
-    var query = this.getOrCreateQuery('all',
-                                      selected,
-                                      this.get('AllQuery'),
-                                      service);
+  all: function(selected) {
+    var query = this.getOrCreateQuery('all', selected, this.get('AllQuery'));
 
     return query.get('result')
           .then(function(result) {

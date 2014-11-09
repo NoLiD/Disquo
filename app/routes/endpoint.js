@@ -16,6 +16,11 @@ export default Ember.Route.extend({
 
   afterModel: function(model, transition) {
     if (transition.targetName === 'endpoint.index') {
+      // Reset every view!
+      this.controllerFor('endpoint.types').set('model', undefined);
+      this.controllerFor('endpoint.things').set('model', undefined);
+      this.controllerFor('endpoint.predicates').set('model', undefined);
+
       this.transitionTo('endpoint.types', 'all', JSON.stringify(['all']));
     }
   },
