@@ -6,10 +6,10 @@ import Ember from 'ember';
 //      triggered by 1 or more thing resources selected
 //      multiple thing resources selected, multiple predicates shown as nodes
 //
-// 2. fact view 
+// 2. fact view
 //      triggered by single predicate (node) selected from feature view
 //      shows multiple thing resources, single predicate, multiple values
-// 
+//
 // Both 1 and 2 render a graph with unlabeled, directed edges centered around a
 // set of selected thing resource nodes.
 
@@ -22,16 +22,8 @@ export default Ember.Component.extend({
     //TODO:
     //resources is a currently list of 'resource' objects from models/resource
     //see adapters/predicate.js for query and query execution
-    
-    this.get('resources').forEach(function (res, i) {
-        // each object is for one of the selected items (thing resources)
-        
-        // this component should not care whether or not only predicates shared
-        // by each of the selected resources are shown
 
-        //console.log(i);
-        //console.log(res.get('label'));
-    });
+    // Result arrays: resources.outgoing and resources.incoming
 
   }.observes('resources')
 });

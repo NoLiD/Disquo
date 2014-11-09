@@ -3,39 +3,24 @@ import BaseAdapter from './base-adapter';
 import Query from '../models/queries/async-select';
 
 export default BaseAdapter.extend({
-  AllQuery: Query.extend({variable: 'predicate', template: 'SELECT ?predicate ?label WHERE { {{#each selected}} <{{this}}> ?predicate [] . {{/each}} ?predicate {{label}} ?label }'}),
+  Outgoing: Query.extend({variable: 'predicate', template: 'SELECT ?predicate ?label WHERE { {{#each selected}} <{{this}}> ?predicate [] . {{/each}} ?predicate {{label}} ?label }'}),
+  Incoming: Query.extend({variable: 'predicate', template: 'SELECT ?predicate ?label WHERE { {{#each selected}} [] ?predicate <{{this}}> . {{/each}} ?predicate {{label}} ?label }'}),
 
   all: function(selected) {
-    var query = this.getOrCreateQuery('all', selected, this.get('AllQuery'));
+    var incoming = this.getOrCreateQuery('all.in', selected, this.get('Incoming')),
+        outgoing = this.getOrCreateQuery('all.out', selected, this.get('Outgoing'));
 
-    selected.forEach(function () {
-        // each res is a string uri of a selected thing.
-        // construct query that gets incoming and outgoing predicates for each
-    });
+    var queries = {
+      outgoing: outgoing.get('result'),
+      incoming: incoming.get('result')
+    };
 
-    // TODO: currently only gets outgoing predicates for first selected thing
-    // incoming: SELECT ?predicate ?label WHERE { [] ?predicate <{{selected}}> . {{/each}} ?predicate {{label}} ?label }
-
-    return query.get('result').then(function(result) {
-
-        // TODO: extend service in model/store.js to make result obj.  use the
-        //       model/resource.js :
-        // [
-        //   {
-        //    'resource': selected_thing_1,
-        //    'outpreds': [outgoing_predicate_1, ...],
-        //    'inpreds': [incoming_predicate_1, ...]
-        //   },
-        //   {
-        //    'resource': selected_thing_2,
-        //    'outpreds': [outgoing_predicate_1, ...],
-        //    'inpreds': [incoming_predicate_1, ...]
-        //   },
-        //   ...
-        // ]
-        return { things: result, selected: selected };
-      }, function() {
-        return Ember.RSVP.Promise.reject('Unable to fetch predicates of ' + selected.toString());
+    return Ember.RSVP.hash(queries).then(function(results) {
+      return { predicates: {outgoing: results.outgoing, incoming: results.incoming},
+                selected: selected };
+    }, function() {
+      return Ember.RSVP.Promise.reject('Unable to fetch predicates of ' +
+                                        selected.toString());
       }
     );
   }

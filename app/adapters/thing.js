@@ -12,7 +12,8 @@ export default BaseAdapter.extend({
           .then(function(result) {
             return { things: result, selected: selected };
           }, function() {
-            return Ember.RSVP.Promise.reject('Unable to fetch things of ' + selected.toString());
+            return Ember.RSVP.Promise.reject('Unable to fetch things of ' +
+                                              selected.toString());
           }
     );
   }
