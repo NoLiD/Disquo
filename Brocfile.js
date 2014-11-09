@@ -29,6 +29,16 @@ app.import('bower_components/underscore/underscore.js');
 // Jassa
 app.import('bower_components/jassa/jassa.js');
 
+// cytoscape.js
+app.import('bower_components/cytoscape/dist/cytoscape.js');
+
+// Shims for imports
+app.import('vendor/app-shims.js', {
+  exports: {
+    cytoscape: ['default']
+  }
+});
+
 // Fonts
 var extraAssets = pickFiles('bower_components/bootswatch-dist/fonts', {
   srcDir: '/',

@@ -13,7 +13,8 @@
     "ember-qunit-notifications": "0.0.4",
     "qunit": "~1.15.0",
     "jassa": "v0.0.4-SNAPSHOT",
-    "bootswatch-dist": "3.2.0-darkly"
+    "bootswatch-dist": "3.3.0-darkly",
+    "cytoscape": "2.3.x"
   },
   "resolutions": {
     "jquery": ">=1.11.x <2.0.0"

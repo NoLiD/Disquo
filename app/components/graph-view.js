@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Cytoscape from 'cytoscape';
 
 // this component may not be fully reusable between both graph views:
 //
