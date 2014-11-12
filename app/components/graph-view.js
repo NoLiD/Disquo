@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Cytoscape from 'cytoscape';
+import cytoscape from 'cytoscape';
 
 // this component may not be fully reusable between both graph views:
 //
@@ -20,10 +20,21 @@ export default Ember.Component.extend({
 
   //this observes the resources list and is invoked on initialization
   draw: function () {
-    //TODO:
-    //resources is a currently list of 'resource' objects from models/resource
-    //see adapters/predicate.js for query and query execution
+	var canv = this.$().append("canvas");
+	canv.addClass("graph");
 
+	var cy = cytoscape({
+		container: canv,
+		ready: function () {
+			console.log("Cytoscape ready.");
+		}
+	});
+
+	cy.add({
+		group: 'nodes',
+		data: { id: 'n1' },
+		position: { x: 50, y: 50 }
+	});
     // Result arrays: resources.outgoing and resources.incoming
 
   }.observes('resources')
