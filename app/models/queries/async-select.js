@@ -1,21 +1,24 @@
+import Ember from 'ember';
 import Query from './select';
 
 export default Query.extend({
-  init: function() {
-    this._super();
-
-    this.set('limit', 100);
-    this.set('offset', 0);
-  },
+  limit: 100,
+  offset: 0,
 
   result: function() {
-    var query = this.get('query');
+    var self   = this,
+        limit  = this.get('limit'),
+        offset = this.get('offset');
 
-    query +=' LIMIT ' + this.get('limit') +
-            ' OFFSET ' + this.get('offset');
+    return this._super()
+            .then(function(result) {
+              if (result.getIterator().getArray().length === limit) {
+                  self.set('offset', offset + limit);
 
-    this.set('query', query);
-
-    return this._super().then(this.resultToResources.bind(this));
-  }.property('query')
+                  Ember.run.next(self, function() { this.get('result'); });
+              }
+              return result;
+            })
+            .then(this.resultToResources.bind(this));
+  }.property('query', 'offset')
 });

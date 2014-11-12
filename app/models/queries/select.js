@@ -20,7 +20,8 @@ export default Query.extend({
   resultToResources: function(result) {
     var row, entry, uri, label, lang,
     variable = this.get('variable'),
-    map      = this.get('resourcesMap');
+    map      = this.get('resourcesMap'),
+    arr      = this.get('resourcesArray');
 
     while (result.hasNext()) {
       row   = result.nextBinding();
@@ -36,10 +37,9 @@ export default Query.extend({
         map.set(uri, entry);
       }
     }
-    var arr = Ember.A();
 
     map.forEach(function(key, value) {
-      arr.pushObject(value);
+      if (!arr.contains(value)) { arr.pushObject(value); }
     });
     return arr;
   },

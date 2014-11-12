@@ -11,9 +11,9 @@ export default Ember.Object.extend({
   }.property('template'),
 
   query: function() {
-    var query   = this.get('_query');
-    var rdfRefs = this.get('rdfRefs');
-    var context = this.get('context');
+    var query   = this.get('_query'),
+        rdfRefs = this.get('rdfRefs'),
+        context = this.get('context');
 
     if (context) {
       return query(Ember.$.extend(context, rdfRefs));
@@ -23,8 +23,16 @@ export default Ember.Object.extend({
   }.property('context'),
 
   result: function() {
-    var query   = this.get('query');
-    var service = this.get('service');
+    var query   = this.get('query'),
+        limit   = this.get('limit'),
+        offset  = this.get('offset'),
+        service = this.get('service');
+
+    if (limit) {
+      query += ' LIMIT ' + limit;
+      if (offset) { query += ' OFFSET ' + offset; }
+    }
+
 
     var queryExec = service.createQueryExecutionStr(query);
 
