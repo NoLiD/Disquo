@@ -20,21 +20,25 @@ export default Ember.Component.extend({
 
   //this observes the resources list and is invoked on initialization
   draw: function () {
-	var canv = this.$().append("canvas");
-	canv.addClass("graph");
+        var canv = this.$('<canvas/>',{'class':'graph'});
+	this.$().append(canv);
 
 	var cy = cytoscape({
-		container: canv,
+		container: canv.get()[0],
 		ready: function () {
 			console.log("Cytoscape ready.");
+
+                        //TODO won't render
+                        this.add({
+                                group: 'nodes',
+                                data: { id: 'n1' },
+                                position: { x: 50, y: 50 }
+                        });
 		}
 	});
 
-	cy.add({
-		group: 'nodes',
-		data: { id: 'n1' },
-		position: { x: 50, y: 50 }
-	});
+
+
     // Result arrays: resources.outgoing and resources.incoming
 
   }.observes('resources')
