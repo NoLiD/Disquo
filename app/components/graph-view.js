@@ -16,30 +16,78 @@ import cytoscape from 'cytoscape';
 
 // Peek at http://jsbin.com/d3ember-barchart/13/edit
 export default Ember.Component.extend({
-  classNames: ['panel-body'],
+    classNames: ['panel-body'],
 
-  //this observes the resources list and is invoked on initialization
-  draw: function () {
-        var canv = this.$('<canvas/>',{'class':'graph'});
-	this.$().append(canv);
+    //this observes the resources list and is invoked on initialization
+    draw: function () {
+        var canv = this.$('<div/>');
+        canv.addClass('graph');
 
-	var cy = cytoscape({
-		container: canv.get()[0],
-		ready: function () {
-			console.log("Cytoscape ready.");
+        this.$().append(canv);
 
-                        //TODO won't render
-                        this.add({
-                                group: 'nodes',
-                                data: { id: 'n1' },
-                                position: { x: 50, y: 50 }
-                        });
-		}
-	});
+        canv.cytoscape({
+
+            style: cytoscape.stylesheet()
+                .selector('node')
+                  .css({
+                    'content': 'data(name)',
+                    'text-valign': 'center',
+                    'color': 'white',
+                    'background-color': '#ccc',
+                    'text-outline-width': 2,
+                    'text-outline-color': '#888'
+                  })
+                .selector('edge')
+                  .css({
+                    'target-arrow-shape': 'triangle',
+                    'width': 5
+                  })
+                .selector(':selected')
+                  .css({
+                    'background-color': 'black',
+                    'line-color': 'black',
+                    'target-arrow-color': 'black',
+                    'source-arrow-color': 'black'
+                  })
+                .selector('.faded')
+                  .css({
+                    'opacity': 0.25,
+                    'text-opacity': 0
+                  }),
+
+            elements: {
+                nodes: [
+                      { data: { id: 'j', name: 'Jerry' } },
+                      { data: { id: 'e', name: 'Elaine' } },
+                      { data: { id: 'k', name: 'Kramer' } },
+                      { data: { id: 'g', name: 'George' } }
+                    ],
+                    edges: [
+                      { data: { source: 'j', target: 'e' } },
+                      { data: { source: 'j', target: 'k' } },
+                      { data: { source: 'j', target: 'g' } },
+                      { data: { source: 'e', target: 'j' } },
+                      { data: { source: 'e', target: 'k' } },
+                      { data: { source: 'k', target: 'j' } },
+                      { data: { source: 'k', target: 'e' } },
+                      { data: { source: 'k', target: 'g' } },
+                      { data: { source: 'g', target: 'j' } }
+                    ]
+            },
+
+            layout: {
+                name: 'grid',
+                padding: 10
+            },
+
+            ready: function () {
+                console.log("Cytoscape ready.");
+            }
+        });
 
 
 
-    // Result arrays: resources.outgoing and resources.incoming
+        // Result arrays: resources.outgoing and resources.incoming
 
-  }.observes('resources')
+    }.observes('resources')
 });
