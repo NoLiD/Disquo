@@ -14,46 +14,78 @@ import cytoscape from 'cytoscape';
 // Both 1 and 2 render a graph with unlabeled, directed edges centered around a
 // set of selected thing resource nodes.
 
+// TODO: all nodes will either be central or outer - set styles differently
+//       (EX: selected things central, incoming/outgoing predicates outer)
+var graphstyle = cytoscape.stylesheet()
+    .selector('node')
+      .css({
+        'content': 'data(name)',
+        'text-valign': 'center',
+        'color': 'white',
+        'background-color': '#ccc',
+        'text-outline-width': 2,
+        'text-outline-color': '#888'
+      })
+    .selector('edge')
+      .css({
+        'target-arrow-shape': 'triangle',
+        'width': 5
+      })
+    .selector(':selected')
+      .css({
+        'background-color': 'black',
+        'line-color': 'black',
+        'target-arrow-color': 'black',
+        'source-arrow-color': 'black'
+      })
+    .selector('.faded')
+      .css({
+        'opacity': 0.25,
+        'text-opacity': 0
+      });
+
 // Peek at http://jsbin.com/d3ember-barchart/13/edit
 export default Ember.Component.extend({
     classNames: ['panel-body'],
 
     //this observes the resources list and is invoked on initialization
     draw: function () {
+        
+        // build node array.  make each member of the selection a central node
+        // and each incoming or outgoing predicate an outer node
+
+        // PROBLEMS
+        
+        // TODO: the selected array is no longer an array of resources with
+        //       label getters - it's just an array of uris
+        console.log('Selected');
+        this.selected.forEach(function (s) {
+            console.log(s);
+        });
+        // TODO: there isn't enough information here to build a graph.  I need
+        //       to know which of the selected uris each outgoing predicate 
+        //       belongs to.
+        console.log('Outgoing');
+        this.resources.outgoing.forEach(function (s) {
+            console.log(s.get('label'));
+        });
+        // TODO: same problem as outgoing above.
+        console.log('Incoming');
+        this.resources.incoming.forEach(function (s) {
+            console.log(s.get('label'));
+        });
+        
+        // build edge array
+
+        // insert cytoscape container
         var canv = this.$('<div/>');
         canv.addClass('graph');
-
         this.$().append(canv);
 
+        // initialize cytoscape
         canv.cytoscape({
 
-            style: cytoscape.stylesheet()
-                .selector('node')
-                  .css({
-                    'content': 'data(name)',
-                    'text-valign': 'center',
-                    'color': 'white',
-                    'background-color': '#ccc',
-                    'text-outline-width': 2,
-                    'text-outline-color': '#888'
-                  })
-                .selector('edge')
-                  .css({
-                    'target-arrow-shape': 'triangle',
-                    'width': 5
-                  })
-                .selector(':selected')
-                  .css({
-                    'background-color': 'black',
-                    'line-color': 'black',
-                    'target-arrow-color': 'black',
-                    'source-arrow-color': 'black'
-                  })
-                .selector('.faded')
-                  .css({
-                    'opacity': 0.25,
-                    'text-opacity': 0
-                  }),
+            style: graphstyle,
 
             elements: {
                 nodes: [
@@ -76,6 +108,7 @@ export default Ember.Component.extend({
             },
 
             layout: {
+                // TODO: force layout, animate if possible.
                 name: 'grid',
                 padding: 10
             },
@@ -83,11 +116,9 @@ export default Ember.Component.extend({
             ready: function () {
                 console.log("Cytoscape ready.");
             }
+
+            // TODO: register tap event on each predicate for route transition.
         });
-
-
-
-        // Result arrays: resources.outgoing and resources.incoming
 
     }.observes('resources')
 });
