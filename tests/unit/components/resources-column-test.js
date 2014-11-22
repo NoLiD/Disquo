@@ -1,6 +1,6 @@
 import { test, moduleForComponent } from 'ember-qunit';
 
-moduleForComponent('resources-list', 'ResourcesListComponent', {
+moduleForComponent('resources-column', 'ResourcesColumnComponent', {
   // specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });

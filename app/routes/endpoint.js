@@ -37,6 +37,10 @@ export default Ember.Route.extend({
       }
 
       return true;
+    },
+
+    resourceTransition: function(route, query, selected) {
+      this.transitionTo(route, query, selected);
     }
   }
 });

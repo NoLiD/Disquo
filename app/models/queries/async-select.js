@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Query from './select';
 
 export default Query.extend({
-  limit: 100,
+  limit: 500,
   offset: 0,
 
   result: function() {

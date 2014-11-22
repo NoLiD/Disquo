@@ -1,0 +1,12 @@
+{{#if view.focused}}
+<div {{action "showComment" target=view}} class="comment pull-right">
+  <span class="badge">
+    <span class="glyphicon glyphicon-comment"></span>
+  </span>
+</div>
+{{/if}}
+
+<h4 class="ember-list-item-view-heading" {{bind-attr title=label}}>{{label}}
+  {{#if altLabel}}<span class="badge">{{altLabel}}</span>{{/if}}
+</h4>
+{{view view.PopoverView viewName='popoverView' data=comment}}

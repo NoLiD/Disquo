@@ -14,9 +14,9 @@
   {{/if}}
 </div>
 <div class="panel-body">
-  <ul class="list-group">
-    {{#each resource in searchResults}}
-    {{resource-item resource=resource onSelect='selected' onDeselect='deselected'}}
-    {{/each}}
-  </ul>
+  {{collection resourcesList
+      transitionAction='transitionResources'
+      content=searchResults
+      targetRoute=targetRoute
+      store=store}}
 </div>

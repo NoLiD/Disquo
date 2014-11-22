@@ -1,7 +1,4 @@
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
+import { test, moduleForModel } from 'ember-qunit';
 
 moduleFor('model:resource', 'Resource', {
   // Specify the other units that are required for this test.

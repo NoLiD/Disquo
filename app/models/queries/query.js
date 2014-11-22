@@ -33,14 +33,13 @@ export default Ember.Object.extend({
       if (offset) { query += ' OFFSET ' + offset; }
     }
 
-
     var queryExec = service.createQueryExecutionStr(query);
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       queryExec.execAny().then(function(result) {
         resolve(result);
       }, function(error) {
-        console.error('Error requesting query\'' + query + '\', error: ' + error);
+        console.error('Error requesting query \'' + query + '\', error: ' + error.toString());
         reject(error);
       });
     });

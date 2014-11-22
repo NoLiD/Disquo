@@ -1,10 +1,4 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  actions: {
-    // this will receive all transition requests from components
-    transitionResources: function(route, query, selected) {
-      this.transitionToRoute(route, query, selected);
-    }
-  }
 });
