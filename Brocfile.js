@@ -32,6 +32,9 @@ app.import('bower_components/jassa/jassa.js');
 // cytoscape.js
 app.import('bower_components/cytoscape/dist/cytoscape.js');
 
+// List-view
+app.import('vendor/list-view/list-view.js');
+
 // Shims for imports
 app.import('vendor/app-shims.js', {
   exports: {
