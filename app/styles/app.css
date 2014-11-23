@@ -150,8 +150,9 @@ a.ember-list-item-view:focus {
 .ember-list-item-view-heading {
   margin-top: 0;
   margin-bottom: 5px;
-  white-space: nowrap;
+  cursor: pointer;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 .ember-list-item-view-text {
@@ -170,6 +171,7 @@ a.ember-list-item-view.active > .badge,
 
 .comment .glyphicon {
   font-size: 1.2em;
+  cursor: pointer;
 }
 
 /* panels */
