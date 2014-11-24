@@ -54,14 +54,6 @@ export default Ember.Component.extend({
         // build node array.  make each member of the selection a central node
         // and each incoming or outgoing predicate an outer node
 
-        // PROBLEMS - see adapters/predicate.js
-        
-        // TODO: the selected array is no longer an array of resources with
-        //       label getters - it's just an array of uris
-        console.log('Selected');
-        this.selected.forEach(function (s) {
-            console.log(s);
-        });
         // TODO: there isn't enough information here to build a graph.  I need
         //       to know which of the selected uris each outgoing predicate 
         //       belongs to.
