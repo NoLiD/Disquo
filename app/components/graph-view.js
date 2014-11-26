@@ -54,17 +54,15 @@ export default Ember.Component.extend({
         // build node array.  make each member of the selection a central node
         // and each incoming or outgoing predicate an outer node
 
-        // TODO: there isn't enough information here to build a graph.  I need
-        //       to know which of the selected uris each outgoing predicate 
-        //       belongs to.
         console.log('Outgoing');
         this.resources.outgoing.forEach(function (s) {
             console.log(s.get('label'));
+            console.log(s.get('ctx'));
         });
-        // TODO: same problem as outgoing above.
         console.log('Incoming');
         this.resources.incoming.forEach(function (s) {
             console.log(s.get('label'));
+            console.log(s.get('ctx'));
         });
         
         // build edge array

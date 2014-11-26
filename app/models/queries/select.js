@@ -18,7 +18,8 @@ export default Query.extend({
   }.property('query'),
 
   resultToResources: function(result) {
-    var row, entry, uri, label, lang,
+    var row, entry, ctx, uri, label, lang,
+    ctxVar   = this.get('ctx'),
     variable = this.get('variable'),
     map      = this.get('resourcesMap'),
     arr      = this.get('resourcesArray');
@@ -26,14 +27,17 @@ export default Query.extend({
     while (result.hasNext()) {
       row   = result.nextBinding();
       uri   = row.varNameToEntry[variable].node.uri;
+      if (ctxVar) { ctx = row.varNameToEntry[ctxVar].node.uri; }
       label = row.varNameToEntry.label.node.literalLabel.val;
       lang  = row.varNameToEntry.label.node.literalLabel.lang;
 
       if ((entry = map.get(uri))) {
         entry.addLabel(label, lang);
+        if (ctx) { entry.set('ctx', ctx); }
       } else {
         entry = Resource.create({uri: uri});
         entry.addLabel(label, lang);
+        if (ctx) { entry.set('ctx', ctx); }
         map.set(uri, entry);
       }
     }
