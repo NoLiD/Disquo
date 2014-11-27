@@ -57,12 +57,12 @@ export default Ember.Component.extend({
         console.log('Outgoing');
         this.resources.outgoing.forEach(function (s) {
             console.log(s.get('label'));
-            console.log(s.get('ctx'));
+            if (s.get('ctx').length > 1) {console.log(s.get('ctx'));}
         });
         console.log('Incoming');
         this.resources.incoming.forEach(function (s) {
             console.log(s.get('label'));
-            console.log(s.get('ctx'));
+            if (s.get('ctx').length > 1) {console.log(s.get('ctx'));}
         });
         
         // build edge array

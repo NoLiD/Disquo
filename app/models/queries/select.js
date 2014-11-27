@@ -33,12 +33,14 @@ export default Query.extend({
 
       if ((entry = map.get(uri))) {
         entry.addLabel(label, lang);
-        if (ctx) { entry.set('ctx', ctx); }
       } else {
         entry = Resource.create({uri: uri});
         entry.addLabel(label, lang);
-        if (ctx) { entry.set('ctx', ctx); }
         map.set(uri, entry);
+      }
+      if (ctx) { 
+        if (!entry.get('ctx')) { entry.set('ctx', Ember.A()); }
+        if (!entry.get('ctx').contains(ctx)) { entry.get('ctx').push(ctx); }
       }
     }
 
