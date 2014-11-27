@@ -9,35 +9,39 @@ export default Ember.Object.extend({
     this.clearQueries();
   },
 
-  getOrCreateQuery: function(type, selected, queryClass) {
-    if (this.getQuery(type, selected)) {
-      return this.getQuery(type, selected);
+  getOrCreateQuery: function(queryClass, type, selected, predicate) {
+    var query;
+
+    if ((query = this.getQuery(type, selected, predicate))) {
+      return query;
     } else {
-      var query = queryClass.create();
+      query = queryClass.create();
       query.set('service', this.get('service'));
-      query.set('context', {selected: selected});
-      this.addQuery(type, selected, query);
+      query.set('context', {selected: selected,  predicate: predicate});
+      this.addQuery(type, selected, predicate, query);
 
       return query;
     }
   },
 
-  addQuery: function(type, selected, query) {
+  addQuery: function(type, selected, predicate, query) {
     var map = this.get('_queries');
 
-    map.set(this._keyForQuery(type, selected), query);
+    map.set(this._keyFor(type, selected, predicate), query);
   },
-  getQuery: function(type, selected) {
+  getQuery: function(type, selected, predicate) {
     var map = this.get('_queries');
 
-    return map.get(this._keyForQuery(type, selected));
+    return map.get(this._keyFor(type, selected, predicate));
   },
   removeQuery: Ember.K,
 
   clearQueries: function () { this.set('_queries', Ember.Map.create()); },
 
-  _keyForQuery: function(type, selected) {
+  _keyFor: function(type, selected, predicate) {
     //TODO: first part of the string is dependant on Jassa...
-    return this.get('service.serviceUri') + '.' + type + '.' + selected.toString();
+    return this.get('service.serviceUri') + '.' +
+              type + '.[' + selected.toString() + '].'+
+              predicate;
   }
 });

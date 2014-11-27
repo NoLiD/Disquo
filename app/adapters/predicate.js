@@ -8,8 +8,9 @@ export default BaseAdapter.extend({
   Incoming: Query.extend({variable: 'predicate', template: 'SELECT DISTINCT ?object ?predicate ?label WHERE { VALUES ?object { {{#each selected}} <{{this}}> {{/each}} } [] ?predicate ?object . ?predicate {{label}} ?label . }'}),
 
   all: function(selected) {
-    var incoming = this.getOrCreateQuery('all.in', selected, this.get('Incoming')),
-        outgoing = this.getOrCreateQuery('all.out', selected, this.get('Outgoing'));
+    var incoming = this.getOrCreateQuery(this.get('Incoming'), 'all.in', selected),
+        outgoing = this.getOrCreateQuery(this.get('Outgoing'), 'all.out', selected);
+
 
     var queries = {
       outgoing: outgoing.get('result'),
@@ -20,7 +21,7 @@ export default BaseAdapter.extend({
      * Maybe I could get something like to work without having to exend the underlying Query system too much:
      *
      *   // *should* get array of uri strings from which the predicate is outgoing
-     *   results.outgoing[0].get('connected')  
+     *   results.outgoing[0].get('connected')
      *
      * in much the same way that this works:
      *
@@ -29,8 +30,7 @@ export default BaseAdapter.extend({
      *
      */
     return Ember.RSVP.hash(queries).then(function(results) {
-      return { predicates: {outgoing: results.outgoing, incoming: results.incoming},
-                selected: selected };
+      return { predicates: {outgoing: results.outgoing, incoming: results.incoming} };
     }, function() {
       return Ember.RSVP.Promise.reject('Unable to fetch predicates of ' +
                                         selected.toString());

@@ -18,6 +18,8 @@ export default Ember.Route.extend({
   },
 
   decodedModel: function(params) {
-    return this.store.find('type', params.query, params.selected);
+    return this.store.find('type', params.query,
+                                   params.selected,
+                                   params.predicate);
   }
 });

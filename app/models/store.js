@@ -25,11 +25,12 @@ export default Ember.Object.extend({
           });
   },
 
-  find: function(name, method, params) {
-    var adapter = this.container.lookup('adapter:' + name);
+  find: function(name, query, selected, predicate) {
+    var adapter = this.container.lookup('adapter:' + name),
+        adapterMethod;
 
-    if (adapter.get(method)) {
-      return adapter[method](params);
+    if ((adapterMethod = adapter.get(query))) {
+      return adapterMethod.call(adapter, selected, predicate);
     } else {
       return Ember.RSVP.reject('Error! Invalid query');
     }

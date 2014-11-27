@@ -21,7 +21,9 @@ export default Ember.Route.extend({
       this.controllerFor('endpoint.things').set('model', undefined);
       this.controllerFor('endpoint.predicates').set('model', undefined);
 
-      this.transitionTo('endpoint.types', 'all', JSON.stringify(['all']));
+      this.transitionTo('endpoint.types', 'all',
+                      JSON.stringify(['any']),
+                      'none');
     }
   },
 
@@ -39,8 +41,8 @@ export default Ember.Route.extend({
       return true;
     },
 
-    resourceTransition: function(route, query, selected) {
-      this.transitionTo(route, query, selected);
+    resourceTransition: function(route, query, selected, predicate) {
+      this.transitionTo(route, query, selected, predicate);
     }
   }
 });
