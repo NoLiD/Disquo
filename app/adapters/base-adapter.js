@@ -12,16 +12,35 @@ export default Ember.Object.extend({
   getOrCreateQuery: function(queryClass, type, selected, predicate) {
     var query;
 
-    if ((query = this.getQuery(type, selected, predicate))) {
-      return query;
-    } else {
+    if (!(query = this.getQuery(type, selected, predicate))) {
       query = queryClass.create();
       query.set('service', this.get('service'));
       query.set('context', {selected: selected,  predicate: predicate});
       this.addQuery(type, selected, predicate, query);
-
-      return query;
     }
+
+    this.set('currentQuery', query);
+    this.resumeQuery();
+
+    return query;
+  },
+
+  pauseQuery: function() {
+    var currentQuery;
+
+    if ((currentQuery = this.get('currentQuery')) &&
+      typeof(currentQuery.get('pause')) !== 'undefined') {
+        currentQuery.pause();
+    }
+  },
+
+  resumeQuery: function() {
+    var currentQuery;
+
+    if ((currentQuery = this.get('currentQuery')) &&
+      typeof(currentQuery.get('resume')) !== 'undefined') {
+        currentQuery.resume();
+      }
   },
 
   addQuery: function(type, selected, predicate, query) {

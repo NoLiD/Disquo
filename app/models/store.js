@@ -27,10 +27,19 @@ export default Ember.Object.extend({
 
   find: function(name, query, selected, predicate) {
     var adapter = this.container.lookup('adapter:' + name),
-        adapterMethod;
+        adapterMethod, lastAdapter;
 
     if ((adapterMethod = adapter.get(query))) {
-      return adapterMethod.call(adapter, selected, predicate);
+      if ((lastAdapter = this.get('lastAdapter'))) {
+        lastAdapter.pauseQuery();
+      }
+
+      this.set('lastAdapter', adapter);
+
+      return adapterMethod.call(adapter, selected, predicate)
+                .then(function(result) {
+                  return Ember.$.extend(result, {selected: selected, predicate: predicate});
+                });
     } else {
       return Ember.RSVP.reject('Error! Invalid query');
     }

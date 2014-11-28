@@ -4,16 +4,18 @@ export default Ember.Route.extend({
   titleToken: function(model) {
     var selected = model.selected;
 
-    if (selected && selected.length === 1) {
-      var uri = selected.get('firstObject');
+    if (selected) {
+      if (selected.length === 1) {
+        var uri = selected.get('firstObject');
 
-      if (uri === 'all') {
-        return 'All Types';
+        if (uri === 'any') {
+          return 'All Types';
+        } else {
+          return 'Types of ' + uri;
+        }
       } else {
-        return 'Types of ' + uri;
+        return 'Multiple Types';
       }
-    } else {
-      return 'Multiple Types';
     }
   },
 

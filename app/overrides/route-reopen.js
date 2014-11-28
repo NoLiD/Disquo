@@ -13,7 +13,8 @@ export default Ember.Route.reopen({
         }
       }
     }
-    return Ember.$.extend(this.decodedModel(params, transition, queryParams), params);
+
+    return this.decodedModel(params, transition, queryParams);
   },
 
   decodedModel: Ember.K

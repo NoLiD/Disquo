@@ -8,10 +8,7 @@ export default Ember.Route.extend({
 
   decodedModel: function(params) {
     return this.store.addEndpoint(params.url, [])
-      .then(function() {
-        return params;
-      }
-    );
+      .then(function() { return params; });
   },
 
   afterModel: function(model, transition) {
