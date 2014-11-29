@@ -5,7 +5,8 @@ import Query from '../models/queries/async-select';
 export default BaseAdapter.extend({
   // TODO: Remove limit and add page control
   // Which is needed with most queries
-  AllQuery: Query.extend({variable: 'type', template: 'SELECT DISTINCT ?type ?label WHERE { [] a ?type . ?type {{label}} ?label }'}),
+  AllQuery: Query.extend({ template: 'SELECT DISTINCT ?type ?label WHERE { [] a ?type . ?type {{label}} ?label }',
+                           key: {var: 'type', label: 'label'} }),
 
   all: function() {
     var query = this.getOrCreateQuery(this.get('AllQuery'), 'all', 'all');

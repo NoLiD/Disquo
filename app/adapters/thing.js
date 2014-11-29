@@ -3,7 +3,8 @@ import BaseAdapter from './base-adapter';
 import Query from '../models/queries/async-select';
 
 export default BaseAdapter.extend({
-  AllQuery: Query.extend({variable: 'instance', template: 'SELECT ?instance ?label WHERE { {{#each selected}} ?instance a <{{this}}> . {{/each}} ?instance {{label}} ?label }'}),
+  AllQuery: Query.extend({ template: 'SELECT ?instance ?label WHERE { {{#each selected}} ?instance a <{{this}}> . {{/each}} ?instance {{label}} ?label }',
+                           key: {var: 'instance', label: 'label'} }),
 
   all: function(selected) {
     var query = this.getOrCreateQuery(this.get('AllQuery'), 'all', selected);

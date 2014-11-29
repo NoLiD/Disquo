@@ -3,9 +3,13 @@ import BaseAdapter from './base-adapter';
 import Query from '../models/queries/async-select';
 
 export default BaseAdapter.extend({
-  Outgoing: Query.extend({variable: 'predicate', template: 'SELECT DISTINCT ?subject ?predicate ?label WHERE { VALUES ?subject { {{#each selected}} <{{this}}> {{/each}} } ?subject ?predicate [] . ?predicate {{label}} ?label . }'}),
+  Outgoing: Query.extend({ template: 'SELECT DISTINCT ?subject ?predicate ?label WHERE { VALUES ?subject { {{#each selected}} <{{this}}> {{/each}} } ?subject ?predicate [] . ?predicate {{label}} ?label . }',
+                           key: {var: 'subject'},
+                           variables: [ {var: 'predicate', label: 'label', mapName: 'outPredicates'} ] }),
 
-  Incoming: Query.extend({variable: 'predicate', template: 'SELECT DISTINCT ?object ?predicate ?label WHERE { VALUES ?object { {{#each selected}} <{{this}}> {{/each}} } [] ?predicate ?object . ?predicate {{label}} ?label . }'}),
+  Incoming: Query.extend({ template: 'SELECT DISTINCT ?object ?predicate ?label WHERE { VALUES ?object { {{#each selected}} <{{this}}> {{/each}} } [] ?predicate ?object . ?predicate {{label}} ?label . }',
+                           key: {var: 'object'},
+                           variables: [ {var: 'predicate', label: 'label', mapName: 'inPredicates'} ] }),
 
   all: function(selected) {
     var incoming = this.getOrCreateQuery(this.get('Incoming'), 'all.in', selected),
@@ -30,7 +34,7 @@ export default BaseAdapter.extend({
      *
      */
     return Ember.RSVP.hash(queries).then(function(results) {
-      return { predicates: {outgoing: results.outgoing, incoming: results.incoming} };
+      return { predicates: { outgoing: results.outgoing, incoming: results.incoming } };
     }, function() {
       return Ember.RSVP.Promise.reject('Unable to fetch predicates of ' +
                                         selected.toString());

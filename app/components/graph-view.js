@@ -17,100 +17,113 @@ import cytoscape from 'cytoscape';
 // TODO: all nodes will either be central or outer - set styles differently
 //       (EX: selected things central, incoming/outgoing predicates outer)
 var graphstyle = cytoscape.stylesheet()
-    .selector('node')
-      .css({
-        'content': 'data(name)',
-        'text-valign': 'center',
-        'color': 'white',
-        'background-color': '#ccc',
-        'text-outline-width': 2,
-        'text-outline-color': '#888'
-      })
-    .selector('edge')
-      .css({
-        'target-arrow-shape': 'triangle',
-        'width': 5
-      })
-    .selector(':selected')
-      .css({
-        'background-color': 'black',
-        'line-color': 'black',
-        'target-arrow-color': 'black',
-        'source-arrow-color': 'black'
-      })
-    .selector('.faded')
-      .css({
-        'opacity': 0.25,
-        'text-opacity': 0
-      });
+  .selector('node')
+  .css({
+    'content': 'data(name)',
+    'text-valign': 'center',
+    'color': 'white',
+    'background-color': '#ccc',
+    'text-outline-width': 2,
+    'text-outline-color': '#888'
+  })
+  .selector('edge')
+  .css({
+    'target-arrow-shape': 'triangle',
+    'width': 5
+  })
+  .selector(':selected')
+  .css({
+    'background-color': 'black',
+    'line-color': 'black',
+    'target-arrow-color': 'black',
+    'source-arrow-color': 'black'
+  })
+  .selector('.faded')
+  .css({
+    'opacity': 0.25,
+    'text-opacity': 0
+  });
 
 // Peek at http://jsbin.com/d3ember-barchart/13/edit
 export default Ember.Component.extend({
-    classNames: ['panel-body'],
+  classNames: ['panel-body'],
 
-    //this observes the resources list and is invoked on initialization
-    draw: function () {
-        
-        // build node array.  make each member of the selection a central node
-        // and each incoming or outgoing predicate an outer node
+  //this observes the resources list and is invoked on initialization
+  draw: function () {
 
-        // TODO: there isn't enough information here to build a graph.  I need
-        //       to know which of the selected uris each outgoing predicate 
-        //       belongs to.
-        console.log('Outgoing');
-        this.resources.outgoing.forEach(function (s) {
-            console.log(s.get('label'));
+    // build node array.  make each member of the selection a central node
+    // and each incoming or outgoing predicate an outer node
+
+    // TODO: there isn't enough information here to build a graph.  I need
+    //       to know which of the selected uris each outgoing predicate
+    //       belongs to.
+
+    // Each resource will have added properties(see queries in the adapter)
+    // The properties are NOT lists but rather maps (see Ember.Map)
+    // This will make life easier when checking for intersections and such
+    var preds;
+    console.log('Outgoing');
+    this.get('resources.outgoing').forEach(function (s) {
+      if ((preds = s.get('outPredicates'))) {
+        preds.forEach(function(key, value) {
+          console.log(value.get('label'));
         });
-        // TODO: same problem as outgoing above.
-        console.log('Incoming');
-        this.resources.incoming.forEach(function (s) {
-            console.log(s.get('label'));
+      }
+    });
+
+    console.log('Incoming');
+    this.get('resources.incoming').forEach(function (s) {
+      if ((preds = s.get('inPredicates'))) {
+        preds.forEach(function(key, value) {
+          console.log(value.get('label'));
         });
-        
-        // build edge array
+      }
+    });
+    // // TODO: same problem as outgoing above.
+    // build edge array
 
-        // insert cytoscape container
-        var canv = this.$('<div/>');
-        canv.addClass('graph');
-        this.$().append(canv);
+    // insert cytoscape container
+    var canv = this.$('<div/>');
+    canv.addClass('graph');
+    this.$().append(canv);
 
-        // initialize cytoscape
-        canv.cytoscape({
+    // initialize cytoscape
+    canv.cytoscape({
 
-            style: graphstyle,
+      style: graphstyle,
 
-            elements: {
-                nodes: [
-                      { data: { id: 'j', name: 'Jerry' } },
-                      { data: { id: 'e', name: 'Elaine' } },
-                      { data: { id: 'k', name: 'Kramer' } },
-                      { data: { id: 'g', name: 'George' } }
-                    ],
-                    edges: [
-                      { data: { source: 'j', target: 'e' } },
-                      { data: { source: 'j', target: 'k' } },
-                      { data: { source: 'j', target: 'g' } },
-                      { data: { source: 'e', target: 'j' } },
-                      { data: { source: 'e', target: 'k' } },
-                      { data: { source: 'k', target: 'j' } },
-                      { data: { source: 'k', target: 'e' } },
-                      { data: { source: 'k', target: 'g' } },
-                      { data: { source: 'g', target: 'j' } }
-                    ]
-            },
+      elements: {
+        nodes: [
+        { data: { id: 'j', name: 'Jerry' } },
+        { data: { id: 'e', name: 'Elaine' } },
+        { data: { id: 'k', name: 'Kramer' } },
+        { data: { id: 'g', name: 'George' } }
+        ],
+        edges: [
+        { data: { source: 'j', target: 'e' } },
+        { data: { source: 'j', target: 'k' } },
+        { data: { source: 'j', target: 'g' } },
+        { data: { source: 'e', target: 'j' } },
+        { data: { source: 'e', target: 'k' } },
+        { data: { source: 'k', target: 'j' } },
+        { data: { source: 'k', target: 'e' } },
+        { data: { source: 'k', target: 'g' } },
+        { data: { source: 'g', target: 'j' } }
+        ]
+      },
 
-            layout: {
-                // TODO: force layout, animate if possible.
-                name: 'grid',
-                padding: 10
-            },
+      layout: {
+        // TODO: force layout, animate if possible.
+        name: 'grid',
+        padding: 10
+      },
 
-            ready: function () {
-                console.log("Cytoscape ready.");
-            }
+      ready: function () {
+        console.log("Cytoscape ready.");
+      }
 
-            // TODO: register tap event on each predicate for route transition.
-        });
+      // TODO: register tap event on each predicate for route transition.
+    });
 
-    }.observes('resources')
+  }.observes('resources')
 });

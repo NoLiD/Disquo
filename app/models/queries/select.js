@@ -18,23 +18,18 @@ export default Query.extend({
   }.property('query'),
 
   resultToResources: function(result) {
-    var row, entry, uri, label, lang,
-    variable = this.get('variable'),
-    map      = this.get('resourcesMap'),
-    arr      = this.get('resourcesArray');
+    var row, entry,
+        key  = this.get('key'),
+        vars = this.get('variables'),
+        map  = this.get('resourcesMap'),
+        arr  = this.get('resourcesArray');
 
     while (result.hasNext()) {
-      row   = result.nextBinding();
-      uri   = row.varNameToEntry[variable].node.uri;
-      label = row.varNameToEntry.label.node.literalLabel.val;
-      lang  = row.varNameToEntry.label.node.literalLabel.lang;
+      row = result.nextBinding();
+      entry = this._rowToResource(row, map, key);
 
-      if ((entry = map.get(uri))) {
-        entry.addLabel(label, lang);
-      } else {
-        entry = Resource.create({uri: uri});
-        entry.addLabel(label, lang);
-        map.set(uri, entry);
+      if (vars) {
+        vars.forEach(this._addInnerVars.bind(this, row, entry));
       }
     }
 
@@ -59,5 +54,39 @@ export default Query.extend({
     if (!resource.get('comments.length')) {
       resource.addComment('This resource has no description');
     }
+  },
+
+  _rowToResource: function(row, map, key)  {
+    var entry, label, lang,
+        uri = row.varNameToEntry[key.var].node.uri;
+
+    if (!(entry = map.get(uri))) {
+      entry = Resource.create({uri: uri});
+      map.set(uri, entry);
+    }
+
+    if (key.label) {
+      label = row.varNameToEntry[key.label].node.literalLabel.val;
+      lang  = row.varNameToEntry[key.label].node.literalLabel.lang;
+
+      entry.addLabel(label, lang);
+    }
+
+    return entry;
+  },
+
+  _addInnerVars: function(row, entry, key) {
+    var innerMap;
+
+    if (!key.mapName) {
+      key.mapName = key.var + 'Map';
+    }
+
+    if (!(innerMap = entry.get(key.mapName))) {
+      innerMap = Ember.Map.create();
+      entry.set(key.mapName, innerMap);
+    }
+
+    this._rowToResource(row, innerMap, key);
   }
 });
