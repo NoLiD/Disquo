@@ -11,30 +11,23 @@ export default BaseAdapter.extend({
                            key: {var: 'object'},
                            variables: [ {var: 'predicate', label: 'label', mapName: 'inPredicates'} ] }),
 
+  KeyLabels: Query.extend({ template: 'SELECT DISTINCT ?key ?label WHERE { VALUES ?key { {{#each selected}} <{{this}}> {{/each}} } ?key {{label}} ?label }',
+                            key: { var: 'key', label: 'label' } }),
+
   all: function(selected) {
     var incoming = this.getOrCreateQuery(this.get('Incoming'), 'all.in', selected),
-        outgoing = this.getOrCreateQuery(this.get('Outgoing'), 'all.out', selected);
+        outgoing = this.getOrCreateQuery(this.get('Outgoing'), 'all.out', selected),
+        keylabels = this.getOrCreateQuery(this.get('KeyLabels'), 'all.labels', selected);
 
 
     var queries = {
       outgoing: outgoing.get('result'),
-      incoming: incoming.get('result')
+      incoming: incoming.get('result'),
+      keylabels: keylabels.get('result')
     };
 
-    /* TODO I need to get the subject (object) uri of each resource in results.outgoing (.incoming).
-     * Maybe I could get something like to work without having to exend the underlying Query system too much:
-     *
-     *   // *should* get array of uri strings from which the predicate is outgoing
-     *   results.outgoing[0].get('connected')
-     *
-     * in much the same way that this works:
-     *
-     *   // *currently* gets the label string of the predicate
-     *   results.outgoing[0].get('label')
-     *
-     */
     return Ember.RSVP.hash(queries).then(function(results) {
-      return { predicates: { outgoing: results.outgoing, incoming: results.incoming } };
+      return { predicates: { outgoing: results.outgoing, incoming: results.incoming, selectedlabels: results.keylabels } };
     }, function() {
       return Ember.RSVP.Promise.reject('Unable to fetch predicates of ' +
                                         selected.toString());

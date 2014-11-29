@@ -44,28 +44,33 @@ var graphstyle = cytoscape.stylesheet()
     'text-opacity': 0
   });
 
-// Peek at http://jsbin.com/d3ember-barchart/13/edit
 export default Ember.Component.extend({
   classNames: ['panel-body'],
 
   //this observes the resources list and is invoked on initialization
   draw: function () {
 
-    // build node array.  make each member of the selection a central node
-    // and each incoming or outgoing predicate an outer node
-
-    // TODO: there isn't enough information here to build a graph.  I need
-    //       to know which of the selected uris each outgoing predicate
-    //       belongs to.
+    // start node array with central (selected) nodes.
+    var nodes = [];
+    console.log('Selected');
+    this.get('resources.selectedlabels').forEach(function (s) {
+      console.log(s.get('uri'));
+      console.log(s.get('label'));
+    });
 
     // Each resource will have added properties(see queries in the adapter)
     // The properties are NOT lists but rather maps (see Ember.Map)
     // This will make life easier when checking for intersections and such
+
+    // add outer nodes (predicates or predicate values) and build edge array
+    var edges = [];
     var preds;
     console.log('Outgoing');
     this.get('resources.outgoing').forEach(function (s) {
+      console.log(s.get('uri'));
       if ((preds = s.get('outPredicates'))) {
         preds.forEach(function(key, value) {
+          console.log(value.get('uri'));
           console.log(value.get('label'));
         });
       }
@@ -73,14 +78,14 @@ export default Ember.Component.extend({
 
     console.log('Incoming');
     this.get('resources.incoming').forEach(function (s) {
+      console.log(s.get('uri'));
       if ((preds = s.get('inPredicates'))) {
         preds.forEach(function(key, value) {
+          console.log(value.get('uri'));
           console.log(value.get('label'));
         });
       }
     });
-    // // TODO: same problem as outgoing above.
-    // build edge array
 
     // insert cytoscape container
     var canv = this.$('<div/>');
