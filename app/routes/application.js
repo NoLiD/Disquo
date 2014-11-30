@@ -36,6 +36,11 @@ export default Ember.Route.extend({
         outlet: 'modal',
         parentView: 'application'
       });
+    },
+
+    loading: function() {
+      var view = this.container.lookup('view:loading').append();
+      this.router.one('didTransition', view, 'destroy');
     }
   }
 });
