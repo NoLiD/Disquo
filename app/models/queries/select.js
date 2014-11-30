@@ -4,9 +4,10 @@ import Resource from '../resource';
 
 export default Query.extend({
   init: function() {
-    this._super();
     this.set('resourcesMap', Ember.Map.create());
     this.set('resourcesArray', Ember.A());
+
+    return this._super();
   },
 
   result: function() {
