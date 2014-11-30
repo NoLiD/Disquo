@@ -3,7 +3,6 @@ import Query from './query';
 import Resource from '../resource';
 
 export default Query.extend({
-
   init: function() {
     this._super();
     this.set('resourcesMap', Ember.Map.create());
