@@ -261,7 +261,7 @@ Loading Spinner
 -----------------------------------
 ***********************************/
 
-.loading-container .loading-square {
+#loading-container .loading-square {
   margin:auto;
   position:absolute;
   top:0;left:0;right:0;bottom:0;
@@ -275,7 +275,7 @@ Loading Spinner
   -moz-animation: loading-animation 2.3s infinite;
   animation: loading-animation 2.3s infinite;
 }
-.loading-container .loading-square div {
+#loading-container .loading-square div {
   position:absolute;
   background-color:#009871;
   opacity:0.85;
@@ -291,8 +291,8 @@ Loading Spinner
   -moz-animation: loading-animation 2.3s cubic-bezier(1,.45,.45,1) infinite;
   animation: loading-animation 2.3s cubic-bezier(1,.45,.45,1) infinite;
 }
-.loading-container .loading-square div + div,
-.loading-container .loading-square div + div div {
+#loading-container .loading-square div + div,
+#loading-container .loading-square div + div div {
   position:absolute;
   background-color:#009871;
   height:100%;
@@ -300,7 +300,7 @@ Loading Spinner
   top:-6px;
   right:-6px;
 }
-.loading-container .two {
+#loading-container .two {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   transform: rotate(90deg);

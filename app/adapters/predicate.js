@@ -19,7 +19,6 @@ export default BaseAdapter.extend({
         outgoing = this.getOrCreateQuery(this.get('Outgoing'), 'all.out', selected),
         keylabels = this.getOrCreateQuery(this.get('KeyLabels'), 'all.labels', selected);
 
-
     var queries = {
       outgoing: outgoing.get('result'),
       incoming: incoming.get('result'),
