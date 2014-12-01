@@ -86,65 +86,65 @@ function newEdge(src, tgt) {
 }
 
 function getGraphArrays(results) {
-    var selectMap = results.get('resources.selectedlabels'),
-        outMap    = results.get('resources.outgoing'),
-        inMap     = results.get('resources.incoming'),
-        nodeSet   = new Ember.Set(),
-        nodes     = [],
-        edges     = [];
+  var selectMap = results.get('resources.selectedlabels'),
+      outMap    = results.get('resources.outgoing'),
+      inMap     = results.get('resources.incoming'),
+      nodeSet   = new Ember.Set(),
+      nodes     = [],
+      edges     = [];
 
-    // start node array with central (selected) nodes.
-    selectMap.forEach(function (s) {
-      // set central for style and click event choice
-      nodes.push(newNode(s.get('uri'), s.get('label'), 'central'));
-      nodeSet.push(s.get('uri'));
-    });
+  // start node array with central (selected) nodes.
+  selectMap.forEach(function (s) {
+    // set central for style and click event choice
+    nodes.push(newNode(s.get('uri'), s.get('label'), 'central'));
+    nodeSet.push(s.get('uri'));
+  });
 
-    // add outer nodes (predicates or predicate values) and build edge array
-    outMap.forEach(function (s) {
-      // (outMap holds a subset of selectMap, so no need to add nodes)
+  // add outer nodes (predicates or predicate values) and build edge array
+  outMap.forEach(function (s) {
+    // (outMap holds a subset of selectMap, so no need to add nodes)
 
-      // detect outgoing predicates for this selected resource.
-      var preds = s.get('outPredicates');
-      if (preds) {
-        preds.forEach(function(key, value) {
-          var uri   = value.get('uri'),
-              label = value.get('label');
+    // detect outgoing predicates for this selected resource.
+    var preds = s.get('outPredicates');
+    if (preds) {
+      preds.forEach(function(key, value) {
+        var uri   = value.get('uri'),
+            label = value.get('label');
 
-          // add predicate to node list if it wasn't in the selection
-          if (!nodeSet.contains(uri)) {
-            nodes.push(newNode(uri, label, 'outer'));
-            nodeSet.push(uri);
-          }
+        // add predicate to node list if it wasn't in the selection
+        if (!nodeSet.contains(uri)) {
+          nodes.push(newNode(uri, label, 'outer'));
+          nodeSet.push(uri);
+        }
 
-          // add edge between from selected resource to predicate
-          edges.push(newEdge(s.get('uri'), uri));
-        });
-      }
-    });
+        // add edge between from selected resource to predicate
+        edges.push(newEdge(s.get('uri'), uri));
+      });
+    }
+  });
 
-    // yeah! repeating myself!
-    inMap.forEach(function (s) {
-      // do the same for inbound predicates, but reverse edge direction
-      var preds = s.get('inPredicates');
-      if (preds) {
-        preds.forEach(function(key, value) {
-          var uri   = value.get('uri'),
-              label = value.get('label');
+  // yeah! repeating myself!
+  inMap.forEach(function (s) {
+    // do the same for inbound predicates, but reverse edge direction
+    var preds = s.get('inPredicates');
+    if (preds) {
+      preds.forEach(function(key, value) {
+        var uri   = value.get('uri'),
+            label = value.get('label');
 
-          // add predicate to node list if it wasn't in the selection
-          if (!nodeSet.contains(uri)) {
-            nodes.push(newNode(uri, label, 'outer'));
-            nodeSet.push(uri);
-          }
+        // add predicate to node list if it wasn't in the selection
+        if (!nodeSet.contains(uri)) {
+          nodes.push(newNode(uri, label, 'outer'));
+          nodeSet.push(uri);
+        }
 
-          // add edge between from predicate to selected resource
-          edges.push(newEdge(uri, s.get('uri')));
-        });
-      }
-    });
+        // add edge between from predicate to selected resource
+        edges.push(newEdge(uri, s.get('uri')));
+      });
+    }
+  });
 
-    return { nodes: nodes, edges: edges };
+  return { nodes: nodes, edges: edges };
 }
 
 export default Ember.Component.extend({
