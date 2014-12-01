@@ -39,8 +39,16 @@ export default Ember.Route.extend({
     },
 
     loading: function() {
-      var view = this.container.lookup('view:loading').append();
-      this.router.one('didTransition', view, 'destroy');
+      if (this.get('loading')) { return false; }
+
+      var self = this,
+          view = this.container.lookup('view:loading').append();
+
+      this.set('loading', true);
+      this.router.one('didTransition', view, function() {
+        this.destroy();
+        self.set('loading', false);
+      });
     }
   }
 });
