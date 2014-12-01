@@ -17,7 +17,7 @@ This project is still in very early stages of development. Proceed with caution.
 
 ## Run
 
-1. `ember server`
+1. `ember server --proxy <any CORS proxy>`
 2. Visit your Disquo at http://localhost:4200
 
 ## Development
