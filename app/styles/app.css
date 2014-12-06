@@ -44,6 +44,16 @@ main layout
   overflow-x: visible;
 }
 
+.navbar-right {
+  margin: 0;
+}
+
+.list-group-item.disabled,
+.list-group-item.disabled:hover,
+.list-group-item.disabled:focus {
+  cursor: pointer;
+}
+
 .navbar-collapse {
   background-color: #00bc8c;
 }
