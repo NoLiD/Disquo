@@ -11,22 +11,20 @@ export default BaseAdapter.extend({
                            key: {var: 'object'},
                            variables: [ {var: 'predicate', label: 'label', mapName: 'inPredicates'} ] }),
 
-  KeyLabels: Query.extend({ template: 'SELECT DISTINCT ?key ?label WHERE { VALUES ?key { {{#each selected}} <{{this}}> {{/each}} } ?key {{label}} ?label }',
-                            key: { var: 'key', label: 'label' } }),
-
   all: function(selected) {
     var incoming = this.getOrCreateQuery(this.get('Incoming'), 'all.in', selected),
-        outgoing = this.getOrCreateQuery(this.get('Outgoing'), 'all.out', selected),
-        keylabels = this.getOrCreateQuery(this.get('KeyLabels'), 'all.labels', selected);
+        outgoing = this.getOrCreateQuery(this.get('Outgoing'), 'all.out', selected);
 
     var queries = {
-      outgoing: outgoing.get('result'),
-      incoming: incoming.get('result'),
-      keylabels: keylabels.get('result')
+      outgoing  : outgoing.get('result'),
+      incoming  : incoming.get('result'),
+      keylabels : this.store.fetchLabels(selected)
     };
 
     return Ember.RSVP.hash(queries).then(function(results) {
-      return { predicates: { outgoing: results.outgoing, incoming: results.incoming, selectedlabels: results.keylabels } };
+      return { predicates: { outgoing: results.outgoing,
+                             incoming: results.incoming,
+                             selectedlabels: results.keylabels } };
     }, function() {
       return Ember.RSVP.Promise.reject('Unable to fetch predicates of ' +
                                         selected.toString());
