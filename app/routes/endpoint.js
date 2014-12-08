@@ -2,6 +2,15 @@ import Ember from 'ember';
 import Notify from 'ember-notify';
 
 export default Ember.Route.extend({
+  renderTemplate: function() {
+    this.render();
+
+    this.render('selected-list', {
+      into: 'application',
+      outlet: 'selected-list'
+    });
+  },
+
   titleToken: function(model) {
     return model.url;
   },
@@ -39,7 +48,13 @@ export default Ember.Route.extend({
     },
 
     resourceTransition: function(route, query, selected, predicate) {
-      this.transitionTo(route, query, selected, predicate);
+      var self = this;
+
+      this.store.fetchLabels(selected).then(function(result) {
+        self.set('controller.selected', result.mapBy('label').join(', '));
+      });
+
+      this.transitionTo(route, query, JSON.stringify(selected), predicate);
     }
   }
 });

@@ -44,8 +44,16 @@ main layout
   overflow-x: visible;
 }
 
-.navbar-right {
+.navbar-nav {
+  max-width: 100%;
   margin: 0;
+}
+
+.navbar .list-group-item {
+  max-width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .list-group-item.disabled,

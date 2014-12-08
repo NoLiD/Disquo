@@ -1,0 +1,10 @@
+<ul class="nav navbar-nav navbar-left">
+  <li><button type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button></li>
+  <li class="list-group-item navbar-btn disabled" {{bind-attr title=selected}}>
+    {{#if selected}}
+      {{selected}}
+    {{else}}
+      None
+    {{/if}}
+  </li>
+</ul>

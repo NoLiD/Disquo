@@ -28,8 +28,7 @@ export default Ember.ListView.extend({
     if (items.length === 0) { return; }
 
     controller.send('transition', this.get('targetRoute'), 'all',
-                                          JSON.stringify(items),
-                                          'none');
+                                          items, 'none');
   },
 
   clearActive: function() {
