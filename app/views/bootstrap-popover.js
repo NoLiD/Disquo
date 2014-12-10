@@ -8,11 +8,11 @@ export default Ember.View.extend({
   dToggle: 'popover',
 
 
-  popoverInserted: function() {
+  afterRenderEvent: function() {
     this.$().popover({
       trigger: 'manual'
     });
-  }.on('didInsertElement'),
+  },
 
   destoryPopover: function() {
     this.$().popover('destroy');

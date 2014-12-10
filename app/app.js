@@ -10,7 +10,6 @@ import Router from './overrides/router-reopen';
 import Route from './overrides/route-reopen';
 import View from './overrides/view-reopen';
 
-
 /* Ember Notify lib */
 import Notify from 'ember-notify';
 

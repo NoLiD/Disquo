@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
-// location stuff from http://stackoverflow.com/q/18666601/1366033
-
+/** location stuff from http://stackoverflow.com/q/18666601/1366033
+**/
 export default Ember.Component.extend({
   layoutName: 'components/query-menu',
   classNames: ['dropdown-menu'],

@@ -5,7 +5,6 @@ export default Ember.Object.extend({
 
   init: function() {
     this._super();
-
     this.clearQueries();
   },
 

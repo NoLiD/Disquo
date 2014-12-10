@@ -6,7 +6,7 @@ export default BaseAdapter.extend({
   AllQuery: Query.extend({ template: 'SELECT DISTINCT ?type ?label WHERE { [] a ?type . ?type {{label}} ?label }',
                            key: {var: 'type', label: 'label'} }),
 
-  typesQuery: Query.extend({ template: 'SELECT DISTINCT ?type ?label WHERE { {{#each selected}} [] {{this}} ?type . {{/each}} ?type {{label}} ?label }',
+  typesQuery: Query.extend({ template: 'SELECT DISTINCT ?type ?label WHERE { {{#each selected}} [] <{{this}}> ?type . {{/each}} ?type {{label}} ?label }',
                            key: {var: 'type', label: 'label'} }),
 
 

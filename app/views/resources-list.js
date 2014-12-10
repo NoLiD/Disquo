@@ -2,19 +2,18 @@ import Ember from 'ember';
 import ResourceItem from './resource-item';
 
 export default Ember.ListView.extend({
-  height: 46,
+  itemViewClass: ResourceItem,
   rowHeight: 46,
-  itemViewClass: ResourceItem.extend(),
+  height: 46,
 
   init: function() {
     this.set('selectedItems', Ember.A());
-
     return this._super();
   },
 
   listInstered: function() {
     Ember.$(window).on('resize', this.updateHeight.bind(this));
-    this.updateHeight();
+    Ember.run.scheduleOnce('afterRender', this, 'updateHeight');
   }.on('didInsertElement'),
 
   updateHeight: function() {
