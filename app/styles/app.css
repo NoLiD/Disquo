@@ -71,6 +71,10 @@ main layout
   border-bottom: 1px solid #009871;
 }
 
+.dropdown-menu {
+  z-index: 1040;
+}
+
 .panels {
   height: 100%;
 }

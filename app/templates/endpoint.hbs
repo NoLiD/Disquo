@@ -1,15 +1,51 @@
-<div class="col col-xs-2">
-  <!-- Column one start -->
-  {{render "endpoint/types"}}
-  <!-- Column one end -->
+<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-6">
+        <ul class="nav navbar-nav navbar-left">
+          <li {{action 'queryButton' bubbles=false}} id="queryButton">
+            <button type="button" class="btn btn-default navbar-btn">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button>
+          </li>
+          <li class="list-group-item navbar-btn disabled" {{bind-attr title=selection}}>
+            {{#if selection}}{{selection}}{{else}}None{{/if}}
+          </li>
+          <li>
+            {{test-comp}}
+          </li>
+        </ul>
+      </div>
+      <div class="col-xs-6">
+        <ul {{action 'openModal' 'endpoint'}} class="nav navbar-nav navbar-right">
+          {{#if url}}
+          <li><button type="button" class="btn btn-default navbar-btn">@</button></li>
+          <li class="list-group-item navbar-btn disabled">{{url}}</li>
+          {{else}}
+          <li class="list-group-item navbar-btn disabled">Enter an endpoint to start</li>
+          {{/if}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="row panels">
+  <div class="col col-xs-2">
+    <!-- Column one start -->
+    {{render "endpoint/types"}}
+    <!-- Column one end -->
+  </div>
+  <div class="col col-xs-2">
+    <!-- Column two start -->
+    {{render "endpoint/things"}}
+    <!-- Column two end -->
+  </div>
+  <div class="col col-xs-8">
+    <!-- Column three start -->
+    {{render "endpoint/predicates"}}
+    <!-- Column three end -->
+  </div>
 </div>
-<div class="col col-xs-2">
-  <!-- Column two start -->
-  {{render "endpoint/things"}}
-  <!-- Column two end -->
-</div>
-<div class="col col-xs-8">
-  <!-- Column three start -->
-  {{render "endpoint/predicates"}}
-  <!-- Column three end -->
-</div>
+{{query-menu
+  menu=queryMenu
+  transitionAction='resourceTransition'}}

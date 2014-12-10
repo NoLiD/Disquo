@@ -2,14 +2,8 @@ import Ember from 'ember';
 import Notify from 'ember-notify';
 
 export default Ember.Route.extend({
-  renderTemplate: function() {
-    this.render();
-
-    this.render('selected-list', {
-      into: 'application',
-      outlet: 'selected-list'
-    });
-  },
+  queryMenu: Ember.computed.alias('controller.queryMenu'),
+  selection: Ember.computed.alias('controller.selection'),
 
   titleToken: function(model) {
     return model.url;
@@ -51,10 +45,29 @@ export default Ember.Route.extend({
       var self = this;
 
       this.store.fetchLabels(selected).then(function(result) {
-        self.set('controller.selected', result.mapBy('label').join(', '));
+        self.set('selection', result.mapBy('label').join(', '));
       });
 
       this.transitionTo(route, query, JSON.stringify(selected), predicate);
+    },
+
+    queryButton: function() {
+      this.send('toggleMenu',
+                Ember.$('#queryButton').offset(),
+                this.get('selection'));
+    },
+
+    toggleMenu: function(offset, selection) {
+      var menu = this.get('queryMenu');
+
+      menu.set('selection', selection);
+      menu.set('offset', offset);
+
+      menu.toggle();
+    },
+
+    hideMenu: function() {
+      this.get('queryMenu').hide();
     }
   }
 });

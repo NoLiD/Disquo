@@ -1,0 +1,26 @@
+<li class="dropdown-header">Types</li>
+<li>
+  <a {{action 'select' 'types' 'all' all}}>All types</a>
+</li>
+<li {{bind-attr class="hasSelection::disabled"}}>
+  <a {{action 'select' 'types' 'typesOf' selection}}>Types of</a>
+</li>
+<li class="divider"></li>
+<li class="dropdown-header">Things</li>
+<li {{bind-attr class="hasSelection::disabled"}}>
+  <a {{action 'select' 'things' 'all' selection}}>All things of</a>
+</li>
+<li {{bind-attr class="hasSelection::disabled"}}>
+  <a {{action 'select' 'things' 'withObjects' selection}}>Things with object</a>
+</li>
+<li {{bind-attr class="hasSelection::disabled"}}>
+  <a {{action 'select' 'things' 'withPredicates' selection}}>Things with predicate</a>
+</li>
+<li {{bind-attr class="hasSelection::disabled"}}>
+  <a {{action 'select' 'things' 'ofSameTypes' selection}}>Things with same types</a>
+</li>
+<li class="divider"></li>
+<li class="dropdown-header">Graph</li>
+<li {{bind-attr class="hasSelection::disabled"}}>
+  <a {{action 'select' 'predicates' 'all' selection}}>Graph view</a>
+</li>

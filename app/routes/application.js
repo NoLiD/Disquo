@@ -5,17 +5,6 @@ export default Ember.Route.extend({
     return 'Disquo - ' + tokens.join(' ');
   },
 
-  renderTemplate: function() {
-    // render the application template first
-    this.render();
-    // then render the endpoint selector
-    this.render('endpoint-selector', {
-      into: 'application',
-      outlet: 'endpoint-selector',
-      controller: 'endpoint'
-    });
-  },
-
   actions: {
     openModal: function(modalName, model) {
       var modal = 'modals/' + modalName;
