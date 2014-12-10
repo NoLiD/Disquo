@@ -5,6 +5,8 @@ export default Ember.Component.extend({
   classNames: ['panel',  'panel-primary'],
   transitionAction: 'resourceTransition',
   resourcesList: ResourcesList,
+  openMenu: 'toggleMenu',
+  closeMenu: 'hideMenu',
 
   searchResults: function() {
     var list  = this.get('resources'),
@@ -25,9 +27,19 @@ export default Ember.Component.extend({
 
   actions: {
     transition: function() {
-      Array.prototype.unshift.call(arguments, 'transitionAction');
+      this.unshift(arguments, 'transitionAction');
       this.sendAction.apply(this, arguments);
-
+    },
+    showContext: function() {
+      this.unshift(arguments, 'openMenu');
+      this.sendAction.apply(this, arguments);
+    },
+    hideContext: function() {
+      this.sendAction('closeMenu');
     }
+  },
+
+  unshift: function(args, arg) {
+    Array.prototype.unshift.call(args, arg);
   }
 });

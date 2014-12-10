@@ -68,6 +68,25 @@ export default Ember.ListItemView.extend({
     parentView.updateURL();
   },
 
+  contextMenu: function() {
+    var selection  = this.get('content.uri'),
+        controller = this.get('controller'),
+        offset     = this.$().offset();
+
+    controller.send('hideContext');
+
+    offset.top  += this.$().innerHeight()/2;
+    offset.left += this.$().width()/2;
+
+    if (this.get('active')) {
+      controller.send('showContext', offset, this.get('selectedItems'));
+    } else {
+      controller.send('showContext', offset, [selection]);
+    }
+
+    return false;
+  },
+
   actions: {
     showComment: function() {
       if (this.get('fetching')) { return; }
