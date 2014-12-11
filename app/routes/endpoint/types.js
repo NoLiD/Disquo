@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import EndpointRoute from '../../models/endpoint-route';
 
-export default Ember.Route.extend({
+export default EndpointRoute.extend({
   titleToken: function(model) {
     var selected = model.selected;
 
@@ -11,7 +11,7 @@ export default Ember.Route.extend({
         if (uri === 'any') {
           return 'All Types';
         } else {
-          return 'Types of ' + uri;
+          return 'Types of ' + uri.get('label');
         }
       } else {
         return 'Multiple Types';

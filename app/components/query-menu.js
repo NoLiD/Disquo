@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   classNames: ['dropdown-menu'],
   attributeBindings: ['role'],
   role: 'menu',
-  all: ['all'],
+  any: ['any'],
 
   didInsertElement: function() {
     var self = this;

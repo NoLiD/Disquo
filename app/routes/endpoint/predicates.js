@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import EndpointRoute from '../../models/endpoint-route';
 
-export default Ember.Route.extend({
+export default EndpointRoute.extend({
   titleToken: function(model) {
     var selected = model.selected;
 
@@ -8,7 +8,7 @@ export default Ember.Route.extend({
       if (selected.length === 1) {
         var uri = selected.get('firstObject');
 
-        return 'Graph of ' + uri;
+        return 'Graph of ' + uri.get('label');
       } else {
         return 'Graph of multiple selection';
       }

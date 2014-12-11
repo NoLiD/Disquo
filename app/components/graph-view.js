@@ -86,7 +86,7 @@ function newEdge(src, tgt) {
 }
 
 function getGraphArrays(results) {
-  var selectMap = results.get('resources.selectedlabels'),
+  var selectMap = results.get('selected'),
       outMap    = results.get('resources.outgoing'),
       inMap     = results.get('resources.incoming'),
       nodeSet   = new Ember.Set(),

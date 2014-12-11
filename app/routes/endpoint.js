@@ -42,13 +42,11 @@ export default Ember.Route.extend({
     },
 
     resourceTransition: function(route, query, selected, predicate) {
-      var self = this;
-
-      this.store.fetchLabels(selected).then(function(result) {
-        self.set('selection', result.mapBy('label').join(', '));
-      });
-
       this.transitionTo(route, query, JSON.stringify(selected), predicate);
+    },
+
+    selectionChange: function(selected) {
+      this.set('selection',  selected.mapBy('label').join(', '));
     },
 
     queryButton: function() {

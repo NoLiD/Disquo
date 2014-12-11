@@ -11,7 +11,7 @@ export default BaseAdapter.extend({
 
 
   all: function() {
-    var query = this.getOrCreateQuery(this.get('AllQuery'), 'all', 'all');
+    var query = this.getOrCreateQuery(this.get('AllQuery'), 'all', 'any');
 
     return query.get('result')
           .then(function(result) {

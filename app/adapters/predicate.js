@@ -18,13 +18,11 @@ export default BaseAdapter.extend({
     var queries = {
       outgoing  : outgoing.get('result'),
       incoming  : incoming.get('result'),
-      keylabels : this.store.fetchLabels(selected)
     };
 
     return Ember.RSVP.hash(queries).then(function(results) {
       return { predicates: { outgoing: results.outgoing,
-                             incoming: results.incoming,
-                             selectedlabels: results.keylabels } };
+                             incoming: results.incoming } };
     }, function() {
       return Ember.RSVP.Promise.reject('Unable to fetch predicates of ' +
                                         selected.toString());
