@@ -1,7 +1,7 @@
 {{#if view.focused}}
-<div {{action "showComment" target=view}} class="comment pull-right">
+<div {{action "showComment" target=view bubbles=false}} class="comment pull-right">
   <span class="badge">
-    <span class="glyphicon glyphicon-comment"></span>
+    <span class="glyphicon glyphicon-comment" title="Description?"></span>
   </span>
 </div>
 {{/if}}

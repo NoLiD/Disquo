@@ -193,7 +193,7 @@ a.ember-list-item-view.active > .badge,
 
 .comment .glyphicon {
   font-size: 1.2em;
-  cursor: pointer;
+  cursor: help;
 }
 
 /* panels */
