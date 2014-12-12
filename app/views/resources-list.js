@@ -32,10 +32,7 @@ export default Ember.ListView.extend({
 
   clearActive: function() {
     this.forEach(function(view) {
-      // if the list is filtered then a view might have been destroyed
-      if (!view.get('isDestroyed')) {
-        view.set('active', false);
-      }
+      view.set('active', false);
     });
-  },
+  }
 });

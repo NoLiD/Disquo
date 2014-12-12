@@ -81,6 +81,7 @@ export default Ember.ListItemView.extend({
     if (this.get('active')) {
       controller.send('showContext', offset, this.get('selectedItems'));
     } else {
+      this.$().trigger('click');
       controller.send('showContext', offset, [selection]);
     }
 
