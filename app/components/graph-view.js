@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import cytoscape from 'cytoscape';
+import Cyto from 'cytoscape';
 
 // this component may not be fully reusable between both graph views:
 //
@@ -15,7 +15,7 @@ import cytoscape from 'cytoscape';
 // set of selected thing resource nodes.
 
 //TODO break graph style and layout options into app/styles/...
-var graphstyle = cytoscape.stylesheet()
+var graphstyle = Cyto.stylesheet()
   .selector('node')
   .css({
     'content': 'data(name)',
@@ -51,7 +51,7 @@ var graphstyle = cytoscape.stylesheet()
     'text-opacity': 0
   });
 
-var layoutOptions = {
+var layoutOptions = { // jshint ignore:line
   name: 'springy',
 
   animate: true, // whether to show the layout as it's running
