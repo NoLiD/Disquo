@@ -283,8 +283,20 @@ Loading Spinner
 -----------------------------------
 ***********************************/
 
+#loading-container .loading-frame {
+  background-color:#303030;
+  border: thin solid #464545;
+  margin:auto;
+  overflow:hidden;
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  height:150px;
+  width:150px;
+}
+
 #loading-container .loading-square {
   margin:auto;
+  overflow:visible;
   position:absolute;
   top:0;left:0;right:0;bottom:0;
   background-color:#009871;
