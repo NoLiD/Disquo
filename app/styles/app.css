@@ -285,7 +285,7 @@ Loading Spinner
 
 #loading-container .loading-frame {
   background-color:#303030;
-  border: thin solid #464545;
+  border: thin outset #464545;
   margin:auto;
   overflow:hidden;
   position:absolute;
