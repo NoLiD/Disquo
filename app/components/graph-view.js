@@ -21,12 +21,14 @@ var graphstyle = Cyto.stylesheet()
     'content': 'data(name)',
     'text-valign': 'center',
     'color': 'white',
-    'text-outline-color': '#666'
+    'text-outline-color': '#333'
   })
   .selector('edge')
   .css({
     'target-arrow-shape': 'triangle',
-    'width': 3
+    'width': 3,
+    'line-color': '#999',
+    'line-style': 'dotted'
   })
   .selector('node.central')
   .css({
@@ -51,24 +53,27 @@ var graphstyle = Cyto.stylesheet()
     'text-opacity': 0
   });
 
-var layoutOptions = { // jshint ignore:line
-  name: 'springy',
+var layoutOptions = {
+  name: 'cose',
 
   animate: true, // whether to show the layout as it's running
-  maxSimulationTime: 4000, // max length in ms to run the layout
-  ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
+  refresh: 10,
   fit: true, // whether to fit the viewport to the graph
   padding: 30, // padding on fit
   boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
   random: false, // whether to use random initial positions
-  infinite: false, // overrides all other options for a forces-all-the-time mode
   ready: undefined, // callback on layoutready
   stop: undefined, // callback on layoutstop
 
-  // springy forces
-  stiffness: 400,
-  repulsion: 400,
-  damping: 0.5
+  nodeRepulsion: 900000,
+  nodeOverlap: 100,
+  idealEdgeLength: 40,
+  edgeElasticity: 200,
+  gravity: 250,
+
+  numIter: 100,
+  coolingFactor: 0.95,
+  minTemp: 1.0
 };
 
 function newNode(uri, label, group) {
@@ -95,10 +100,13 @@ function getGraphArrays(results) {
 
   // start node array with central (selected) nodes.
   selectMap.forEach(function (s) {
-    // set central for style and click event choice
+    // set central class for style and click event choice
     nodes.push(newNode(s.get('uri'), s.get('label'), 'central'));
     nodeSet.push(s.get('uri'));
   });
+
+  // TODO: for predicate view, exclude outer nodes with only one edge
+  //       for value view, do not exclude any outer nodes
 
   // add outer nodes (predicates or predicate values) and build edge array
   outMap.forEach(function (s) {
@@ -124,8 +132,8 @@ function getGraphArrays(results) {
   });
 
   // yeah! repeating myself!
+  // do the same for inbound predicates, but reverse edge direction
   inMap.forEach(function (s) {
-    // do the same for inbound predicates, but reverse edge direction
     var preds = s.get('inPredicates');
     if (preds) {
       preds.forEach(function(key, value) {
@@ -172,10 +180,12 @@ export default Ember.Component.extend({
 
       style: graphstyle,
 
-      layout: //TODO springy
-              //layoutOptions,
-      { name: 'grid' },
+      layout: layoutOptions,
 
+      panningEnabled: true,
+      userPanningEnabled: true,
+
+      boxSelectionEnabled: true,
     });
 
     var cy = this.canv.cytoscape('get');
