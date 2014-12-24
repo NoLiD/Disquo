@@ -56,7 +56,7 @@ var graphstyle = Cyto.stylesheet()
 var layoutOptions = {
   name: 'cose',
 
-  animate: true, // whether to show the layout as it's running
+  animate: false, // whether to show the layout as it's running
   refresh: 10,
   fit: true, // whether to fit the viewport to the graph
   padding: 30, // padding on fit
@@ -90,95 +90,102 @@ function newEdge(src, tgt) {
   return { data: { source: src, target: tgt } };
 }
 
-function getGraphArrays(results) {
-  var selectMap = results.get('selected'),
-      outMap    = results.get('resources.outgoing'),
-      inMap     = results.get('resources.incoming'),
-      nodeSet   = new Ember.Set(),
-      nodes     = [],
-      edges     = [];
-
-  // start node array with central (selected) nodes.
-  selectMap.forEach(function (s) {
-    // set central class for style and click event choice
-    nodes.push(newNode(s.get('uri'), s.get('label'), 'central'));
-    nodeSet.push(s.get('uri'));
-  });
-
-  // TODO: for predicate view, exclude outer nodes with only one edge
-  //       for value view, do not exclude any outer nodes
-
-  // add outer nodes (predicates or predicate values) and build edge array
-  outMap.forEach(function (s) {
-    // (outMap holds a subset of selectMap, so no need to add nodes)
-
-    // detect outgoing predicates for this selected resource.
-    var preds = s.get('outPredicates');
-    if (preds) {
-      preds.forEach(function(key, value) {
-        var uri   = value.get('uri'),
-            label = value.get('label');
-
-        // add predicate to node list if it wasn't in the selection
-        if (!nodeSet.contains(uri)) {
-          nodes.push(newNode(uri, label, 'outer'));
-          nodeSet.push(uri);
-        }
-
-        // add edge between from selected resource to predicate
-        edges.push(newEdge(s.get('uri'), uri));
-      });
-    }
-  });
-
-  // yeah! repeating myself!
-  // do the same for inbound predicates, but reverse edge direction
-  inMap.forEach(function (s) {
-    var preds = s.get('inPredicates');
-    if (preds) {
-      preds.forEach(function(key, value) {
-        var uri   = value.get('uri'),
-            label = value.get('label');
-
-        // add predicate to node list if it wasn't in the selection
-        if (!nodeSet.contains(uri)) {
-          nodes.push(newNode(uri, label, 'outer'));
-          nodeSet.push(uri);
-        }
-
-        // add edge between from predicate to selected resource
-        edges.push(newEdge(uri, s.get('uri')));
-      });
-    }
-  });
-
-  return { nodes: nodes, edges: edges };
-}
+// TODO: for predicate view, exclude outer nodes with only one edge
+//       for value view, do not exclude any outer nodes
 
 export default Ember.Component.extend({
-  classNames: ['panel-body'],
+  classNames: ['graph'],
 
-  insertCanvas: function () {
-    // insert cytoscape container
-    this.canv = this.$('<div/>');
-    this.canv.addClass('graph');
-    this.$().append(this.canv);
-  }.on('didInsertElement'),
+  init: function() {
+    this.set('nodeSet', new Ember.Set());
+    this.set('nodes', Ember.A());
+    this.set('edges', Ember.A());
+  },
+
+  updateSelect: function() {
+    var nodes   = this.get('nodes'),
+        nodeSet = this.get('nodeSet');
+
+    // start node array with central (selected) nodes.
+    this.get('selected').forEach(function (s) {
+      // set central class for style and click event choice
+      nodes.addObject(newNode(s.get('uri'), s.get('label'), 'central'));
+      nodeSet.push(s.get('uri'));
+    });
+  }.observes('selected.@each').on('init'),
+
+  updateOut: function() {
+    var nodes   = this.get('nodes'),
+        edges   = this.get('edges'),
+        nodeSet = this.get('nodeSet');
+
+    // add outer nodes (predicates or predicate values) and build edge array
+    this.get('resources.outgoing').forEach(function (s) {
+      // (resources.outgoing holds subset of selectMap, so no need to add nodes)
+
+      // detect outgoing predicates for this selected resource.
+      var preds = s.get('outPredicates');
+      if (preds) {
+        preds.forEach(function(key, value) {
+          var uri   = value.get('uri'),
+              label = value.get('label');
+
+          // add predicate to node list if it wasn't in the selection
+          if (!nodeSet.contains(uri)) {
+            nodes.addObject(newNode(uri, label, 'outer'));
+            nodeSet.push(uri);
+          }
+
+          // add edge between from selected resource to predicate
+          edges.addObject(newEdge(s.get('uri'), uri));
+        });
+      }
+    });
+  }.observes('resources.outgoing.size').on('init'),
+
+  updateIn: function() {
+    var nodes   = this.get('nodes'),
+        edges   = this.get('edges'),
+        nodeSet = this.get('nodeSet');
+
+    // do the same for inbound predicates, but reverse edge direction
+    this.get('resources.incoming').forEach(function (s) {
+      var preds = s.get('inPredicates');
+      if (preds) {
+        preds.forEach(function(key, value) {
+          var uri   = value.get('uri'),
+              label = value.get('label');
+
+          // add predicate to node list if it wasn't in the selection
+          if (!nodeSet.contains(uri)) {
+            nodes.addObject(newNode(uri, label, 'outer'));
+            nodeSet.push(uri);
+          }
+
+          // add edge between from predicate to selected resource
+          edges.addObject(newEdge(uri, s.get('uri')));
+        });
+      }
+    });
+  }.observes('resources.incoming.size').on('init'),
 
   //this observes the resources list and is invoked on initialization
-  draw: function () {
-
-    var graph = getGraphArrays(this);
+  didInsertElement: function () {
+    var nodes = this.get('nodes').toArray(),
+        edges = this.get('edges').toArray();
 
     // initialize cytoscape
-    this.canv.cytoscape({
+    this.$().cytoscape({
+
+      //container: this.$()[0],
 
       elements: {
-        nodes: graph.nodes,
-        edges: graph.edges
+        nodes: nodes,
+        edges: edges
       },
 
       style: graphstyle,
+      motionBlur: false,
 
       layout: layoutOptions,
 
@@ -188,8 +195,10 @@ export default Ember.Component.extend({
       boxSelectionEnabled: true,
     });
 
-    var cy = this.canv.cytoscape('get');
+    console.log(nodes);
+    console.log(edges);
 
+    /*
     cy.on('tap', 'node.outer', function (evt) {
       var node = evt.cyTarget;
       //TODO detect if value or predicate.  this.resultType?
@@ -203,6 +212,7 @@ export default Ember.Component.extend({
       // treat the same as click from Things list?
       console.log('Central tap registered: ' + node.id());
     });
+    */
+  }.observes('resources')
 
-  }.observes('resources') //TODO observe length of all maps
 });
