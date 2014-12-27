@@ -104,85 +104,104 @@ export default Ember.Component.extend({
 
   updateSelect: function() {
     var nodes   = this.get('nodes'),
-        nodeSet = this.get('nodeSet');
+        nodeSet = this.get('nodeSet'),
+        select  = this.get('selected');
 
     // start node array with central (selected) nodes.
-    this.get('selected').forEach(function (s) {
-      // set central class for style and click event choice
-      nodes.addObject(newNode(s.get('uri'), s.get('label'), 'central'));
-      nodeSet.push(s.get('uri'));
-    });
-  }.observes('selected.@each').on('init'),
+    if (select !== undefined) {
+      select.forEach(function (s) {
+        // set central class for style and click event choice
+        nodes.addObject(newNode(s.get('uri'), s.get('label'), 'central'));
+        nodeSet.push(s.get('uri'));
+      });
+
+      this.reRender();
+    }
+  }.observes('selected.@each'),
 
   updateOut: function() {
-    var nodes   = this.get('nodes'),
-        edges   = this.get('edges'),
-        nodeSet = this.get('nodeSet');
+    var nodes    = this.get('nodes'),
+        edges    = this.get('edges'),
+        nodeSet  = this.get('nodeSet'),
+        outbound = this.get('resources.outgoing');
 
     // add outer nodes (predicates or predicate values) and build edge array
-    this.get('resources.outgoing').forEach(function (s) {
-      // (resources.outgoing holds subset of selectMap, so no need to add nodes)
+    if (outbound !== undefined) {
+      outbound.forEach(function (s) {
+        // (outbound holds subset of selectMap, so no need to add nodes)
 
-      // detect outgoing predicates for this selected resource.
-      var preds = s.get('outPredicates');
-      if (preds) {
-        preds.forEach(function(key, value) {
-          var uri   = value.get('uri'),
-              label = value.get('label');
+        // detect outgoing predicates for this selected resource.
+        var preds = s.get('outPredicates');
+        if (preds) {
+          preds.forEach(function(key, value) {
+            var uri   = value.get('uri'),
+                label = value.get('label');
 
-          // add predicate to node list if it wasn't in the selection
-          if (!nodeSet.contains(uri)) {
-            nodes.addObject(newNode(uri, label, 'outer'));
-            nodeSet.push(uri);
-          }
+            // add predicate to node list if it wasn't in the selection
+            if (!nodeSet.contains(uri)) {
+              nodes.addObject(newNode(uri, label, 'outer'));
+              nodeSet.push(uri);
+            }
 
-          // add edge between from selected resource to predicate
-          edges.addObject(newEdge(s.get('uri'), uri));
-        });
-      }
-    });
-  }.observes('resources.outgoing.size').on('init'),
+            // add edge between from selected resource to predicate
+            edges.addObject(newEdge(s.get('uri'), uri));
+          });
+        }
+      });
+
+      this.reRender();
+    }
+  }.observes('resources.outgoing.size'),
 
   updateIn: function() {
     var nodes   = this.get('nodes'),
         edges   = this.get('edges'),
-        nodeSet = this.get('nodeSet');
+        nodeSet = this.get('nodeSet'),
+        inbound = this.get('resources.incoming');
 
     // do the same for inbound predicates, but reverse edge direction
-    this.get('resources.incoming').forEach(function (s) {
-      var preds = s.get('inPredicates');
-      if (preds) {
-        preds.forEach(function(key, value) {
-          var uri   = value.get('uri'),
-              label = value.get('label');
+    if (inbound !== undefined) {
+      inbound.forEach(function (s) {
+        var preds = s.get('inPredicates');
+        if (preds) {
+          preds.forEach(function(key, value) {
+            var uri   = value.get('uri'),
+                label = value.get('label');
 
-          // add predicate to node list if it wasn't in the selection
-          if (!nodeSet.contains(uri)) {
-            nodes.addObject(newNode(uri, label, 'outer'));
-            nodeSet.push(uri);
-          }
+            // add predicate to node list if it wasn't in the selection
+            if (!nodeSet.contains(uri)) {
+              nodes.addObject(newNode(uri, label, 'outer'));
+              nodeSet.push(uri);
+            }
 
-          // add edge between from predicate to selected resource
-          edges.addObject(newEdge(uri, s.get('uri')));
-        });
-      }
+            // add edge between from predicate to selected resource
+            edges.addObject(newEdge(uri, s.get('uri')));
+          });
+        }
+      });
+
+      this.reRender();
+    }
+  }.observes('resources.incoming.size'),
+
+  //must not be called before 'didInsertElement'
+  reRender: function() {
+    this.cy.add({
+      nodes: this.get('nodes').toArray(),
+      edges: this.get('edges').toArray()
     });
-  }.observes('resources.incoming.size').on('init'),
+    console.log(this.get('nodes').toArray());
+    this.cy.layout({name: 'grid'});
+    this.cy.forceRender();
+  },
 
-  //this observes the resources list and is invoked on initialization
+  //this is invoked on initialization
   didInsertElement: function () {
-    var nodes = this.get('nodes').toArray(),
-        edges = this.get('edges').toArray();
 
     // initialize cytoscape
-    this.$().cytoscape({
+    this.cy = Cyto({  // jshint ignore:line
 
-      //container: this.$()[0],
-
-      elements: {
-        nodes: nodes,
-        edges: edges
-      },
+      container: this.$()[0],
 
       style: graphstyle,
       motionBlur: false,
@@ -194,9 +213,6 @@ export default Ember.Component.extend({
 
       boxSelectionEnabled: true,
     });
-
-    console.log(nodes);
-    console.log(edges);
 
     /*
     cy.on('tap', 'node.outer', function (evt) {
@@ -213,6 +229,6 @@ export default Ember.Component.extend({
       console.log('Central tap registered: ' + node.id());
     });
     */
-  }.observes('resources')
+  }
 
 });
