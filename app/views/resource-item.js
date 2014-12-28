@@ -1,13 +1,27 @@
 import Ember from 'ember';
 import Notify from 'ember-notify';
-import Popover from './bootstrap-popover';
 
 // this component is for rendering list items and displaying comments
 export default Ember.ListItemView.extend({
   selectedItems: Ember.computed.alias('parentView.selectedItems'),
   templateName: 'views/resource-item',
   classNameBindings: ['active'],
-  PopoverView: Popover,
+
+  didInsertElement: function() {
+    this.$().popover({
+      trigger: 'manual',
+      container: 'body',
+      content: this.popoverrContent.bind(this)
+    });
+  },
+
+  willDestroyElement: function() {
+    this.$().popover('destroy');
+  },
+
+  popoverrContent: function() {
+    return this.get('content.comment');
+  },
 
   render: function(buffer) {
     this.setFocus(false);
@@ -24,9 +38,7 @@ export default Ember.ListItemView.extend({
   toggleComment: function() {
     if (!this.$()) { return; }
 
-    Ember.run.later(this, function() {
-      this.get('popoverView').toggle();
-    });
+    this.$().popover('toggle');
   },
 
   setFocus: function(val) {
@@ -43,7 +55,7 @@ export default Ember.ListItemView.extend({
 
   mouseLeave: function() {
     this.setFocus(false);
-    this.get('popoverView').hide();
+    this.$().popover('hide');
   },
 
   click: function(evt) {
@@ -64,7 +76,7 @@ export default Ember.ListItemView.extend({
       selected.removeObject(uri);
     }
 
-    this.get('popoverView').hide();
+    this.$().popover('hide');
     parentView.updateURL();
   },
 
@@ -92,17 +104,18 @@ export default Ember.ListItemView.extend({
     showComment: function() {
       if (this.get('fetching')) { return; }
 
-      var self     = this,
-          resource = this.get('content');
+      if (this.get('fetched')) { return this.toggleComment(); }
 
-      if (resource.get('comments.length')) { return this.toggleComment(); }
+      var self = this,
+          res  = this.get('content');
 
       this.set('fetching', true);
 
-      this.get('parentView.store').fetchComments(resource).catch(function() {
+      this.get('parentView.store').fetchComments(res).catch(function() {
         Notify.error('Unable to fetch comments for ' + self.get('content.uri'));
       }).finally(function() {
         self.set('fetching', false);
+        self.set('fetched', true);
         self.toggleComment();
       });
     }
