@@ -5,7 +5,7 @@ import AsyncQuery from './queries/async-select';
 
 export default Ember.Object.extend({
   askQuery: AskQuery.extend({template: 'ASK { ?s ?p ?o }'}),
-  commentQuery: SelectQuery.create({template: 'SELECT DISTINCT ?comment {<{{uri}}> {{comment}} ?comment}'}),
+  commentQuery: SelectQuery.create({template: 'SELECT DISTINCT ?comment WHERE { <{{uri}}> {{comment}} ?comment }'}),
   labelsQuery: AsyncQuery.extend({ template: 'SELECT DISTINCT ?uri ?label WHERE { VALUES ?uri { {{#each selected}} <{{this}}> {{/each}} } ?uri {{label}} ?label }',
                                    key: { var: 'uri', label: 'label' } }),
 

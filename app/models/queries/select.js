@@ -43,16 +43,16 @@ export default Query.extend({
     var row, comment, lang;
     var resource = this.get('resource');
 
-    while (result.hasNext()) {
-      row     = result.nextBinding();
-      comment = row.varNameToEntry.comment.node.literalLabel.val;
-      lang    = row.varNameToEntry.comment.node.literalLabel.lang;
+    if (!result.hasNext()) {
+      resource.addComment('default', 'This resource has no description');
+    } else {
+      while (result.hasNext()) {
+        row     = result.nextBinding();
+        comment = row.varNameToEntry.comment.node.literalLabel.val;
+        lang    = row.varNameToEntry.comment.node.literalLabel.lang;
 
-      resource.addComment(comment, lang);
-    }
-
-    if (!resource.get('comments.length')) {
-      resource.addComment('This resource has no description');
+        resource.addComment(lang ? lang : 'default', comment);
+      }
     }
   },
 
@@ -69,7 +69,7 @@ export default Query.extend({
       label = row.varNameToEntry[key.label].node.literalLabel.val;
       lang  = row.varNameToEntry[key.label].node.literalLabel.lang;
 
-      entry.addLabel(label, lang);
+      entry.addLabel(lang ? lang : 'default', label);
     }
 
     return entry;

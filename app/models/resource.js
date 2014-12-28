@@ -1,18 +1,18 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-  lang:'en',
+  lang: 'en',
 
   init: function() {
     this.set('labels', Ember.Map.create());
     this.set('comments', Ember.Map.create());
   },
 
-  label: function() {
-    var key, lang = this.get('lang'),
+  label: Ember.computed('lang', function() {
+    var lang   = this.get('lang'),
         labels = this.get('labels');
 
-    if (lang && labels.has(lang)) {
+    if (labels.has(lang)) {
       return labels.get(lang);
     }
 
@@ -20,42 +20,26 @@ export default Ember.Object.extend({
       return labels.get('default');
     }
 
-    // The rare case of no default nor wanted encoding existing
-    // but some other encoding(s)... return first
-    key = labels.keys.toArray()[0];
-    this.set('altLabel', key);
+    return this.get('uri');
+  }),
 
-    return labels.get(key);
-  }.property('labels.size'),
-
-  comment: function() {
-    var key, lang = this.get('lang'),
+  comment: Ember.computed('lang', function() {
+    var lang     = this.get('lang'),
         comments = this.get('comments');
 
-    if (lang && comments.has(lang)) {
+    if (comments.has(lang)) {
       return comments.get(lang);
     }
 
-    if (comments.has('default')) {
-      return comments.get('default');
-    }
+    return comments.get('default');
+  }).volatile(),
 
-    key = comments.keys.toArray()[0];
-    this.set('altComment', key);
 
-    return comments.get(key);
-  }.property('comments.size'),
-
-  addLabel: function(label, lang) {
-    this._addLiteral('labels', label, lang);
+  addLabel: function(lang, label) {
+    this.get('labels').set(lang, label);
   },
 
-  addComment: function(comment, lang) {
-    this._addLiteral('comments', comment, lang);
-  },
-
-  _addLiteral: function(type, value, lang) {
-    var key = lang ? lang : 'default';
-    this.get(type).set(key, value);
+  addComment: function(lang, comment) {
+    this.get('comments').set(lang, comment);
   }
 });
