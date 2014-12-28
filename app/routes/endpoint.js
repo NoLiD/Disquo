@@ -48,7 +48,7 @@ export default Ember.Route.extend({
     },
 
     selectionChange: function(type, selected) {
-      this.set('selectionText', selected.mapBy('label').join(', '))
+      this.set('selectionText', selected.mapBy('label').join(', '));
       this.set('selection', selected.mapBy('uri'));
       this.set('type', 'endpoint.' + type);
     },

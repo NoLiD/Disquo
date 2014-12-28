@@ -26,7 +26,7 @@ export default Ember.ListView.extend({
         } else {
           view.set('active', false);
         }
-      })
+      });
     }
   }.observes('selectedItems'),
 
