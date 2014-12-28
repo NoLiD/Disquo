@@ -17,7 +17,9 @@ export default Ember.ListView.extend({
   }.on('didInsertElement'),
 
   updateHeight: function() {
-    this.set('height', this.get('parentView').$().innerHeight()*0.9);
+    this.set('height', this.get('parentView').$()
+                           .find('.panel-body')
+                           .height());
   },
 
   updateURL: function() {
