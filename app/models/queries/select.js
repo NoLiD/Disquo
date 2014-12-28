@@ -33,7 +33,7 @@ export default Query.extend({
       }
     }
 
-    map.forEach(function(key, value) {
+    map.forEach(function(value) {
       if (!arr.contains(value)) { arr.pushObject(value); }
     });
     return arr;

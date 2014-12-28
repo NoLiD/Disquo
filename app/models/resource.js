@@ -26,7 +26,7 @@ export default Ember.Object.extend({
     this.set('altLabel', key);
 
     return labels.get(key);
-  }.property('labels.length'),
+  }.property('labels.size'),
 
   comment: function() {
     var key, lang = this.get('lang'),
@@ -44,7 +44,7 @@ export default Ember.Object.extend({
     this.set('altComment', key);
 
     return comments.get(key);
-  }.property('comments.length'),
+  }.property('comments.size'),
 
   addLabel: function(label, lang) {
     this._addLiteral('labels', label, lang);
