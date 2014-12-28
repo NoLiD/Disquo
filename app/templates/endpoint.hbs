@@ -8,11 +8,8 @@
               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </button>
           </li>
-          <li class="list-group-item navbar-btn disabled" {{bind-attr title=selection}}>
-            {{#if selection}}{{selection}}{{else}}None{{/if}}
-          </li>
-          <li>
-            {{test-comp}}
+          <li class="list-group-item navbar-btn disabled" {{bind-attr title=selectionText}}>
+            {{#if selectionText}}{{selectionText}}{{else}}None{{/if}}
           </li>
         </ul>
       </div>

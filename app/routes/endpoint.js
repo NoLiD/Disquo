@@ -2,8 +2,10 @@ import Ember from 'ember';
 import Notify from 'ember-notify';
 
 export default Ember.Route.extend({
-  queryMenu: Ember.computed.alias('controller.queryMenu'),
-  selection: Ember.computed.alias('controller.selection'),
+  selectionText : Ember.computed.alias('controller.selectionText'),
+  selection     : Ember.computed.alias('controller.selection'),
+  queryMenu     : Ember.computed.alias('controller.queryMenu'),
+  type          : Ember.computed.alias('controller.type'),
 
   titleToken: function(model) {
     return model.url;
@@ -45,8 +47,10 @@ export default Ember.Route.extend({
       this.transitionTo(route, query, JSON.stringify(selected), predicate);
     },
 
-    selectionChange: function(selected) {
-      this.set('selection',  selected.mapBy('label').join(', '));
+    selectionChange: function(type, selected) {
+      this.set('selectionText', selected.mapBy('label').join(', '))
+      this.set('selection', selected.mapBy('uri'));
+      this.set('type', 'endpoint.' + type);
     },
 
     queryButton: function() {

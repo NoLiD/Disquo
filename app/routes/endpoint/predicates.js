@@ -1,6 +1,8 @@
 import EndpointRoute from '../../models/endpoint-route';
 
 export default EndpointRoute.extend({
+  type: 'predicate',
+
   titleToken: function(model) {
     var selected = model.selected;
 
@@ -16,8 +18,8 @@ export default EndpointRoute.extend({
   },
 
   decodedModel: function(params) {
-    return this.store.find('predicate', params.query,
-                                        params.selected,
-                                        params.predicate);
+    return this.store.find(this.get('type'), params.query,
+                                             params.selected,
+                                             params.predicate);
   }
 });

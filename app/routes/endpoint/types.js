@@ -1,6 +1,8 @@
 import EndpointRoute from '../../models/endpoint-route';
 
 export default EndpointRoute.extend({
+  type: 'type',
+
   titleToken: function(model) {
     var selected = model.selected;
 
@@ -20,8 +22,8 @@ export default EndpointRoute.extend({
   },
 
   decodedModel: function(params) {
-    return this.store.find('type', params.query,
-                                   params.selected,
-                                   params.predicate);
+    return this.store.find(this.get('type'), params.query,
+                                             params.selected,
+                                             params.predicate);
   }
 });

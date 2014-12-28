@@ -6,12 +6,32 @@ export default Ember.ListView.extend({
   rowHeight: 46,
   height: 46,
 
-  init: function() {
-    this.set('selectedItems', Ember.A());
-    return this._super();
-  },
+  selectedItems: Ember.computed.alias('endpoint.selection'),
+  currentRoute: Ember.computed.alias('endpoint.type'),
+
+  endpoint: Ember.computed(function() {
+    var controller = this.get('controller');
+    if (controller && controller.container) {
+      return controller.container.lookup('controller:endpoint');
+    }
+  }),
+
+  selectionChanged: function() {
+    if (this.get('targetRoute') !== this.get('currentRoute')) {
+      var selection = this.get('selectedItems');
+
+      this.forEach(function(view) {
+        if (selection.contains(view.get('content.uri'))) {
+          view.set('active', true);
+        } else {
+          view.set('active', false);
+        }
+      })
+    }
+  }.observes('selectedItems'),
 
   listInstered: function() {
+    this.get('endpoint');
     Ember.$(window).on('resize', this.updateHeight.bind(this));
     Ember.run.scheduleOnce('afterRender', this, 'updateHeight');
   }.on('didInsertElement'),
