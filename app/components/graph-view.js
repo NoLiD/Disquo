@@ -97,7 +97,7 @@ export default Ember.Component.extend({
   classNames: ['graph'],
 
   init: function() {
-    this.set('nodeSet', new Ember.Set());
+    this.set('nodeSet', Ember.A());
     this.set('nodes', Ember.A());
     this.set('edges', Ember.A());
   },
@@ -112,7 +112,7 @@ export default Ember.Component.extend({
       select.forEach(function (s) {
         // set central class for style and click event choice
         nodes.addObject(newNode(s.get('uri'), s.get('label'), 'central'));
-        nodeSet.push(s.get('uri'));
+        nodeSet.addObject(s.get('uri'));
       });
 
       this.reRender();
@@ -140,7 +140,7 @@ export default Ember.Component.extend({
             // add predicate to node list if it wasn't in the selection
             if (!nodeSet.contains(uri)) {
               nodes.addObject(newNode(uri, label, 'outer'));
-              nodeSet.push(uri);
+              nodeSet.addObject(uri);
             }
 
             // add edge between from selected resource to predicate
@@ -171,7 +171,7 @@ export default Ember.Component.extend({
             // add predicate to node list if it wasn't in the selection
             if (!nodeSet.contains(uri)) {
               nodes.addObject(newNode(uri, label, 'outer'));
-              nodeSet.push(uri);
+              nodeSet.addObject(uri);
             }
 
             // add edge between from predicate to selected resource
