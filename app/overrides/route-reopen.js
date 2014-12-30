@@ -7,7 +7,7 @@ export default Ember.Route.reopen({
     for (var prop in params) {
       if (params.hasOwnProperty(prop)) {
         if (prop === 'selected' /*||  prop === 'predicates'*/) {
-          params[prop] = JSON.parse(decodeURIComponent(params[prop]));
+          params[prop] = decodeURIComponent(params[prop]).split(',');
         } else {
           params[prop] = decodeURIComponent(params[prop]);
         }
