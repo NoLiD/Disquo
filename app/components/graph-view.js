@@ -183,12 +183,18 @@ var nodePool = {
   init: function (cy) {
     this.cy = cy;
 
-    // list of inactive/active nodes
+    // list of inactive cytoscape node objects
     this.inactiveNodes = Ember.A();
-    this.activeNodes = Ember.A();
+    // map of active cytoscape node objects (keyed by uri string)
+    this.activeNodes = new Ember.Map();
+
     // map of inactive/active edge lists, using 'srcid:tgtid' string keys
     this.inactiveEdges = new Ember.Map();
     this.activeEdges = new Ember.Map();
+  },
+
+  getActiveNode: function (uri) {
+    return this.activeNodes.get(uri);
   },
 
   // useInactiveX returns an element not currently 'restored' from 'removal',
@@ -218,7 +224,7 @@ var nodePool = {
   },
 
   deactivateAll: function () {
-    // for each element in inactive pool
+    // for each element in both inactive pools
       // move element from active pool to inactive pool
       // remove element from cytoscape
   }
