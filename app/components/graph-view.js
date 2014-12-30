@@ -177,7 +177,7 @@ function getGraphArrays(results) {
   });
 
   return { nodes: nodes, edges: edges };
-};
+}
 
 var nodePool = {
   init: function (cy) {
@@ -248,14 +248,13 @@ export default Ember.Component.extend({
   hideNonintersecting: function() {
     var expectedDegree = this.get('selected').length;
     this.cy.elements('node.outer').forEach(function (node) {
-      if (node.degree(false) < expectedDegree) node.hide();
-      else node.show();
+      if (node.degree(false) < expectedDegree) { node.hide(); }
+      else { node.show(); }
     });
   },
 
   detectNewSelection: (function () {
-    var current = undefined;
-    var that = this;
+    var current;
     return function (newSelection) {
       if (newSelection === current) {
         return false;
