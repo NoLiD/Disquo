@@ -1,9 +1,13 @@
 /* Credit: https://github.com/stefanpenner/ember-cli-shims */
+
 (function() {
 
   var shims = {
     'cytoscape': {
       'default': cytoscape
+    },
+    'nprogress': {
+      'default': NProgress
     }
   };
 

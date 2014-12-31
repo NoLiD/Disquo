@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import nProgress from 'nprogress';
 
 export default Ember.Route.extend({
   title: function(tokens) {
@@ -28,15 +29,16 @@ export default Ember.Route.extend({
     },
 
     loading: function() {
-      if (this.get('loading')) { return false; }
+      if (this.isLoading) { return false; }
 
-      var self = this,
-          view = this.container.lookup('view:loading').append();
+      var self = this;
 
-      this.set('loading', true);
-      this.router.one('didTransition', view, function() {
-        this.destroy();
-        self.set('loading', false);
+      this.isLoading = true;
+
+      nProgress.start();
+      this.router.one('didTransition', this, function() {
+        nProgress.done();
+        self.isLoading = false;
       });
     }
   }

@@ -14,7 +14,8 @@
     "qunit": "~1.15.0",
     "jassa": "v0.0.4-SNAPSHOT",
     "bootswatch-dist": "3.3.0-darkly",
-    "cytoscape": "2.3.x"
+    "cytoscape": "2.3.x",
+    "nprogress": "~0.1.6"
   },
   "resolutions": {
     "jquery": ">=1.11.x <2.0.0"

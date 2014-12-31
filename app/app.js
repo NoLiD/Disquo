@@ -13,6 +13,8 @@ import View from './overrides/view-reopen';
 /* Ember Notify lib */
 import Notify from 'ember-notify';
 
+import nProgress from 'nprogress';
+
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
 var App = Ember.Application.extend({
@@ -26,5 +28,10 @@ loadInitializers(App, config.modulePrefix);
 // Tell Notify to always use bootstrap styling
 Notify.useBootstrap();
 Notify.View.reopen({removeAfter: 5000});
+
+nProgress.configure({
+  showSpinner: false,
+  template: '<div class="bar" role="bar"></div>'
+});
 
 export default App;

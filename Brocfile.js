@@ -35,10 +35,15 @@ app.import('bower_components/cytoscape/dist/cytoscape.js');
 // List-view
 app.import('vendor/list-view/list-view.js');
 
+// NProgress
+app.import('bower_components/nprogress/nprogress.css');
+app.import('bower_components/nprogress/nprogress.js');
+
 // Shims for imports
 app.import('vendor/app-shims.js', {
   exports: {
-    cytoscape: ['default']
+    cytoscape: ['default'],
+    nprogress: ['default']
   }
 });
 
