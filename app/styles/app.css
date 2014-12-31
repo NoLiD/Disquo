@@ -16,7 +16,7 @@ h4, h5, h6 {
 }
 
 /*************************************************
-main layout
+  Main layout
 *************************************************/
 
 .container-fixed,
@@ -88,7 +88,7 @@ main layout
 }
 
 /*************************************************
-list items and tags
+  list items and tags
 *************************************************/
 .ember-list-container,
 .ember-list-view {
@@ -234,7 +234,7 @@ a.ember-list-item-view.active > .badge,
 }
 
 /**********************************
-Modals
+  Modals
 ***********************************/
 
 .modal-header .close {
@@ -251,11 +251,11 @@ Modals
 }
 
 /**********************************
-Notifications
+  Notifications
 -----------------------------------
-This makes notifications appear from
-top of the window rather than
-the original bottom right corner
+  This makes notifications appear from
+  top of the window rather than
+  the original bottom right corner
 ***********************************/
 
 .ember-notify-cn {
@@ -278,7 +278,7 @@ the original bottom right corner
 }
 
 /**********************************
-Loading Spinner
+  Loading Spinner
 -----------------------------------
 ***********************************/
 
