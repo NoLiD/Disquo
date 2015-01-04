@@ -25,9 +25,11 @@ var graphstyle = Cyto.stylesheet()
   .selector('edge')
   .css({
     'target-arrow-shape': 'triangle',
-    'width': 1.5,
-    'line-color': '#777',
-    'line-style': 'solid'
+    'target-arrow-color': '#555',
+    'line-color': '#555',
+    'line-style': 'solid',
+    'width': 1.0,
+    'z-index': 0
   })
   .selector('node.central')
   .css({
@@ -38,6 +40,13 @@ var graphstyle = Cyto.stylesheet()
   .css({
     'background-color': '#00bc8c',
     'text-outline-width': 2
+  })
+  .selector('edge.highlight')
+  .css({
+    'line-color': '#888',
+    'target-arrow-color': '#888',
+    'width': 2.0,
+    'z-index': 1
   })
   .selector(':selected')
   .css({
@@ -56,10 +65,8 @@ var layoutOptions = {
   name: 'cose',
 
   animate: false, // whether to show the layout as it's running
-  fit: true, // whether to fit the viewport to the graph
-  padding: 30, // padding on fit
   boundingBox: undefined, // constrain layout bounds
-  random: false, // whether to use random initial positions
+
   ready: undefined, // callback on layoutready
   stop: undefined, // callback on layoutstop
 
@@ -77,8 +84,6 @@ var layoutOptions = {
 var cyOpts = {
   style: graphstyle,
 
-  layout: layoutOptions,
-
   motionBlur: false,
 
   minZoom: 0.4,
@@ -89,32 +94,6 @@ var cyOpts = {
 
   boxSelectionEnabled: true,
 };
-
-function newNode(uri, label, group) {
-  var fullName = label;
-
-  if (label.length > 16) {
-    label = label.substring(0,14) + '...';
-  }
-
-  return {
-    classes: group,
-    data: {
-      id: uri,
-      name: label,
-      hiddenName: fullName
-    },
-    group: "nodes",
-    position: {x: 100, y: 100}
-  };
-}
-
-function newEdge(src, tgt) {
-  return {
-    data: { source: src, target: tgt },
-    group: "edges"
-  };
-}
 
 function getGraphArrays(results) {
   var selectMap = results.get('selected'),
@@ -127,7 +106,7 @@ function getGraphArrays(results) {
   // start node array with central (selected) nodes.
   selectMap.forEach(function (s) {
     // set central class for style and click event choice
-    nodes.push(newNode(s.get('uri'), s.get('label'), 'central'));
+    results.graphPool.showNode(s.get('uri'), s.get('label'), 'central');
     nodeSet.push(s.get('uri'));
   });
 
@@ -145,12 +124,12 @@ function getGraphArrays(results) {
 
         // add predicate to node list if it wasn't in the selection
         if (!nodeSet.contains(uri)) {
-          nodes.push(newNode(uri, label, 'outer'));
+          results.graphPool.showNode(uri, label, 'outer');
           nodeSet.push(uri);
         }
 
         // add edge between from selected resource to predicate
-        edges.push(newEdge(s.get('uri'), uri));
+        results.graphPool.showEdge(results.graphPool.getActiveNode(s.get('uri')), results.graphPool.getActiveNode(uri));
       });
     }
   });
@@ -166,12 +145,12 @@ function getGraphArrays(results) {
 
         // add predicate to node list if it wasn't in the selection
         if (!nodeSet.contains(uri)) {
-          nodes.push(newNode(uri, label, 'outer'));
+          results.graphPool.showNode(uri, label, 'outer');
           nodeSet.push(uri);
         }
 
         // add edge between from predicate to selected resource
-        edges.push(newEdge(uri, s.get('uri')));
+        results.graphPool.showEdge(results.graphPool.getActiveNode(uri), results.graphPool.getActiveNode(s.get('uri')));
       });
     }
   });
@@ -179,57 +158,193 @@ function getGraphArrays(results) {
   return { nodes: nodes, edges: edges };
 }
 
-var nodePool = {
-  init: function (cy) {
-    this.cy = cy;
+/*****************
+ * BEGIN GRAPHPOOL
+ *****************/
 
-    // list of inactive cytoscape node objects
-    this.inactiveNodes = Ember.A();
-    // map of active cytoscape node objects (keyed by uri string)
-    this.activeNodes = new Ember.Map();
+function GraphPool(cy) {
+  this.cy = cy;
 
-    // map of inactive/active edge lists, using 'srcid:tgtid' string keys
-    this.inactiveEdges = new Ember.Map();
-    this.activeEdges = new Ember.Map();
-  },
+  this.nodeCount = 0;
+  this.edgeCount = 0;
 
-  getActiveNode: function (uri) {
-    return this.activeNodes.get(uri);
-  },
+  // list of inactive cytoscape node objects
+  this.inactiveNodes = Ember.A();
+  // map of active cytoscape node objects (keyed by uri string)
+  this.activeNodes = new Ember.Map();
 
-  // useInactiveX returns an element not currently 'restored' from 'removal',
-  // to use the cytoscape api terminology.  must not be called before cytoscape
-  // is initialized.
-  useInactiveNode: function (data) {
-    if (this.inactiveNodes.length === 0) {
-      // node pool is empty - create new node with data
-      // add the node to cytoscape
-      // add node to active pool
-    } else {
-      // remove a node from inactive, move to active, mutate its data
-      // restore the node to cytoscape
-    }
-    // return the element
-  },
+  // map of inactive/active edge lists, using 'srcid:tgtid' string keys
+  this.inactiveEdges = new Ember.Map();
+  this.activeEdges = new Ember.Map();
+}
 
-  // useInactiveEdge requires source and target node ids because they are
-  // immutable
-  useInactiveEdge: function (srcid, tgtid) {
-    if (this.inactiveEdges.get(srcid + ':' + tgtid).length === 0) {
-      // create the new edge and add it to the active pool
-    } else {
-      // remove edge from inactive, move to active, restore to cytoscape
-    }
-    // return the element
-  },
+GraphPool.prototype.getShortLabel = function (label) {
+  if (label.length > 16) {
+    return label.substring(0,14) + '...';
+  }
+  return label;
+};
 
-  deactivateAll: function () {
-    // for each element in both inactive pools
-      // move element from active pool to inactive pool
-      // remove element from cytoscape
+GraphPool.prototype.addNewNode = function (uri, label, group) {
+
+  var that = this;
+
+  if (this.inactiveNodes.length !== 0) {
+    console.log("WARNING: creating node with nonempty inactive pool.");
   }
 
+  // define node object
+  var node = this.cy.add({
+    classes: group,
+    data: {
+      id: '' + that.nodeCount,
+      uri: uri,
+      name: that.getShortLabel(label),
+      hiddenName: label
+    },
+    group: "nodes",
+    position: {x: Math.random()*100, y: Math.random()*100}
+  });
+
+  // maintain pool data
+  this.nodeCount += 1;
+  this.activeNodes.set(uri, node);
+
+  return node;
 };
+
+GraphPool.prototype.addNewEdge = function (src, tgt) {
+
+  if (this.inactiveEdges.has(src + ':' + tgt) &&
+      this.inactiveEdges.get(src + ':' + tgt).length !== 0) {
+    console.log("WARNING: creating edge with nonempty inactive pool.");
+  }
+
+  // define edge object
+  var edge = this.cy.add({
+    data: { source: src, target: tgt },
+    group: "edges"
+  });
+
+  // maintain pool data
+  this.edgeCount += 1;
+  // ensure activeEdges knows about pair
+  if (!this.activeEdges.has(src + ':' + tgt)) {
+    this.activeEdges.set(src + ':' + tgt, Ember.A());
+  }
+  this.activeEdges.get(src + ':' + tgt).push(edge);
+
+  return edge;
+};
+
+GraphPool.prototype.useExistingNode = function (uri, label, group) {
+  if (this.inactiveNodes.length === 0) {
+    console.err("ERROR: cannot reuse node from empty inactive pool.");
+  }
+
+  // get node and maintain pool data
+  var node = this.inactiveNodes.pop();
+  this.activeNodes.set(uri, node);
+
+  // mutate node
+  node.data('uri', uri);
+  node.data('name', this.getShortLabel(label));
+  node.data('hiddenName', label);
+  node.removeClass('central outer');
+  node.addClass(group);
+
+  // put node back into visible graph
+  node.restore();
+
+  return node;
+};
+
+GraphPool.prototype.useExistingEdge = function (src, tgt) {
+
+  if (!this.inactiveEdges.has(src + ':' + tgt) ||
+      this.inactiveEdges.get(src + ':' + tgt).length === 0) {
+    console.err("ERROR: cannot reuse edge from empty inactive pool.");
+  }
+
+  // get edge and maintain pool data
+  var edge = this.inactiveEdges.get(src + ':' + tgt).pop();
+  // ensure activeEdges knows about pair
+  if (!this.activeEdges.has(src + ':' + tgt)) {
+    this.activeEdges.set(src + ':' + tgt, Ember.A());
+  }
+  this.activeEdges.get(src + ':' + tgt).push(edge);
+
+  // put edge back in graph
+  edge.restore();
+
+  return edge;
+};
+
+GraphPool.prototype.getActiveNode = function (uri) {
+  var node = this.activeNodes.get(uri);
+
+  if (node === undefined) {
+    console.log('WARNING: node not found for:');
+    console.log('         ' + uri);
+  }
+
+  return node;
+};
+
+// showNode is the intended "public" interface for using GraphPool nodes.
+// must not be called before cytoscape is initialized.
+// returns the node it creates/mutates.
+GraphPool.prototype.showNode = function (uri, label, group) {
+  if (this.inactiveNodes.length === 0) {
+    return this.addNewNode(uri, label, group);
+  } else {
+    return this.useExistingNode(uri, label, group);
+  }
+};
+
+GraphPool.prototype.showEdge = function (srcNode, tgtNode) {
+  // get cytoscape ids from nodes
+  var src = srcNode.id(),
+      tgt = tgtNode.id();
+
+  // check if there are inactive edges for the source/target pair
+  if (!this.inactiveEdges.has(src + ':' + tgt) ||
+      this.inactiveEdges.get(src + ':' + tgt).length === 0) {
+    return this.addNewEdge(src, tgt);
+  } else {
+    return this.useExistingEdge(src, tgt);
+  }
+};
+
+GraphPool.prototype.hideAll = function () {
+  // for each element in both active pools
+    // move element from active pool to inactive pool
+    // remove element from cytoscape
+
+  this.activeNodes.forEach(function (node) {
+    this.inactiveNodes.push(node);
+    node.remove();
+  }, this);
+  this.activeNodes = new Ember.Map();
+
+  this.activeEdges.forEach(function (edgeList, pairKey) {
+    if (!this.inactiveEdges.has(pairKey)) {
+      this.inactiveEdges.set(pairKey, Ember.A());
+    }
+
+    edgeList.forEach(function (edge) {
+      this.inactiveEdges.get(pairKey).push(edge);
+      edge.remove();
+    }, this);
+
+  }, this);
+
+  this.activeEdges = new Ember.Map();
+};
+
+/***************
+ * END GRAPHPOOL
+ ***************/
 
 export default Ember.Component.extend({
   classNames: ['graph'],
@@ -244,9 +359,15 @@ export default Ember.Component.extend({
     // add cytoscape context to component
     that.cy = that.$().cytoscape('get');
 
-    // ensure the graph is rendered on page refresh/direct link
     that.cy.on('ready', function () {
-      that.draw();
+      that.graphPool = new GraphPool(this);
+
+      this.on('layoutstop', function (evt) {
+        this.fit(evt.layout.options.eles, 30);
+      });
+
+      // ensure the graph is rendered on page refresh/direct link
+      if (that.get('selected')) { that.draw(); }
     });
   },
 
@@ -260,6 +381,14 @@ export default Ember.Component.extend({
   },
 
   detectNewSelection: (function () {
+    // Curry a component function that tracks the current selection.
+    // For use with updateSelect, updateOut, and updateIn.
+    // All of the updateX functions use .observes(), and the selection always
+    // changes before incoming or outgoing, but it is not always the first
+    // observer to fire.
+    // This curried selection tracker is so that the updateX functions can
+    // fire in any order and the graph will be cleared or updated at the
+    // correct times.
     var current;
     return function (newSelection) {
       if (newSelection === current) {
@@ -299,14 +428,15 @@ export default Ember.Component.extend({
   //this observes the resources list and is invoked on initialization
   draw: function () {
 
-    var graph = getGraphArrays(this);
+    this.graphPool.hideAll();
+    getGraphArrays(this);
 
-    this.cy.load({
-      nodes: graph.nodes,
-      edges: graph.edges
-    });
+    console.log('nodes ' + this.graphPool.nodeCount);
+    console.log('edges ' + this.graphPool.edgeCount);
 
     this.hideNonintersecting();
+
+    this.cy.collection(':visible').layout(layoutOptions);
 
     var swapNames = function (node) {
       var tmp = node.data("name");
@@ -317,11 +447,15 @@ export default Ember.Component.extend({
     this.cy.on('mouseover', 'node', function (evt) {
       var node = evt.cyTarget;
       swapNames(node);
+
+      node.connectedEdges().addClass('highlight');
     });
 
     this.cy.on('mouseout', 'node', function (evt) {
       var node = evt.cyTarget;
       swapNames(node);
+
+      node.connectedEdges().removeClass('highlight');
     });
 
     this.cy.on('tap', 'node.outer', function (evt) {
