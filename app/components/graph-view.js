@@ -349,6 +349,12 @@ GraphPool.prototype.hideAll = function () {
 export default Ember.Component.extend({
   classNames: ['graph'],
 
+  swapNames: function (node) {
+    var tmp = node.data("name");
+    node.data("name", node.data("hiddenName"));
+    node.data("hiddenName", tmp);
+  },
+
   didInsertElement: function () {
     var that = this;
 
@@ -360,10 +366,41 @@ export default Ember.Component.extend({
     that.cy = that.$().cytoscape('get');
 
     that.cy.on('ready', function () {
+      // initialize component graph pool
       that.graphPool = new GraphPool(this);
+
+      // register cytoscape events
 
       this.on('layoutstop', function (evt) {
         this.fit(evt.layout.options.eles, 30);
+      });
+
+      this.on('mouseover', 'node', function (evt) {
+        var node = evt.cyTarget;
+        that.swapNames(node);
+
+        node.connectedEdges().addClass('highlight');
+      });
+
+      this.on('mouseout', 'node', function (evt) {
+        var node = evt.cyTarget;
+        that.swapNames(node);
+
+        node.connectedEdges().removeClass('highlight');
+      });
+
+      this.on('tap', 'node.outer', function (evt) {
+        var node = evt.cyTarget;
+        //TODO detect if value or predicate.  this.resultType?
+        //     transition to routes accordingly
+        console.log('Outer tap registered: ' + node.id());
+      });
+
+      this.on('tap', 'node.central', function (evt) {
+        var node = evt.cyTarget;
+        //TODO transition to what route?  selected resource clicked, so
+        // treat the same as click from Things list?
+        console.log('Central tap registered: ' + node.id());
       });
 
       // ensure the graph is rendered on page refresh/direct link
@@ -437,40 +474,6 @@ export default Ember.Component.extend({
     this.hideNonintersecting();
 
     this.cy.collection(':visible').layout(layoutOptions);
-
-    var swapNames = function (node) {
-      var tmp = node.data("name");
-      node.data("name", node.data("hiddenName"));
-      node.data("hiddenName", tmp);
-    };
-
-    this.cy.on('mouseover', 'node', function (evt) {
-      var node = evt.cyTarget;
-      swapNames(node);
-
-      node.connectedEdges().addClass('highlight');
-    });
-
-    this.cy.on('mouseout', 'node', function (evt) {
-      var node = evt.cyTarget;
-      swapNames(node);
-
-      node.connectedEdges().removeClass('highlight');
-    });
-
-    this.cy.on('tap', 'node.outer', function (evt) {
-      var node = evt.cyTarget;
-      //TODO detect if value or predicate.  this.resultType?
-      //     transition to routes accordingly
-      console.log('Outer tap registered: ' + node.id());
-    });
-
-    this.cy.on('tap', 'node.central', function (evt) {
-      var node = evt.cyTarget;
-      //TODO transition to what route?  selected resource clicked, so
-      // treat the same as click from Things list?
-      console.log('Central tap registered: ' + node.id());
-    });
 
   }.observes('resources') //TODO observe length of all maps
 });
