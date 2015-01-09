@@ -36,5 +36,13 @@ export default BaseAdapter.extend({
                                         selected.toString());
       }
     );
+  },
+
+  //NEWTHING: values in place of all in route uri thing.   'predicate' param is end of uri route thing
+  values: function(selected, predicate) {
+    //var incoming = this.getOrCreateQuery(this.get('DifferentIncoming'), 'values.in', selected, predicate),
+     //   outgoing = this.getOrCreateQuery(this.get('DifferentOutgoing'), 'values.out', selected, predicate);
+
+		return Ember.RSVP.resolve('NEWTHING');
   }
 });

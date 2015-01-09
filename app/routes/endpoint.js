@@ -42,6 +42,10 @@ export default Ember.Route.extend({
     },
 
     resourceTransition: function(route, query, selected, predicate) {
+		console.log(route);
+		console.log(query);
+		console.log(selected);
+		console.log(predicate);
       this.transitionTo(route, query, selected.join(), predicate);
     },
 

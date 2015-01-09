@@ -234,6 +234,8 @@ var nodePool = {
 export default Ember.Component.extend({
   classNames: ['graph'],
 
+  transitionAction: 'resourceTransition', //NEWTHING
+
   didInsertElement: function () {
     var that = this;
 
@@ -324,10 +326,15 @@ export default Ember.Component.extend({
       swapNames(node);
     });
 
-    this.cy.on('tap', 'node.outer', function (evt) {
+	// NEWTHING evt arrow syntax autobinds `this`  fun.bind(this)
+	this.cy.on('tap', 'node.outer', evt => {
       var node = evt.cyTarget;
       //TODO detect if value or predicate.  this.resultType?
       //     transition to routes accordingly
+	  
+	  //NEWTHING
+	  this.send('transition', 'endpoint.predicates', 'values', this.get('selected').mapBy('uri'), node.id());
+	  
       console.log('Outer tap registered: ' + node.id());
     });
 
@@ -338,5 +345,17 @@ export default Ember.Component.extend({
       console.log('Central tap registered: ' + node.id());
     });
 
-  }.observes('resources') //TODO observe length of all maps
+  }.observes('resources'), //TODO observe length of all maps
+
+  actions: {//NEWTHING
+    transition: function() {
+      this.unshift(arguments, 'transitionAction');
+      this.sendAction.apply(this, arguments);
+    }
+  },
+
+	//NEWTHING
+  unshift: function(args, arg) {
+    Array.prototype.unshift.call(args, arg);
+  }
 });
