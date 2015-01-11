@@ -4,8 +4,7 @@ import loadInitializers from 'ember/load-initializers';
 import config from './config/environment';
 
 /* Class overrides */
-/* exported TextField, Router, Route, View */
-import TextField from './overrides/textfield-reopen';
+/* exported Router, Route, View */
 import Router from './overrides/router-reopen';
 import Route from './overrides/route-reopen';
 import View from './overrides/view-reopen';
