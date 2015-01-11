@@ -9,8 +9,10 @@ export default Ember.Object.extend({
   },
 
   label: Ember.computed('lang', function() {
-    var lang   = this.get('lang'),
-        labels = this.get('labels');
+    var uri, lang, labels;
+
+    lang   = this.get('lang');
+    labels = this.get('labels');
 
     if (labels.has(lang)) {
       return labels.get(lang);
@@ -20,7 +22,13 @@ export default Ember.Object.extend({
       return labels.get('default');
     }
 
-    return this.get('uri');
+    if (labels.size) {
+      return labels.get(labels.keys.toArray()[0]);
+    }
+
+    uri = this.get('uri').split('/');
+
+    return uri[uri.length-1];
   }),
 
   comment: Ember.computed('lang', function() {

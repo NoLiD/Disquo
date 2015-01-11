@@ -65,7 +65,7 @@ export default Query.extend({
       map.set(uri, entry);
     }
 
-    if (key.label) {
+    if (key.label && row.varNameToEntry[key.label]) {
       label = row.varNameToEntry[key.label].node.literalLabel.val;
       lang  = row.varNameToEntry[key.label].node.literalLabel.lang;
 
