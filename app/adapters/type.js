@@ -3,10 +3,10 @@ import BaseAdapter from './base-adapter';
 import Query from '../models/queries/async-select';
 
 export default BaseAdapter.extend({
-  AllQuery: Query.extend({ template: 'SELECT DISTINCT ?type ?label WHERE { [] a ?type . ?type {{label}} ?label }',
+  AllQuery: Query.extend({ template: 'SELECT DISTINCT ?type ?label WHERE { [] a ?type . OPTIONAL { ?type {{label}} ?label } } ',
                            key: {var: 'type', label: 'label'} }),
 
-  typesQuery: Query.extend({ template: 'SELECT DISTINCT ?type ?label WHERE { {{#each selected}} [] <{{this}}> ?type . {{/each}} ?type {{label}} ?label }',
+  typesQuery: Query.extend({ template: 'SELECT DISTINCT ?type ?label WHERE { {{#each selected}}[] <{{this}}> ?type .{{/each}} OPTIONAL { ?type {{label}} ?label } }',
                            key: {var: 'type', label: 'label'} }),
 
 
@@ -17,7 +17,7 @@ export default BaseAdapter.extend({
           .then(function(result) {
             return { types: result };
           }, function() {
-            return Ember.RSVP.Promise.reject('Unable to fetch types of all');
+            return Ember.RSVP.Promise.reject('Unable to fetch all types');
           }
     );
   },

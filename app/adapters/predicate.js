@@ -12,11 +12,11 @@ function reduceToIntersection(selected, results) {
 }
 
 export default BaseAdapter.extend({
-  Outgoing: Query.extend({ template: 'SELECT DISTINCT ?subject ?predicate ?label WHERE { VALUES ?subject { {{#each selected}} <{{this}}> {{/each}} } ?subject ?predicate [] . ?predicate {{label}} ?label . }',
+  Outgoing: Query.extend({ template: 'SELECT DISTINCT ?subject ?predicate ?label WHERE { VALUES ?subject { {{#each selected}}<{{this}}>{{/each}} } ?subject ?predicate [] . OPTIONAL { ?predicate {{label}} ?label } }',
                            key: {var: 'subject'},
                            variables: [ {var: 'predicate', label: 'label', mapName: 'outer'} ] }),
 
-  Incoming: Query.extend({ template: 'SELECT DISTINCT ?object ?predicate ?label WHERE { VALUES ?object { {{#each selected}} <{{this}}> {{/each}} } [] ?predicate ?object . ?predicate {{label}} ?label . }',
+  Incoming: Query.extend({ template: 'SELECT DISTINCT ?object ?predicate ?label WHERE { VALUES ?object { {{#each selected}}<{{this}}>{{/each}} } [] ?predicate ?object . OPTIONAL { ?predicate {{label}} ?label } }',
                            key: {var: 'object'},
                            variables: [ {var: 'predicate', label: 'label', mapName: 'outer'} ] }),
 

@@ -3,19 +3,19 @@ import BaseAdapter from './base-adapter';
 import Query from '../models/queries/async-select';
 
 export default BaseAdapter.extend({
-  AllQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}} ?instance a <{{this}}> . {{/each}} ?instance {{label}} ?label }',
+  AllQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}}?instance a <{{this}}> .{{/each}} OPTIONAL { ?instance {{label}} ?label } }',
                            key: {var: 'instance', label: 'label'} }),
 
-  PredsQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}} ?instance <{{this}}> [] . {{/each}} ?instance {{label}} ?label }',
+  PredsQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}}?instance <{{this}}> [] .{{/each}} OPTIONAL { ?instance {{label}} ?label } }',
                            key: {var: 'instance', label: 'label'} }),
 
-  PredsObjsQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}} ?instance <{{this}}> {{predicate}} . {{/each}} ?instance {{label}} ?label }',
+  PredsObjsQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}}?instance <{{this}}> {{predicate}} .{{/each}} OPTIONAL { ?instance {{label}} ?label } }',
                            key: {var: 'instance', label: 'label'} }),
 
-  ObjsQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}} ?instance [] <{{this}}> . {{/each}} ?instance {{label}} ?label }',
+  ObjsQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}}?instance [] <{{this}}> .{{/each}} OPTIONAL { ?instance {{label}} ?label }}',
                            key: {var: 'instance', label: 'label'} }),
 
-  SameTypesQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}} <{{this}}> a ?object . {{/each}} ?instance a ?object . ?instance {{label}} ?label }',
+  SameTypesQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}}<{{this}}> a ?object .{{/each}} ?instance a ?object . OPTIONAL { ?instance {{label}} ?label } }',
                            key: {var: 'instance', label: 'label'} }),
 
   all: function(selected) {
