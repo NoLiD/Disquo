@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import nProgress from 'nprogress';
+import Notify from 'ember-notify';
 
 export default Ember.Route.extend({
   title: function(tokens) {
@@ -40,6 +41,21 @@ export default Ember.Route.extend({
         nProgress.done();
         self.isLoading = false;
       });
-    }
+    },
+
+    error: function(error, transition) {
+      Ember.run.scheduleOnce('afterRender', this, function() {
+        nProgress.done();
+        Notify.error(error);
+        this.isLoading = false;
+      });
+
+      if (transition.targetName === 'endpoint.index') {
+        this.controllerFor('endpoint').set('model', '');
+        this.transitionTo('index');
+      }
+
+      return true;
+    },
   }
 });

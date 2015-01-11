@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Notify from 'ember-notify';
 
 export default Ember.Route.extend({
   selectionText : Ember.computed.alias('controller.selectionText'),
@@ -28,19 +27,6 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    error: function(error, transition) {
-      Notify.error(error);
-
-      this.controllerFor(transition.targetName).set('model', '');
-
-      if (transition.targetName === 'endpoint.index') {
-        this.controllerFor('endpoint').set('model', '');
-        this.transitionTo('index');
-      }
-
-      return true;
-    },
-
     resourceTransition: function(route, query, selected, predicate) {
       this.transitionTo(route, query, selected.join(), predicate);
     },

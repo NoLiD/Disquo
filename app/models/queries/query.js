@@ -36,12 +36,14 @@ export default Ember.Object.extend({
     var queryExec = service.createQueryExecutionStr(query);
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      queryExec.execAny().then(function(result) {
-        resolve(result);
-      }, function(error) {
-        console.error('Error requesting query \'' + query + '\', error: ' + error.toString());
-        reject(error);
-      });
+      queryExec.execAny()
+        .done(function(result) {
+          Ember.run(() => { resolve(result); });
+        })
+        .fail(function(error) {
+          Ember.run(() => { reject(error); });
+        });
     });
+
   }.property('query')
 });

@@ -67,13 +67,7 @@ export default Ember.Object.extend({
     query.set('resource', resource);
     query.set('context', {uri: resource.get('uri')});
 
-    return query.get('result')
-          .then(query.resultToComments.bind(query))
-          .catch(function(error) {
-            console.error('Error fetching comments: ' + error);
-            // for propagation
-            return error;
-          });
+    return query.get('result').then(query.resultToComments.bind(query));
   },
 
   fetchLabels: function(selected) {
