@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   openMenu: 'toggleMenu',
   closeMenu: 'hideMenu',
 
-  searchResults: function() {
+  filteredResources: function() {
     var list  = this.get('resources'),
         sTerm = this.get('searchTerm');
 
@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     return list.filter(function(resource) {
       return regex.test(resource.get('label')) || regex.test(resource.get('comment'));
     });
-  }.property('resources.@each', 'searchTerm'),
+  }.property('resources.length', 'searchTerm'),
 
   _escapeRegExp: function(str) {
     return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");

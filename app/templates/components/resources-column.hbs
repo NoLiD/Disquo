@@ -14,8 +14,20 @@
   {{/if}}
 </div>
 <div class="panel-body">
-  {{collection resourcesList
-      content=searchResults
-      targetRoute=targetRoute
-      store=store}}
+  {{#if filteredResources}}
+    {{collection resourcesList
+        content=filteredResources
+        targetRoute=targetRoute
+        store=store}}
+  {{else}}
+    {{#if resources}}
+    <div class="ember-list-view ember-list-view-list" style="height: 100%;">
+      <div class="ember-list-item-view">
+        <h4 class="ember-list-item-view-heading">
+          No matches
+        </h4>
+      </div>
+    </div>
+    {{/if}}
+  {{/if}}
 </div>
