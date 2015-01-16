@@ -48,13 +48,14 @@ export default Ember.Object.extend({
       this.set('lastAdapter', adapter);
 
       var queries = {
-        labels: selected.contains('any') ?
+        labels : selected.contains('any') ?
                   Ember.RSVP.resolve(selected) : this.fetchLabels(selected),
-        result: adapterMethod.call(adapter, selected, predicate)
+        pred   : predicate === 'none' ? predicate : this.fetchLabels(predicate),
+        result : adapterMethod.call(adapter, selected, predicate)
       };
 
       return Ember.RSVP.hash(queries).then(function(results) {
-        return Ember.$.extend(results.result, {selected: results.labels, predicate: predicate});
+        return Ember.$.extend(results.result, {selected: results.labels, predicate: results.pred});
       });
     } else {
       return Ember.RSVP.reject('Error! Invalid query');
