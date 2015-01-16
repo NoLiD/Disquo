@@ -2,12 +2,21 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   selectionText : Ember.computed.alias('controller.selectionText'),
+  filterTerm    : Ember.computed.alias('controller.filterTerm'),
+  filterType    : Ember.computed.alias('controller.filterType'),
   selection     : Ember.computed.alias('controller.selection'),
   queryMenu     : Ember.computed.alias('controller.queryMenu'),
   type          : Ember.computed.alias('controller.type'),
 
   titleToken: function(model) {
     return model.url;
+  },
+
+  setupController: function (controller, model) {
+    this._super(controller, model);
+
+    controller.set('filterType', 'Types');
+    controller.set('filterTerm', '');
   },
 
   decodedModel: function(params) {
@@ -32,9 +41,19 @@ export default Ember.Route.extend({
     },
 
     selectionChange: function(type, selected) {
-      this.set('selectionText', selected.mapBy('label').join(', '));
+      var selectionText = selected.mapBy('label').join(', ');
+
+      if (Ember.isEmpty(selectionText)) {
+        selectionText = 'None';
+      }
+
+      this.set('selectionText', selectionText);
       this.set('selection', selected.mapBy('uri'));
       this.set('type', 'endpoint.' + type);
+    },
+
+    openSelectModal: function() {
+      this.send('openModal', 'endpoint');
     },
 
     queryButton: function() {

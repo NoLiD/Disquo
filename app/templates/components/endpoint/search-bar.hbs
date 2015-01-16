@@ -1,0 +1,16 @@
+<div class="input-group">
+  <div class="input-group-btn dropup">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      {{type}}
+    </button>
+    <ul class="dropdown-menu dropup">
+      <li><a {{action 'select' 'Types'}}>Types</a></li>
+      <li><a {{action 'select' 'Things'}}>Things</a></li>
+      <li class="disabled"><a {{action 'select' 'features'}}>Features</a></li>
+    </ul>
+  </div>
+  {{input type='search' class='form-control' placeholder='Search...' value=term}}
+  <span class="input-group-addon">
+    <i class="glyphicon glyphicon-search"></i>
+  </span>
+</div>

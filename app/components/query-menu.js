@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   layoutName: 'components/query-menu',
   classNames: ['dropdown-menu'],
   attributeBindings: ['role'],
+  tagName: 'ul',
   role: 'menu',
   any: ['any'],
 

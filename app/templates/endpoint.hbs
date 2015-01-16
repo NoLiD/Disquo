@@ -1,27 +1,14 @@
 <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-6">
-        <ul class="nav navbar-nav navbar-left">
-          <li {{action 'queryButton' bubbles=false}} id="queryButton">
-            <button type="button" class="btn btn-default navbar-btn">
-              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-            </button>
-          </li>
-          <li class="list-group-item navbar-btn disabled" {{bind-attr title=selectionText}}>
-            {{#if selectionText}}{{selectionText}}{{else}}None{{/if}}
-          </li>
-        </ul>
+      <div class="col-xs-4 pull-left">
+        {{endpoint/selection-info selection=selectionText select='queryButton'}}
       </div>
-      <div class="col-xs-6">
-        <ul {{action 'openModal' 'endpoint'}} class="nav navbar-nav navbar-right">
-          {{#if url}}
-          <li><button type="button" class="btn btn-default navbar-btn">@</button></li>
-          <li class="list-group-item navbar-btn disabled">{{url}}</li>
-          {{else}}
-          <li class="list-group-item navbar-btn disabled">Enter an endpoint to start</li>
-          {{/if}}
-        </ul>
+      <div class="col-xs-4 text-center">
+        {{endpoint/search-bar term=filterTerm type=filterType}}
+      </div>
+      <div class="col-xs-4 pull-right">
+        {{endpoint/sparql-selector endpoint=url select='openSelectModal'}}
       </div>
     </div>
   </div>
