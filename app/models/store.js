@@ -1,7 +1,9 @@
 import Ember from 'ember';
+import Resource from './resource';
 import AskQuery from './queries/ask';
 import SelectQuery from './queries/select';
 import AsyncQuery from './queries/async-select';
+
 
 export default Ember.Object.extend({
   askQuery: AskQuery.extend({template: 'ASK { ?s ?p ?o }'}),
@@ -82,6 +84,10 @@ export default Ember.Object.extend({
 
       return query.get('result')
               .then(function(result) {
+                  if (result.length === 0) {
+                    result = selected.map((res) => Resource.create({uri: res}));
+                  }
+
                   map.set(selected.toString(), result);
 
                   return result;
