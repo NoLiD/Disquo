@@ -190,6 +190,10 @@ a.ember-list-item-view.active > .badge,
   background-color: inherit;
 }
 
+.form-control[readonly], fieldset[disabled] .form-control {
+  cursor: pointer;
+}
+
 .comment .glyphicon {
   font-size: 1.2em;
   cursor: help;
