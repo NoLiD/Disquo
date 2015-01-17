@@ -1,15 +1,14 @@
 {
-  "predef": {
-    "document": true,
-    "window": true,
-    "-Promise": true,
-    "DisquoENV": true,
-    "Jassa": true,
-    "$": true,
-    "Handlebars": true
-  },
-  "browser" : true,
-  "boss" : true,
+  "predef": [
+    "document",
+    "window",
+    "-Promise",
+    "Jassa",
+    "$",
+    "Handlebars"
+  ],
+  "browser": true,
+  "boss": true,
   "curly": true,
   "debug": false,
   "devel": true,
