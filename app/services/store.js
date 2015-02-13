@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import Resource from './resource';
-import AskQuery from './queries/ask';
-import SelectQuery from './queries/select';
-import AsyncQuery from './queries/async-select';
+import Resource from '../models/resource';
+import AskQuery from '../models/queries/ask';
+import SelectQuery from '../models/queries/select';
+import AsyncQuery from '../models/queries/async-select';
 
 
 export default Ember.Object.extend({
