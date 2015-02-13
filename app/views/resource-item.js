@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import Notify from 'ember-notify';
+import ListItemView from 'list-view/list_item_view';
 
 // this component is for rendering list items and displaying comments
-export default Ember.ListItemView.extend({
+export default ListItemView.extend({
   selectedItems: Ember.computed.alias('parentView.selectedItems'),
   templateName: 'views/resource-item',
   classNameBindings: ['active'],

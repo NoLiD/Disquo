@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import ResourceItem from './resource-item';
+import ListView from 'list-view/list_view';
 
-export default Ember.ListView.extend({
+export default ListView.extend({
   itemViewClass: ResourceItem,
   rowHeight: 46,
   height: 46,

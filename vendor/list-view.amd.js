@@ -5,118 +5,6 @@
 // Version:   0.0.5
 // ==========================================================================
 
-(function(global){
-var define, requireModule, require, requirejs;
-
-(function() {
-
-  var _isArray;
-  if (!Array.isArray) {
-    _isArray = function (x) {
-      return Object.prototype.toString.call(x) === "[object Array]";
-    };
-  } else {
-    _isArray = Array.isArray;
-  }
-  
-  var registry = {}, seen = {}, state = {};
-  var FAILED = false;
-
-  define = function(name, deps, callback) {
-  
-    if (!_isArray(deps)) {
-      callback = deps;
-      deps     =  [];
-    }
-  
-    registry[name] = {
-      deps: deps,
-      callback: callback
-    };
-  };
-
-  function reify(deps, name, seen) {
-    var length = deps.length;
-    var reified = new Array(length);
-    var dep;
-    var exports;
-
-    for (var i = 0, l = length; i < l; i++) {
-      dep = deps[i];
-      if (dep === 'exports') {
-        exports = reified[i] = seen;
-      } else {
-        reified[i] = require(resolve(dep, name));
-      }
-    }
-
-    return {
-      deps: reified,
-      exports: exports
-    };
-  }
-
-  requirejs = require = requireModule = function(name) {
-    if (state[name] !== FAILED &&
-        seen.hasOwnProperty(name)) {
-      return seen[name];
-    }
-
-    if (!registry[name]) {
-      throw new Error('Could not find module ' + name);
-    }
-
-    var mod = registry[name];
-    var reified;
-    var module;
-    var loaded = false;
-
-    seen[name] = { }; // placeholder for run-time cycles
-
-    try {
-      reified = reify(mod.deps, name, seen[name]);
-      module = mod.callback.apply(this, reified.deps);
-      loaded = true;
-    } finally {
-      if (!loaded) {
-        state[name] = FAILED;
-      }
-    }
-
-    return reified.exports ? seen[name] : (seen[name] = module);
-  };
-
-  function resolve(child, name) {
-    if (child.charAt(0) !== '.') { return child; }
-
-    var parts = child.split('/');
-    var nameParts = name.split('/');
-    var parentBase;
-
-    if (nameParts.length === 1) {
-      parentBase = nameParts;
-    } else {
-      parentBase = nameParts.slice(0, -1);
-    }
-
-    for (var i = 0, l = parts.length; i < l; i++) {
-      var part = parts[i];
-
-      if (part === '..') { parentBase.pop(); }
-      else if (part === '.') { continue; }
-      else { parentBase.push(part); }
-    }
-
-    return parentBase.join('/');
-  }
-
-  requirejs.entries = requirejs._eak_seen = registry;
-  requirejs.clear = function(){
-    requirejs.entries = requirejs._eak_seen = registry = {};
-    seen = state = {};
-  };
-})();
-
 define("list-view/helper",
   ["./list_view","./virtual_list_view","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
@@ -124,7 +12,33 @@ define("list-view/helper",
     var EmberListView = __dependency1__["default"];
     var EmberVirtualListView = __dependency2__["default"];
 
-    function createHelper (view, options) {
+    var EmberVirtualList = createHelper(EmberVirtualListView);
+    var EmberList = createHelper(EmberListView);
+
+    function createHelper(view) {
+      if (Ember.HTMLBars) {
+        return function htmlBarsHelper(params, hash, options, env) {
+          hash.content = hash.items;
+          delete hash.items;
+
+          for (var prop in hash) {
+            if (/-/.test(prop)) {
+              var camelized = Ember.String.camelize(prop);
+              hash[camelized] = hash[prop];
+              delete hash[prop];
+            }
+          }
+
+          /*jshint validthis:true */
+          return Ember.HTMLBars.helpers.collection.helperFunction.call(this, [view], hash, options, env);
+        };
+      }
+      return function handelbarsHelperFactory(options) {
+        return createHandlebarsHelper.call(this, view, options);
+      };
+    }
+
+    function createHandlebarsHelper(view, options) {
       var hash = options.hash;
       var types = options.hashTypes;
 
@@ -153,16 +67,7 @@ define("list-view/helper",
       return Ember.Handlebars.helpers.collection.call(this, view, options);
     }
 
-    function EmberList (options) {
-      return createHelper.call(this, EmberListView, options);
-    }
-
-    __exports__.EmberList = EmberList;__exports__["default"] = EmberList;
-
-    function EmberVirtualList (options) {
-      return createHelper.call(this, EmberVirtualListView, options);
-    }
-
+    __exports__.EmberList = EmberList;
     __exports__.EmberVirtualList = EmberVirtualList;
   });
 define("list-view/list_item_view",
@@ -1453,8 +1358,8 @@ define("list-view/main",
     Ember.ListView             = ListView;
     Ember.ListViewHelper       = ListViewHelper;
 
-    Ember.Handlebars.registerHelper('ember-list', EmberList);
-    Ember.Handlebars.registerHelper('ember-virtual-list', EmberVirtualList);
+    (Ember.HTMLBars || Ember.Handlebars).registerHelper('ember-list', EmberList);
+    (Ember.HTMLBars || Ember.Handlebars).registerHelper('ember-virtual-list', EmberVirtualList);
   });
 define("list-view/reusable_list_item_view",
   ["list-view/list_item_view_mixin","exports"],
@@ -1639,7 +1544,7 @@ define("list-view/virtual_list_scroller_events",
       var point = e.changedTouches[0],
         target = point.target,
         ev;
-      if (target && fieldRegex.test(target.tagName)) {
+      if (target && !fieldRegex.test(target.tagName)) {
         ev = document.createEvent('MouseEvents');
         ev.initMouseEvent('click', true, true, e.view, 1, point.screenX, point.screenY, point.clientX, point.clientY, e.ctrlKey, e.altKey, e.shiftKey, e.metaKey, 0, null);
         return target.dispatchEvent(ev);
@@ -1847,5 +1752,3 @@ define("list-view/virtual_list_view",
       }
     });
   });
- requireModule('list-view/main');
-})(this);
