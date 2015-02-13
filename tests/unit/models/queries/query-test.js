@@ -3,13 +3,14 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('model:queries/query', 'QueriesQuery', {
+moduleFor('model:queries/query', 'Query', {
   // Specify the other units that are required for this test.
-  needs: []
+
 });
 
-test('it exists', function() {
+
+test('it exists', function(assert) {
   var model = this.subject();
   // var store = this.store();
-  ok(!!model);
+  assert.ok(!!model);
 });

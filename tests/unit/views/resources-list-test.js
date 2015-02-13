@@ -3,10 +3,10 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('view:resources-list', 'ResourcesListView');
+moduleFor('view:resources-list');
 
 // Replace this with your real tests.
-test('it exists', function() {
+test('it exists', function(assert) {
   var view = this.subject();
-  ok(view);
+  assert.ok(view);
 });
