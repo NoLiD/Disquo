@@ -1,8 +1,7 @@
 /* global require, module */
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
-var mergeTrees = require('broccoli-merge-trees');
-var pickFiles = require('broccoli-static-compiler');
+var Funnel = require('broccoli-funnel');
 
 var app = new EmberApp();
 
@@ -58,10 +57,10 @@ app.import('vendor/app-shims.js', {
 });
 
 // Fonts
-var extraAssets = pickFiles('bower_components/bootswatch-dist/fonts', {
+var extraAssets = new Funnel('bower_components/bootswatch-dist/fonts', {
   srcDir: '/',
-  files: ['**/*.woff', '**/*.ttf', '**/*.svg', '**/*eot'],
+  include: ['**/*.woff', '**/*.ttf', '**/*.svg', '**/*eot'],
   destDir: '/fonts'
 });
 
-module.exports = mergeTrees([app.toTree(), extraAssets]);
+module.exports = app.toTree(extraAssets);

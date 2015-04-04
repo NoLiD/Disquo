@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Notify from 'ember-notify';
 
 export default Ember.Controller.extend({
   needs: ['endpoint'],
@@ -17,7 +16,7 @@ export default Ember.Controller.extend({
           _endpoint = this.get('_endpoint');
 
       if (endpoint === undefined || !regex.test(endpoint)) {
-        return Notify.error('Invalid Endpoint URL!');
+        return this.notify.error('Invalid Endpoint URL!');
       }
 
       if (endpoint !== _endpoint) {

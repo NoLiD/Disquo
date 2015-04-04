@@ -9,9 +9,6 @@ import Router from './overrides/router-reopen';
 import Route from './overrides/route-reopen';
 import View from './overrides/view-reopen';
 
-/* Ember Notify lib */
-import Notify from 'ember-notify';
-
 import nProgress from 'nprogress';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
@@ -23,10 +20,6 @@ var App = Ember.Application.extend({
 });
 
 loadInitializers(App, config.modulePrefix);
-
-// Tell Notify to always use bootstrap styling
-Notify.useBootstrap();
-Notify.View.reopen({removeAfter: 5000});
 
 nProgress.configure({
   showSpinner: false,

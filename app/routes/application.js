@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import nProgress from 'nprogress';
-import Notify from 'ember-notify';
 
 export default Ember.Route.extend({
   title: function(tokens) {
@@ -46,7 +45,7 @@ export default Ember.Route.extend({
     error: function(error, transition) {
       Ember.run.scheduleOnce('afterRender', this, function() {
         nProgress.done();
-        Notify.error(error);
+        this.notify.error(error);
         this.isLoading = false;
       });
 

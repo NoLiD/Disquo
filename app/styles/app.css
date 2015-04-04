@@ -78,9 +78,10 @@ h4, h5, h6 {
   height: 100%;
 }
 
-.panel-heading {
+.panel-primary > .panel-heading {
   font-size: 1.2em;
   padding-right: 0px;
+  background-color: #009871;
 }
 
 .panel-heading .input-group {
@@ -278,6 +279,7 @@ a.ember-list-item-view.active > .badge,
   top: 0px;
   right: 0px;
   left: 0px;
+  margin: 0px;
   width: 100%;
 }
 
@@ -287,6 +289,6 @@ a.ember-list-item-view.active > .badge,
 ***********************************/
 
 #nprogress .bar {
-  background: #00bc8c;
+  background: #375a7f;
   height: 5px;
 }
