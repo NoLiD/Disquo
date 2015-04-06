@@ -1,0 +1,20 @@
+.graph {
+  height: 100%;
+  width: 100%;
+}
+
+.node {
+  stroke: $node-color;
+  stroke-width: 1.5px;
+
+  text {
+    font-size: 1.5em;
+    color: white;
+    text-outline-color: '#333';
+  }
+}
+
+.link {
+  stroke: $link-color;
+  stroke-opacity: .6;
+}

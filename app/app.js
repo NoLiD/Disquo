@@ -9,7 +9,7 @@ import Router from './overrides/router-reopen';
 import Route from './overrides/route-reopen';
 import View from './overrides/view-reopen';
 
-import nProgress from 'nprogress';
+import nProgress from 'npm:nprogress';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 

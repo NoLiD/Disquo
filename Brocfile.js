@@ -46,20 +46,18 @@ app.import('vendor/list-view.amd.js', {
 
 // NProgress
 app.import('bower_components/nprogress/nprogress.css');
-app.import('bower_components/nprogress/nprogress.js');
 
 // Shims for imports
 app.import('vendor/app-shims.js', {
   exports: {
-    cytoscape: ['default'],
-    nprogress: ['default']
+    cytoscape: ['default']
   }
 });
 
 // Fonts
 var extraAssets = new Funnel('bower_components/bootswatch-dist/fonts', {
   srcDir: '/',
-  include: ['**/*.woff', '**/*.ttf', '**/*.svg', '**/*eot'],
+  include: ['**/*.+(ttf|svg|eot|woff|woff2)'],
   destDir: '/fonts'
 });
 

@@ -5,9 +5,6 @@
   var shims = {
     'cytoscape': {
       'default': cytoscape
-    },
-    'nprogress': {
-      'default': NProgress
     }
   };
 

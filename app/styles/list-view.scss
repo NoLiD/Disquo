@@ -1,0 +1,113 @@
+.ember-list-container,
+.ember-list-view {
+  width: inherit;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.ember-list-view {
+  padding-left: 0;
+  position: relative;
+}
+.ember-list-item-view {
+  position: absolute;
+  width: 100%;
+  display: block;
+  padding: 10px 5px 10px 15px;
+  margin-bottom: -1px;
+  background-color: #303030;
+  border: 1px solid #464545;
+}
+.ember-list-item-view:hover {
+  background-color: #222222;
+}
+.ember-list-item-view:hover p {
+  color: inherit;
+}
+.ember-list-item-view:first-child {
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+.ember-list-item-view:last-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.ember-list-item-view > .badge {
+  float: right;
+}
+.ember-list-item-view > .badge + .badge {
+  margin-right: 5px;
+}
+a.ember-list-item-view {
+  color: #0ce3ac;
+}
+a.ember-list-item-view .ember-list-item-view-heading {
+  color: #0bcb9a;
+}
+a.ember-list-item-view:hover,
+a.ember-list-item-view:focus {
+  text-decoration: none;
+  color: #0ce3ac;
+  background-color: transparent;
+}
+.list-group-item.disabled,
+.list-group-item.disabled:hover,
+.list-group-item.disabled:focus {
+  cursor: pointer;
+}
+
+.ember-list-item-view.active,
+.ember-list-item-view.active:hover,
+.ember-list-item-view.active:focus {
+  z-index: 2;
+  color: #ffffff;
+  background-color: #00bc8c;
+  border-color: #00bc8c;
+}
+.ember-list-item-view.active .ember-list-item-view-heading,
+.ember-list-item-view.active:hover .ember-list-item-view-heading,
+.ember-list-item-view.active:focus .ember-list-item-view-heading,
+.ember-list-item-view.active .ember-list-item-view-heading > small,
+.ember-list-item-view.active:hover .ember-list-item-view-heading > small,
+.ember-list-item-view.active:focus .ember-list-item-view-heading > small,
+.ember-list-item-view.active .ember-list-item-view-heading > .small,
+.ember-list-item-view.active:hover .ember-list-item-view-heading > .small,
+.ember-list-item-view.active:focus .ember-list-item-view-heading > .small {
+  color: inherit;
+}
+.ember-list-item-view.active .ember-list-item-view-text,
+.ember-list-item-view.active:hover .ember-list-item-view-text,
+.ember-list-item-view.active:focus .ember-list-item-view-text {
+  color: #89ffe1;
+}
+.ember-list-item-view-heading {
+  margin-top: 0;
+  margin-bottom: 5px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ember-list-item-view-text {
+  color: #888;
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+a.ember-list-item-view.active > .badge,
+.nav-pills > .active > a > .badge {
+  color: #375a7f;
+  background-color: #ffffff;
+}
+.ember-list-item-view .comment .badge  {
+  background-color: inherit;
+}
+
+.form-control[readonly], fieldset[disabled] .form-control {
+  cursor: pointer;
+}
+
+.ember-list-item-view .comment .glyphicon {
+  font-size: 1.2em;
+  cursor: help;
+}

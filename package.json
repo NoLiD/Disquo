@@ -24,6 +24,9 @@
     "body-parser": "^1.2.0",
     "broccoli-asset-rev": "^2.0.0",
     "broccoli-funnel": "^0.2.3",
+    "broccoli-sass": "0.6.3",
+    "d3": "^3.5.5",
+    "ember-browserify": "^0.6.4",
     "ember-cli": "^0.1.15",
     "ember-cli-app-version": "0.3.3",
     "ember-cli-babel": "^4.0.0",
@@ -36,6 +39,7 @@
     "ember-cli-qunit": "0.3.9",
     "ember-cli-uglify": "1.0.1",
     "ember-export-application-global": "^1.0.2",
-    "ember-notify": "3.1.4"
+    "ember-notify": "3.1.4",
+    "nprogress": "^0.1.6"
   }
 }

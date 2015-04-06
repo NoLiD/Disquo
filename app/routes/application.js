@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import nProgress from 'nprogress';
+import nProgress from 'npm:nprogress';
 
 export default Ember.Route.extend({
   title: function(tokens) {

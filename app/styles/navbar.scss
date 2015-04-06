@@ -1,0 +1,24 @@
+.navbar-nav {
+  margin: 0;
+  max-width: 100%;
+}
+
+.navbar .list-group-item {
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar-collapse {
+  background-color: $dark-green;
+
+  &.in {
+    background-color: $dark-green;
+    border-bottom: 1px solid $green-color;
+  }
+}
+
+.dropdown-menu {
+  z-index: 1040;
+}
