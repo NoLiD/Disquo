@@ -1,41 +1,45 @@
 import Ember from 'ember';
-import ResourcesList from '../views/resources-list';
+
+const get = Ember.get;
+
+function escapeRegExp(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+}
 
 export default Ember.Component.extend({
-  classNames: ['panel', 'panel-primary'],
+  classNames      : ['panel', 'panel-primary'],
   transitionAction: 'resourceTransition',
-  resourcesList: ResourcesList,
-  openMenu: 'toggleMenu',
-  closeMenu: 'hideMenu',
+  openMenu        : 'toggleMenu',
+  closeMenu       : 'hideMenu',
 
-  filterTerm    : Ember.computed.alias('endpointController.filterTerm'),
-  filterType    : Ember.computed.alias('endpointController.filterType'),
+  filterTerm    : Ember.computed.alias('endpointController.model.filterTerm'),
+  filterType    : Ember.computed.alias('endpointController.model.filterType'),
 
   endpointController: Ember.computed(function() {
     return this.container.lookup('controller:endpoint');
   }),
 
-  filteredResources: function() {
-    var list  = this.get('resources');
-    var fTerm = this.get('filterTerm');
+  filteredResources: Ember.computed('resources.length', 'filterTerm', function() {
+    let list;
+    let fTerm;
+    let regex;
+
+    list  = get(this, 'resources');
+    fTerm = get(this, 'filterTerm');
 
     if (!list) { return; }
 
     if (Ember.isEmpty(fTerm) ||
-        this.get('filterType') !== this.get('title')) {
+        get(this, 'filterType') !== get(this, 'title')) {
         return list;
     }
 
-    var regex = new RegExp(this._escapeRegExp(fTerm), 'i');
+    regex = new RegExp(escapeRegExp(fTerm), 'i');
 
     return list.filter(function(resource) {
-      return regex.test(resource.get('label')) || regex.test(resource.get('comment'));
+      return regex.test(get(resource, 'label')) || regex.test(get(resource, 'comment'));
     });
-  }.property('resources.length', 'filterTerm'),
-
-  _escapeRegExp: function(str) {
-    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-  },
+  }),
 
   actions: {
     transition: function() {

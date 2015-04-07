@@ -16,7 +16,7 @@ export default Ember.Router.reopen({
   },
 
   encodeArray: function (arr) {
-    arr.forEach(function(e, i, l) {
+    arr.forEach((e, i, l) => {
       if (typeof e === 'string' || e instanceof String) {
         l[i] = encodeURIComponent(e);
       }

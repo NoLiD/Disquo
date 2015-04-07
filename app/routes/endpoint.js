@@ -1,12 +1,15 @@
 import Ember from 'ember';
 
+const get = Ember.get;
+const set = Ember.set;
+
 export default Ember.Route.extend({
-  selectionText : Ember.computed.alias('controller.selectionText'),
-  filterTerm    : Ember.computed.alias('controller.filterTerm'),
-  filterType    : Ember.computed.alias('controller.filterType'),
-  selection     : Ember.computed.alias('controller.selection'),
-  queryMenu     : Ember.computed.alias('controller.queryMenu'),
-  type          : Ember.computed.alias('controller.type'),
+  selectionText : Ember.computed.alias('controller.model.selectionText'),
+  filterTerm    : Ember.computed.alias('controller.model.filterTerm'),
+  filterType    : Ember.computed.alias('controller.model.filterType'),
+  selection     : Ember.computed.alias('controller.model.selection'),
+  queryMenu     : Ember.computed.alias('controller.model.queryMenu'),
+  type          : Ember.computed.alias('controller.model.type'),
 
   titleToken: function(model) {
     return model.url;
@@ -15,21 +18,21 @@ export default Ember.Route.extend({
   setupController: function (controller, model) {
     this._super(controller, model);
 
-    controller.set('filterType', 'Types');
-    controller.set('filterTerm', '');
+    set(controller, 'model.filterType', 'Types');
+    set(controller, 'model.filterTerm', '');
   },
 
   decodedModel: function(params) {
     return this.store.addEndpoint(params.url, [])
-      .then(function() { return params; });
+                      .then(() => { return params; });
   },
 
   afterModel: function(model, transition) {
     if (transition.targetName === 'endpoint.index') {
       // Reset every view!
-      this.controllerFor('endpoint.types').set('model', undefined);
-      this.controllerFor('endpoint.things').set('model', undefined);
-      this.controllerFor('endpoint.predicates').set('model', undefined);
+      set(this.controllerFor('endpoint.types'), 'model', undefined);
+      set(this.controllerFor('endpoint.things'), 'model', undefined);
+      set(this.controllerFor('endpoint.predicates'), 'model', undefined);
 
       this.transitionTo('endpoint.types', 'all', 'any', 'none');
     }
@@ -41,15 +44,17 @@ export default Ember.Route.extend({
     },
 
     selectionChange: function(type, selected) {
-      var selectionText = selected.mapBy('label').join(', ');
+      let selectionText;
+
+      selectionText = selected.mapBy('label').join(', ');
 
       if (Ember.isEmpty(selectionText)) {
         selectionText = 'None';
       }
 
-      this.set('selectionText', selectionText);
-      this.set('selection', selected.mapBy('uri'));
-      this.set('type', 'endpoint.' + type);
+      set(this, 'type', 'endpoint.' + type);
+      set(this, 'selectionText', selectionText);
+      set(this, 'selection', selected.mapBy('uri'));
     },
 
     openSelectModal: function() {
@@ -58,21 +63,23 @@ export default Ember.Route.extend({
 
     queryButton: function() {
       this.send('toggleMenu',
-                Ember.$('#queryButton').offset(),
-                this.get('selection'));
+                  Ember.$('#queryButton').offset(),
+                  get(this, 'selection'));
     },
 
     toggleMenu: function(offset, selection) {
-      var menu = this.get('queryMenu');
+      let menu;
 
-      menu.set('selection', selection);
-      menu.set('offset', offset);
+      menu = get(this, 'queryMenu');
+
+      set(menu, 'selection', selection);
+      set(menu, 'offset', offset);
 
       menu.toggle();
     },
 
     hideMenu: function() {
-      this.get('queryMenu').hide();
+      get(this, 'queryMenu').hide();
     }
   }
 });

@@ -1,15 +1,17 @@
 import Ember from 'ember';
 
+const set = Ember.set;
+
 export default Ember.Component.extend({
-  classNames: ['navbar-form'],
+  classNames       : ['navbar-form'],
   attributeBindings: ['role'],
-  tagName: 'form',
-  role: 'search',
+  tagName          : 'form',
+  role             : 'search',
 
   actions: {
     select: function(type) {
-      this.set('type', type);
-      this.set('term', '');
+      set(this, 'type', type);
+      set(this, 'term', '');
     }
   }
 });

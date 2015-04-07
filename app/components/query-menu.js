@@ -1,53 +1,63 @@
 import Ember from 'ember';
 
+const get = Ember.get;
+const set = Ember.set;
+
 /** location stuff from http://stackoverflow.com/q/18666601/1366033
 **/
 export default Ember.Component.extend({
-  layoutName: 'components/query-menu',
-  classNames: ['dropdown-menu'],
+  layoutName       : 'components/query-menu',
+  classNames       : ['dropdown-menu'],
   attributeBindings: ['role'],
-  tagName: 'ul',
-  role: 'menu',
-  any: ['any'],
+  tagName          : 'ul',
+  role             : 'menu',
+  any              : ['any'],
 
   didInsertElement: function() {
-    var self = this;
+    set(this, 'menuHeight', this.$().height());
+    set(this, 'menuWidth', this.$().height());
 
-    this.set('menuHeight', this.$().height());
-    this.set('menuWidth', this.$().height());
+    set(this, 'menu', this);
 
-    this.set('menu', this);
-
-    Ember.$(document).click(function() {
-      self.hide();
+    Ember.$(document).click(() => {
+      this.hide();
     });
   },
 
-  hasSelection: function() {
-    return this.get('selection') ? true : false;
-  }.property('selection'),
+  hasSelection: Ember.computed('selection', function() {
+    return get(this, 'selection') ? true : false;
+  }),
 
-  leftLocation: function() {
-    var mouseWidth = this.get('offset.left');
-    var menuWidth  = this.get('menuWidth');
-    var pageWidth  = Ember.$(window).width();
+  leftLocation: Ember.computed('offset', function() {
+    let mouseWidth;
+    let menuWidth;
+    let pageWidth;
+
+    mouseWidth = get(this, 'offset.left');
+    menuWidth  = get(this, 'menuWidth');
+    pageWidth  = Ember.$(window).width();
 
     if (mouseWidth + menuWidth > pageWidth && menuWidth < mouseWidth) {
       return mouseWidth - menuWidth;
     }
-    return mouseWidth;
-  }.property('offset'),
 
-  topLocation: function() {
-    var mouseHeight = this.get('offset.top');
-    var menuHeight  = this.get('menuHeight');
-    var pageHeight  = Ember.$(window).height();
+    return mouseWidth;
+  }),
+
+  topLocation: Ember.computed('offset', function() {
+    let mouseHeight;
+    let menuHeight;
+    let pageHeight;
+
+    mouseHeight = get(this, 'offset.top');
+    menuHeight  = get(this, 'menuHeight');
+    pageHeight  = Ember.$(window).height();
 
     if (mouseHeight + menuHeight > pageHeight && menuHeight < mouseHeight) {
       return mouseHeight - menuHeight;
     }
     return mouseHeight;
-  }.property('offset'),
+  }),
 
   toggle: function() {
     if (this.$().is(':visible')) {
@@ -63,8 +73,8 @@ export default Ember.Component.extend({
   show: function() {
     this.$()
     .css({
-      left: this.get('leftLocation'),
-      top: this.get('topLocation')
+      left: get(this, 'leftLocation'),
+      top : get(this, 'topLocation')
     })
     .show();
   },

@@ -1,18 +1,23 @@
 import Ember from 'ember';
 
+const get = Ember.get;
+const set = Ember.set;
+
 export default Ember.Object.extend({
   lang: 'en',
 
   init: function() {
-    this.set('labels', Ember.Map.create());
-    this.set('comments', Ember.Map.create());
+    set(this, 'labels', Ember.Map.create());
+    set(this, 'comments', Ember.Map.create());
   },
 
   label: Ember.computed('lang', function() {
-    var uri, lang, labels;
+    let uri;
+    let lang;
+    let labels;
 
-    lang   = this.get('lang');
-    labels = this.get('labels');
+    lang   = get(this, 'lang');
+    labels = get(this, 'labels');
 
     if (labels.has(lang)) {
       return labels.get(lang);
@@ -23,17 +28,25 @@ export default Ember.Object.extend({
     }
 
     if (labels.size) {
-      return labels.get(labels.keys.toArray()[0]);
+      return labels.get(labels._keys.list[0]);
     }
 
-    uri = this.get('uri').split('/');
+    uri = get(this, 'uri');
 
-    return uri[uri.length-1];
+    if (uri) {
+      uri = uri.split('/');
+      return uri[uri.length-1];
+    }
+
+    return 'No Data';
   }),
 
   comment: Ember.computed('lang', function() {
-    var lang     = this.get('lang'),
-        comments = this.get('comments');
+    let lang;
+    let comments;
+
+    lang     = get(this, 'lang');
+    comments = get(this, 'comments');
 
     if (comments.has(lang)) {
       return comments.get(lang);
@@ -42,12 +55,11 @@ export default Ember.Object.extend({
     return comments.get('default');
   }).volatile(),
 
-
   addLabel: function(lang, label) {
-    this.get('labels').set(lang, label);
+    get(this, 'labels').set(lang, label);
   },
 
   addComment: function(lang, comment) {
-    this.get('comments').set(lang, comment);
+    get(this, 'comments').set(lang, comment);
   }
 });

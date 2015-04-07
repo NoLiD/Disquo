@@ -31,19 +31,6 @@ app.import('bower_components/jassa/jassa.js');
 // cytoscape.js
 app.import('bower_components/cytoscape/dist/cytoscape.js');
 
-// List-view
-app.import('vendor/list-view.amd.js', {
-  exports: {
-    'list-view/main': ['default'],
-    'list-view/helper': ['default'],
-    'list-view/list_item_view': ['default'],
-    'list-view/list_item_view_mixin': ['default'],
-    'list-view/list_view': ['default'],
-    'list-view/list_view_helper': ['default'],
-    'list-view/list_view_mixin': ['default']
-  }
-});
-
 // NProgress
 app.import('bower_components/nprogress/nprogress.css');
 

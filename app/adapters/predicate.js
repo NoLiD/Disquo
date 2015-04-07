@@ -2,14 +2,7 @@ import Ember from 'ember';
 import BaseAdapter from './base-adapter';
 import Query from '../models/queries/async-select';
 
-function reduceToIntersection(selected, results) {
-  // keep predicate in results iff it belongs to each selection
-  var outgoing = results.outgoing;
-  var incoming = results.incoming;
-
-  return { predicates: { outgoing: outgoing,
-                         incoming: incoming } };
-}
+const get = Ember.get;
 
 export default BaseAdapter.extend({
   Outgoing: Query.extend({ template: 'SELECT DISTINCT ?subject ?predicate ?label WHERE { VALUES ?subject { {{#each selected}}<{{this}}>{{/each}} } ?subject ?predicate [] . OPTIONAL { ?predicate {{label}} ?label } }',
@@ -21,20 +14,25 @@ export default BaseAdapter.extend({
                            variables: [ {var: 'predicate', label: 'label', mapName: 'outer'} ] }),
 
   all: function(selected) {
-    var incoming = this.getOrCreateQuery(this.get('Incoming'), 'all.in', selected),
-        outgoing = this.getOrCreateQuery(this.get('Outgoing'), 'all.out', selected);
+    let incoming;
+    let outgoing;
+    let queries;
 
-    var queries = {
-      outgoing: outgoing.get('result'),
-      incoming: incoming.get('result'),
+    incoming = this.getOrCreateQuery(get(this, 'Incoming'), 'all.in', selected);
+    outgoing = this.getOrCreateQuery(get(this, 'Outgoing'), 'all.out', selected);
+
+    queries = {
+      outgoing: get(outgoing, 'result'),
+      incoming: get(incoming, 'result'),
     };
 
-    return Ember.RSVP.hash(queries).then(function(results) {
-      return reduceToIntersection(selected, results);
-    }, function() {
-      return Ember.RSVP.Promise.reject('Unable to fetch predicates of ' +
-                                        selected.toString());
-      }
-    );
+    return Ember.RSVP.hash(queries)
+            .then((results) => {
+              return { predicates: { outgoing: results.outgoing,
+                                     incoming: results.incoming } };
+            }, () => {
+              return Ember.RSVP.Promise.reject('Unable to fetch predicates of ' +
+                                                selected.toString());
+            });
   }
 });

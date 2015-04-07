@@ -2,6 +2,8 @@ import Ember from 'ember';
 import BaseAdapter from './base-adapter';
 import Query from '../models/queries/async-select';
 
+const get = Ember.get;
+
 export default BaseAdapter.extend({
   AllQuery: Query.extend({ template: 'SELECT DISTINCT ?type ?label WHERE { [] a ?type . OPTIONAL { ?type {{label}} ?label } } ',
                            key: {var: 'type', label: 'label'} }),
@@ -11,27 +13,29 @@ export default BaseAdapter.extend({
 
 
   all: function() {
-    var query = this.getOrCreateQuery(this.get('AllQuery'), 'all', 'any');
+    let query;
 
-    return query.get('result')
-          .then(function(result) {
-            return { types: result };
-          }, function() {
-            return Ember.RSVP.Promise.reject('Unable to fetch all types');
-          }
-    );
+    query = this.getOrCreateQuery(get(this, 'AllQuery'), 'all', 'any');
+
+    return get(query, 'result')
+            .then((result) => {
+              return { types: result };
+            }, () => {
+              return Ember.RSVP.Promise.reject('Unable to fetch all types');
+            });
   },
 
   typesOf: function(selected) {
-    var query = this.getOrCreateQuery(this.get('typesQuery'), 'typesOf', selected);
+    let query;
 
-    return query.get('result')
-          .then(function(result) {
-            return { types: result };
-          }, function() {
-            return Ember.RSVP.Promise.reject('Unable to fetch types of ' +
-                                             selected.toString());
-          }
-    );
+    query = this.getOrCreateQuery(get(this, 'typesQuery'), 'typesOf', selected);
+
+    return get(query, 'result')
+            .then((result) => {
+              return { types: result };
+            }, () => {
+              return Ember.RSVP.Promise.reject('Unable to fetch types of ' +
+                                               selected.toString());
+            });
   }
 });

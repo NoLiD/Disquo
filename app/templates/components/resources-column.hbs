@@ -5,10 +5,10 @@
 </div>
 <div class="panel-body">
   {{#if filteredResources}}
-    {{collection resourcesList
-        content=filteredResources
+    {{view 'resources-list'
+        store=store
         targetRoute=targetRoute
-        store=store}}
+        content=filteredResources}}
   {{else}}
     {{#if resources}}
     <div class="ember-list-view ember-list-view-list" style="height: 100%;">

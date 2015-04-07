@@ -2,6 +2,8 @@ import Ember from 'ember';
 import BaseAdapter from './base-adapter';
 import Query from '../models/queries/async-select';
 
+const get = Ember.get;
+
 export default BaseAdapter.extend({
   AllQuery: Query.extend({ template: 'SELECT DISTINCT ?instance ?label WHERE { {{#each selected}}?instance a <{{this}}> .{{/each}} OPTIONAL { ?instance {{label}} ?label } }',
                            key: {var: 'instance', label: 'label'} }),
@@ -19,67 +21,73 @@ export default BaseAdapter.extend({
                            key: {var: 'instance', label: 'label'} }),
 
   all: function(selected) {
-    var query = this.getOrCreateQuery(this.get('AllQuery'), 'all', selected);
+    let query;
 
-    return query.get('result')
-          .then(function(result) {
-            return { things: result };
-          }, function() {
-            return Ember.RSVP.Promise.reject('Unable to fetch things of ' +
-                                              selected.toString());
-          }
-    );
+    query = this.getOrCreateQuery(get(this, 'AllQuery'), 'all', selected);
+
+    return get(query, 'result')
+            .then((result) => {
+              return { things: result };
+            }, () => {
+              return Ember.RSVP.Promise.reject('Unable to fetch things of ' +
+                                                selected.toString());
+            });
   },
 
   withPredicates: function(selected) {
-    var query = this.getOrCreateQuery(this.get('PredsQuery'), 'preds', selected);
+    let query;
 
-    return query.get('result')
-          .then(function(result) {
-            return { things: result };
-          }, function() {
-            return Ember.RSVP.Promise.reject('Unable to fetch things with predicates of ' +
-                                             selected.toString());
-          }
+    query = this.getOrCreateQuery(get(this, 'PredsQuery'), 'preds', selected);
+
+    return get(query, 'result')
+            .then((result) => {
+              return { things: result };
+            }, () => {
+              return Ember.RSVP.Promise.reject('Unable to fetch things with predicates of ' +
+                                               selected.toString());
+            }
     );
   },
 
   withPredicateAndObjects: function(selected, predicate) {
-    var query = this.getOrCreateQuery(this.get('PredsObjsQuery'), 'predsObjs', selected, predicate);
+    let query;
 
-    return query.get('result')
-          .then(function(result) {
-            return { things: result };
-          }, function() {
-            return Ember.RSVP.Promise.reject('Unable to fetch things with predicate ' +
-                                             predicate + ' and objects of ' + selected.toString());
-          }
-    );
+    query = this.getOrCreateQuery(get(this, 'PredsObjsQuery'), 'predsObjs', selected, predicate);
+
+    return get(query, 'result')
+            .then((result) => {
+              return { things: result };
+            }, () => {
+              return Ember.RSVP.Promise.reject('Unable to fetch things with predicate ' +
+                                               predicate + ' and objects of ' + selected.toString());
+            });
   },
 
   withObjects: function(selected) {
-    var query = this.getOrCreateQuery(this.get('ObjsQuery'), 'objs', selected);
+    let query;
 
-    return query.get('result')
-          .then(function(result) {
-            return { things: result };
-          }, function() {
-            return Ember.RSVP.Promise.reject('Unable to fetch things with objects ' +
-                                             selected.toString());
-          }
-    );
+    query =  this.getOrCreateQuery(get(this, 'ObjsQuery'), 'objs', selected);
+
+    return get(query, 'result')
+            .then((result) => {
+              return { things: result };
+            }, () => {
+              return Ember.RSVP.Promise.reject('Unable to fetch things with objects ' +
+                                               selected.toString());
+            });
   },
 
   ofSameTypes: function(selected) {
-    var query = this.getOrCreateQuery(this.get('SameTypesQuery'), 'sameTypes', selected);
+    let query;
 
-    return query.get('result')
-          .then(function(result) {
-            return { things: result };
-          }, function() {
-            return Ember.RSVP.Promise.reject('Unable to fetch things of same types as ' +
-                                             selected.toString());
-          }
-        );
+    query = this.getOrCreateQuery(get(this, 'SameTypesQuery'), 'sameTypes', selected);
+
+    return get(query, 'result')
+            .then((result) => {
+              return { things: result };
+            }, () => {
+              return Ember.RSVP.Promise.reject('Unable to fetch things of same types as ' +
+                                               selected.toString());
+            });
   }
 });

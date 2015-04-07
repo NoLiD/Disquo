@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-4 pull-left">
-        {{endpoint/selection-info selection=selectionText select='queryButton'}}
+        {{endpoint/selection-info selection=model.selectionText select='queryButton'}}
       </div>
       <div class="col-xs-4 text-center">
-        {{endpoint/search-bar term=filterTerm type=filterType}}
+        {{endpoint/search-bar term=model.filterTerm type=model.filterType}}
       </div>
       <div class="col-xs-4 pull-right">
-        {{endpoint/sparql-selector endpoint=url select='openSelectModal'}}
+        {{endpoint/sparql-selector endpoint=model.url select='openSelectModal'}}
       </div>
     </div>
   </div>
@@ -31,5 +31,5 @@
   </div>
 </div>
 {{query-menu
-  menu=queryMenu
+  menu=model.queryMenu
   transitionAction='resourceTransition'}}

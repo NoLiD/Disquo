@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import nProgress from 'npm:nprogress';
 
+const set = Ember.set;
+
 export default Ember.Route.extend({
   title: function(tokens) {
     return 'Disquo - ' + tokens.join(' ');
@@ -8,9 +10,11 @@ export default Ember.Route.extend({
 
   actions: {
     openModal: function(modalName, model) {
-      var modal = 'modals/' + modalName;
+      let modal;
 
-      this.controllerFor(modal).set('model', model);
+      modal = 'modals/' + modalName;
+
+      set(this.controllerFor(modal), 'model', model);
 
       return this.render(modal, {
         into: 'application',
@@ -31,26 +35,25 @@ export default Ember.Route.extend({
     loading: function() {
       if (this.isLoading) { return false; }
 
-      var self = this;
-
       this.isLoading = true;
 
       nProgress.start();
-      this.router.one('didTransition', this, function() {
+
+      this.router.one('didTransition', this, () => {
         nProgress.done();
-        self.isLoading = false;
+        this.isLoading = false;
       });
     },
 
     error: function(error, transition) {
-      Ember.run.scheduleOnce('afterRender', this, function() {
+      Ember.run.scheduleOnce('afterRender', this, () => {
         nProgress.done();
         this.notify.error(error);
         this.isLoading = false;
       });
 
       if (transition.targetName === 'endpoint.index') {
-        this.controllerFor('endpoint').set('model', '');
+        set(this.controllerFor('endpoint'), 'model', '');
         this.transitionTo('index');
       }
 

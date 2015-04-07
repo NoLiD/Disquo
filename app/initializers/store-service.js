@@ -1,3 +1,4 @@
+
 export function initialize(container, application) {
   application.inject('route', 'store', 'service:store');
   application.inject('adapter', 'store', 'service:store');

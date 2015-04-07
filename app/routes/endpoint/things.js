@@ -1,16 +1,22 @@
+import Ember from 'ember';
 import EndpointRoute from '../../models/endpoint-route';
+
+const get = Ember.get;
 
 export default EndpointRoute.extend({
   type: 'thing',
 
   titleToken: function(model) {
-    var selected = model.selected;
+    let selected;
+    let uri;
+
+    selected = model.selected;
 
     if (selected) {
       if (selected.length === 1) {
-        var uri = selected.get('firstObject');
+        uri = get(selected, 'firstObject');
 
-        return 'All Things of ' + uri.get('label');
+        return 'All Things of ' + get(uri, 'label');
       } else {
         return 'Things of multiple selection';
       }
@@ -18,8 +24,8 @@ export default EndpointRoute.extend({
   },
 
   decodedModel: function(params) {
-    return this.store.find(this.get('type'), params.query,
-                                             params.selected,
-                                             params.predicate);
+    return this.store.find(get(this, 'type'), params.query,
+                                              params.selected,
+                                              params.predicate);
   }
 });

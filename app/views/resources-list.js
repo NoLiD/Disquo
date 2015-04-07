@@ -1,61 +1,73 @@
 import Ember from 'ember';
 import ResourceItem from './resource-item';
-import ListView from 'list-view/list_view';
+import ListView from 'ember-list-view';
+
+const get = Ember.get;
+const set = Ember.set;
 
 export default ListView.extend({
   itemViewClass: ResourceItem,
-  rowHeight: 46,
-  height: 46,
+  height       : 500,
+  rowHeight    : 46,
 
-  selectedItems: Ember.computed.alias('endpoint.selection'),
-  currentRoute: Ember.computed.alias('endpoint.type'),
+
+  selectedItems: Ember.computed.alias('endpoint.model.selection'),
+  currentRoute: Ember.computed.alias('endpoint.model.type'),
 
   endpoint: Ember.computed(function() {
-    var controller = this.get('controller');
+    let controller;
+
+    controller = get(this, 'controller');
+
     if (controller && controller.container) {
       return controller.container.lookup('controller:endpoint');
     }
   }),
 
-  selectionChanged: function() {
-    if (this.get('targetRoute') !== this.get('currentRoute')) {
-      var selection = this.get('selectedItems');
+  selectionChanged: Ember.observer('selectedItems', function() {
+    let selection;
 
-      this.forEach(function(view) {
-        if (selection.contains(view.get('content.uri'))) {
-          view.set('active', true);
+    if (get(this, 'targetRoute') !== get(this, 'currentRoute')) {
+      selection = get(this, 'selectedItems');
+
+      this.forEach((view) => {
+        if (selection.contains(get(view, 'context.uri'))) {
+          set(view, 'active', true);
         } else {
-          view.set('active', false);
+          set(view, 'active', false);
         }
       });
     }
-  }.observes('selectedItems'),
+  }),
 
-  listInstered: function() {
-    this.get('endpoint');
+  listInstered: Ember.on('didInsertElement', function() {
+    get(this, 'endpoint');
     Ember.$(window).on('resize', this.updateHeight.bind(this));
     Ember.run.scheduleOnce('afterRender', this, 'updateHeight');
-  }.on('didInsertElement'),
+  }),
 
   updateHeight: function() {
-    this.set('height', this.get('parentView').$()
-                           .find('.panel-body')
-                           .height());
+    set(this, 'height', get(this, 'parentView').$('.panel-body').height());
   },
 
   updateURL: function() {
-    var items      = this.get('selectedItems'),
-        controller = this.get('controller');
+    let items;
+    let controller;
+
+    items      = get(this, 'selectedItems');
+    controller = get(this, 'controller');
 
     if (items.length === 0) { return; }
 
-    controller.send('transition', this.get('targetRoute'), 'all',
-                                          items, 'none');
+    controller.send('transition', get(this, 'targetRoute'),
+                                  'all',
+                                  items,
+                                  'none');
   },
 
   clearActive: function() {
     this.forEach(function(view) {
-      view.set('active', false);
+      set(view, 'active', false);
     });
   }
 });

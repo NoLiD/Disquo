@@ -62,7 +62,7 @@ a.ember-list-item-view:focus {
 .ember-list-item-view.active:focus {
   z-index: 2;
   color: #ffffff;
-  background-color: #00bc8c;
+  background-color: $blue-color;
   border-color: #00bc8c;
 }
 .ember-list-item-view.active .ember-list-item-view-heading,

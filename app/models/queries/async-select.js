@@ -1,46 +1,53 @@
 import Ember from 'ember';
 import Query from './select';
 
+const get = Ember.get;
+const set = Ember.set;
+
 export default Query.extend({
   limit: 100,
   offset: 0,
 
   pause: function() {
-    this.set('_paused', true);
+    set(this, '_paused', true);
   },
 
   resume: function() {
-    if (!this.get('_paused')) { return; }
+    if (!get(this, '_paused')) { return; }
 
-    this.set('_paused', false);
+    set(this, '_paused', false);
 
-    if (!this.set('completed')) {
+    if (!set(this, 'completed')) {
       this.runLater();
     }
   },
 
   runLater: function() {
-    Ember.run.next(this, function() { this.get('result'); });
+    Ember.run.next(this, () => get(this, 'result'));
   },
 
-  result: function() {
-    var self   = this,
-        limit  = this.get('limit'),
-        offset = this.get('offset');
+  result: Ember.computed('query', 'offset', function() {
+    let limit;
+    let offset;
+
+    limit  = get(this, 'limit');
+    offset = get(this, 'offset');
 
     return this._super()
-            .then(function(result) {
-              if (result.getIterator().getArray().length === limit) {
-                  self.set('offset', offset + limit);
+            .then((result) => {
 
-                  if(!self.get('_paused')) {
-                    self.runLater();
+              if (result.getIterator().getArray().length === limit) {
+                  set(this, 'offset', offset + limit);
+
+                  if(!get(this, '_paused')) {
+                    this.runLater();
                   }
               } else {
-                self.set('completed', true);
+                set(this, 'completed', true);
               }
+
               return result;
             })
             .then(this.resultToResources.bind(this));
-  }.property('query', 'offset')
+  })
 });

@@ -4,6 +4,8 @@ import AskQuery from '../models/queries/ask';
 import SelectQuery from '../models/queries/select';
 import AsyncQuery from '../models/queries/async-select';
 
+const get = Ember.get;
+const set = Ember.set;
 
 export default Ember.Object.extend({
   askQuery: AskQuery.extend({template: 'ASK { ?s ?p ?o }'}),
@@ -12,7 +14,7 @@ export default Ember.Object.extend({
                                    key: { var: 'uri', label: 'label' } }),
 
   init: function() {
-    this.set('labels', Ember.Map.create());
+    set(this, 'labels', Ember.Map.create());
 
     return this._super();
   },
@@ -20,42 +22,49 @@ export default Ember.Object.extend({
   addEndpoint: function(url, initGraph) {
     // For now will just have a single 'endpoint'
     // Querying multiple endpoints will require a collection
-    var self     = this,
-        query    = this.get('askQuery').create();
+    let query;
+    let service;
 
-    var service = new Jassa.service.SparqlServiceHttp(url, initGraph);
+    query = get(this, 'askQuery').create();
 
-    query.set('service', service);
+    service = new Jassa.service.SparqlServiceHttp(url, initGraph);
 
-    return query.get('result')
-          .then(function() {
-            self.set('endpoint', service);
-            return service;
-          }, function() {
-            return Ember.RSVP.Promise.reject('Unable to connect to ' + url);
-          });
+    set(query, 'service', service);
+
+    return get(query, 'result')
+            .then(() => {
+              set(this, 'endpoint', service);
+              return service;
+            }, () => {
+              return Ember.RSVP.Promise.reject('Unable to connect to ' + url);
+            });
   },
 
   find: function(name, query, selected, predicate) {
-    var adapter = this.container.lookup('adapter:' + name),
-        adapterMethod, lastAdapter;
+    let adapter;
+    let queries;
+    let lastAdapter;
+    let adapterMethod;
 
-    if ((adapterMethod = adapter.get(query))) {
-      if ((lastAdapter = this.get('lastAdapter'))) {
+    adapter = this.container.lookup('adapter:' + name);
+
+    if ((adapterMethod = get(adapter, query))) {
+      if ((lastAdapter = get(this, 'lastAdapter'))) {
         lastAdapter.pauseQuery();
       }
 
-      this.set('lastAdapter', adapter);
+      set(this, 'lastAdapter', adapter);
 
-      var queries = {
+      queries = {
         labels : selected.contains('any') ?
                   Ember.RSVP.resolve(selected) : this.fetchLabels(selected),
         pred   : predicate === 'none' ? predicate : this.fetchLabels(predicate),
         result : adapterMethod.call(adapter, selected, predicate)
       };
 
-      return Ember.RSVP.hash(queries).then(function(results) {
-        return Ember.$.extend(results.result, {selected: results.labels, predicate: results.pred});
+      return Ember.RSVP.hash(queries).then((results) => {
+        return Ember.$.extend(results.result,
+                              {selected: results.labels, predicate: results.pred});
       });
     } else {
       return Ember.RSVP.reject('Error! Invalid query');
@@ -63,38 +72,45 @@ export default Ember.Object.extend({
   },
 
   fetchComments: function(resource) {
-    var service = this.get('endpoint'),
-        query   = this.get('commentQuery');
+    let service;
+    let query;
 
-    query.set('service', service);
-    query.set('resource', resource);
-    query.set('context', {uri: resource.get('uri')});
+    service = get(this, 'endpoint');
+    query   = get(this, 'commentQuery');
 
-    return query.get('result').then(query.resultToComments.bind(query));
+    set(query, 'service', service);
+    set(query, 'resource', resource);
+    set(query, 'context', {uri: get(resource, 'uri')});
+
+    return get(query, 'result')
+            .then(query.resultToComments.bind(query));
   },
 
   fetchLabels: function(selected) {
-    var map = this.get('labels'),
-        labels, query;
+    let map;
+    let query;
+    let labels;
+
+    map = get(this, 'labels');
 
     if (!(labels = map.get(selected.toString()))) {
-      query = this.get('labelsQuery').create();
+      query = get(this, 'labelsQuery').create();
 
-      query.set('service', this.get('endpoint'));
-      query.set('context', {selected: selected});
+      set(query, 'service', get(this, 'endpoint'));
+      set(query, 'context', {selected: selected});
 
-      return query.get('result')
-              .then(function(result) {
-                  if (result.length === 0) {
-                    result = selected.map((res) => Resource.create({uri: res}));
-                  }
+      return get(query, 'result')
+              .then((result) => {
+                if (result.length === 0) {
+                  result = selected.map((res) => Resource.create({uri: res}));
+                }
 
-                  map.set(selected.toString(), result);
+                map.set(selected.toString(), result);
 
-                  return result;
-              }, function() {
+                return result;
+              }, () => {
                 return Ember.RSVP.Promise
-                            .reject('Unable to fetch labels for: ' + selected.toString());
+                                  .reject('Unable to fetch labels for: ' + selected.toString());
               });
     }
 

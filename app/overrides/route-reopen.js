@@ -4,15 +4,16 @@ import Ember from 'ember';
 // peak at router-reopen
 export default Ember.Route.reopen({
   model: function(params, transition, queryParams) {
-    for (var prop in params) {
-      if (params.hasOwnProperty(prop)) {
-        if (prop === 'selected' /*||  prop === 'predicates'*/) {
-          params[prop] = decodeURIComponent(params[prop]).split(',');
-        } else {
-          params[prop] = decodeURIComponent(params[prop]);
-        }
-      }
-    }
+
+    Object
+      .keys(params)
+      .map((param) => {
+         if (param === 'selected' /*||  prop === 'predicates'*/) {
+           params[param] = decodeURIComponent(params[param]).split(',');
+         } else {
+           params[param] = decodeURIComponent(params[param]);
+         }
+      });
 
     return this.decodedModel(params, transition, queryParams);
   },
